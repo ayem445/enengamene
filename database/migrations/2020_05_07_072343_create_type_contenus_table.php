@@ -21,8 +21,8 @@ class CreateTypeContenusTable extends Migration
             $table->string('libelle', 100)->unique()->comment('libelle du Type de Contenu');
             $table->string('description')->nullable()->comment('description du Type de Contenu');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut du Type de Contenu');
-            $table->boolean('etat')->is_default(false)->comment('Etat du Type de Contenu');
+            $table->boolean('statut')->default(false)->comment('Statut du Type de Contenu');
+            $table->boolean('etat')->default(false)->comment('Etat du Type de Contenu');
 
             $table->timestamps();
         });

@@ -27,8 +27,8 @@ class CreateQuizQuestionsTable extends Migration
           $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
           $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
-          $table->boolean('statut')->is_default(false)->comment('Statut de la Question de Quiz');
-          $table->boolean('etat')->is_default(false)->comment('Etat de la Question de Quiz');
+          $table->boolean('statut')->default(false)->comment('Statut de la Question de Quiz');
+          $table->boolean('etat')->default(false)->comment('Etat de la Question de Quiz');
 
           $table->timestamps();
       });
@@ -42,7 +42,7 @@ class CreateQuizQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sessions', function (Blueprint $table) {
+        Schema::table('quiz_questions', function (Blueprint $table) {
             $table->dropForeign(['quiz_id']);
             $table->dropForeign(['quiz_type_question_id']);
         });

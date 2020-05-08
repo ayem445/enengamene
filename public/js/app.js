@@ -1979,14 +1979,17 @@ __webpack_require__.r(__webpack_exports__);
         password: this.password,
         remember: this.remember
       }).then(function (resp) {
+        // Tout s'est bien passé, alors on actualise la page actuelle
         location.reload();
       })["catch"](function (error) {
         _this.loading = false;
 
         if (error.response.status == 422) {
-          _this.errors.push("We couldn't verify your account details.");
+          console.log(error.data);
+
+          _this.errors.push("Nous n'avons pas pu vérifier les détails de votre compte.");
         } else {
-          _this.errors.push("Something went wrong , please refresh and try again.");
+          _this.errors.push("Une erreur s'est produite, veuillez actualiser et réessayer.");
         }
       });
     }
@@ -19621,7 +19624,7 @@ var render = function() {
           },
           [
             _c("h5", { staticClass: "text-uppercase text-center" }, [
-              _vm._v("Login XXX")
+              _vm._v("Connexion")
             ]),
             _vm._v(" "),
             _c("br"),
@@ -19742,7 +19745,7 @@ var render = function() {
                   _c("span", { staticClass: "custom-control-indicator" }),
                   _vm._v(" "),
                   _c("span", { staticClass: "custom-control-description" }, [
-                    _vm._v("Remember me")
+                    _vm._v("Se souvenir de moi")
                   ])
                 ]),
                 _vm._v(" "),
@@ -19752,7 +19755,7 @@ var render = function() {
                     staticClass: "text-muted hover-primary fs-13",
                     attrs: { href: "#" }
                   },
-                  [_vm._v("Forgot password?")]
+                  [_vm._v("Mot de passe oublié?")]
                 )
               ]),
               _vm._v(" "),
@@ -19768,7 +19771,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("Login")]
+                  [_vm._v("Valider")]
                 )
               ])
             ]),
@@ -19786,8 +19789,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "text-center text-muted fs-13 mt-20" }, [
-      _vm._v("Don't have an account? "),
-      _c("a", { attrs: { href: "page-register.html" } }, [_vm._v("Sign up")])
+      _vm._v("Vous n'avez pas de compte? "),
+      _c("a", { attrs: { href: "page-register.html" } }, [
+        _vm._v("Inscrivez-vous")
+      ])
     ])
   }
 ]

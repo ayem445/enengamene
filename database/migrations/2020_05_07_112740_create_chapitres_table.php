@@ -28,8 +28,8 @@ class CreateChapitresTable extends Migration
             $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
             $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut du chapitre');
-            $table->boolean('etat')->is_default(false)->comment('Etat du chapitre');
+            $table->boolean('statut')->default(false)->comment('Statut du chapitre');
+            $table->boolean('etat')->default(false)->comment('Etat du chapitre');
 
             $table->timestamps();
         });
@@ -43,7 +43,7 @@ class CreateChapitresTable extends Migration
      */
     public function down()
     {
-        Schema::table('sessions', function (Blueprint $table) {
+        Schema::table('chapitres', function (Blueprint $table) {
             $table->dropForeign(['quiz_id']);
             $table->dropForeign(['cour_id']);
         });

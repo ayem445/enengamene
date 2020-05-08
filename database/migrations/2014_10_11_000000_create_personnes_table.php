@@ -27,8 +27,8 @@ class CreatePersonnesTable extends Migration
             $table->string('fonction')->nullable()->comment('fonction de la Personne');
             $table->string('pays')->nullable()->comment('fonction de la Personne');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut de la Personne');
-            $table->boolean('etat')->is_default(false)->comment('Etat de la Personne');
+            $table->boolean('statut')->default(false)->comment('Statut de la Personne');
+            $table->boolean('etat')->default(false)->comment('Etat de la Personne');
 
             $table->timestamps();
         });

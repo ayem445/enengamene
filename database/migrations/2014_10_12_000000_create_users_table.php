@@ -27,8 +27,8 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('personne_id')->nullable()->comment('référence de la personne');
             $table->foreign('personne_id')->references('id')->on('personnes')->onDelete('set null');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut du compte de l utilisateur');
-            $table->boolean('etat')->is_default(false)->comment('Etat du compte de l utilisateur');
+            $table->boolean('statut')->default(false)->comment('Statut du compte de l utilisateur');
+            $table->boolean('etat')->default(false)->comment('Etat du compte de l utilisateur');
 
             $table->timestamps();
         });

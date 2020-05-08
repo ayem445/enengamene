@@ -34,11 +34,8 @@ class CreateEtablissementsTable extends Migration
             $table->string('ville')->nullable()->comment('ville de l établissement');
             $table->string('localisation')->nullable()->comment('localisation de l établissement');
 
-            $table->unsignedBigInteger('type_etablissement_id')->nullable()->comment('référence du Type de département');
-            $table->foreign('type_etablissement_id')->references('id')->on('type_etablissements')->onDelete('set null');
-
-            $table->boolean('statut')->is_default(false)->comment('Statut de l établissement');
-            $table->boolean('etat')->is_default(false)->comment('Etat de l établissement');
+            $table->boolean('statut')->default(false)->comment('Statut de l établissement');
+            $table->boolean('etat')->default(false)->comment('Etat de l établissement');
 
             $table->timestamps();
         });
@@ -52,7 +49,7 @@ class CreateEtablissementsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sessions', function (Blueprint $table) {
+        Schema::table('etablissements', function (Blueprint $table) {
             $table->dropForeign(['type_etablissement_id']);
         });
         Schema::dropIfExists('etablissements');

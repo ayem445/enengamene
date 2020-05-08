@@ -22,8 +22,8 @@ class CreateQuizsTable extends Migration
             $table->string('description')->nullable()->comment('description du Quiz');
             $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut du Quiz');
-            $table->boolean('etat')->is_default(false)->comment('Etat du Quiz');
+            $table->boolean('statut')->default(false)->comment('Statut du Quiz');
+            $table->boolean('etat')->default(false)->comment('Etat du Quiz');
 
             $table->timestamps();
         });

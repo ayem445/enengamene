@@ -38,28 +38,20 @@
 
 
       <div class="topbar-right">
-        <ul class="topbar-nav nav">
-          <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-          @auth
-              @admin
-                <li class="nav-item"><a href="#" class="nav-link">All series</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Create series</a></li>
-              @else
-
-              @endadmin
-
+          <ul class="topbar-nav nav">
+            <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
+            @auth
               <li class="nav-item">
-                <a class="nav-link" href="#">Hey John Doe</a></li>
+                <a class="nav-link" href="#">Salut <strong>{{ auth()->user()->name  }}</strong></a></li>
               </li>
+            @endauth
+            <li class="nav-item"><a href="#" class="nav-link">Tous les Cours</a></li>
 
-          @endauth
-          <li class="nav-item"><a href="#" class="nav-link">All series</a></li>
-
-          @guest
-            <li class="nav-item"><a href="#" class="nav-link">All series</a></li>
-            <li class="nav-item"><a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#loginModal">Login</a></li>
-          @endguest
-        </ul>
+            @guest
+              <li class="nav-item"><a href="#" class="nav-link">Tous les Cours</a></li>
+              <li class="nav-item"><a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#loginModal">Se Connecter</a></li>
+            @endguest
+          </ul>
       </div>
 
     </div>
@@ -90,7 +82,9 @@
 
 
 
-  <vue-login></vue-login>
+  @guest
+      <vue-login></vue-login>
+  @endguest
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">

@@ -19,9 +19,9 @@ class CreateDifficultesTable extends Migration
 
             $table->string('code', 50)->unique()->comment('code de la difficulté');
             $table->string('libelle', 100)->unique()->comment('libelle de la difficulté');
-            $table->int('niveau')->comment('niveau de la difficulté');
-            $table->boolean('statut')->is_default(false)->comment('Statut de la difficulté');
-            $table->boolean('etat')->is_default(false)->comment('Etat de la difficulté');
+            $table->integer('niveau')->comment('niveau de la difficulté');
+            $table->boolean('statut')->default(false)->comment('Statut de la difficulté');
+            $table->boolean('etat')->default(false)->comment('Etat de la difficulté');
 
             $table->timestamps();
         });

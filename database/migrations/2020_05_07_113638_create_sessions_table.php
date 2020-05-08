@@ -32,8 +32,8 @@ class CreateSessionsTable extends Migration
             $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
             $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut de la session');
-            $table->boolean('etat')->is_default(false)->comment('Etat de la session');
+            $table->boolean('statut')->default(false)->comment('Statut de la session');
+            $table->boolean('etat')->default(false)->comment('Etat de la session');
 
             $table->timestamps();
         });
