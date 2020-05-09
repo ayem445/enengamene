@@ -32,7 +32,8 @@
               <button class="btn btn-bold btn-block btn-primary" @click="attemptLogin()" :disabled="!isValidLoginForm" type="button">Valider</button>
             </div>
           </form>
-          <p class="text-center text-muted fs-13 mt-20">Vous n'avez pas de compte? <a href="page-register.html">Inscrivez-vous</a></p>
+          <!-- {{ route('/register') }} -->
+          <p class="text-center text-muted fs-13 mt-20">Vous n'avez pas de compte? <a href="#">Inscrivez-vous</a></p>
         </div>
       </div>
     </div>

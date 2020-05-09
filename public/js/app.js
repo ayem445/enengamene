@@ -1950,6 +1950,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -19790,9 +19791,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "text-center text-muted fs-13 mt-20" }, [
       _vm._v("Vous n'avez pas de compte? "),
-      _c("a", { attrs: { href: "page-register.html" } }, [
-        _vm._v("Inscrivez-vous")
-      ])
+      _c("a", { attrs: { href: "#" } }, [_vm._v("Inscrivez-vous")])
     ])
   }
 ]
