@@ -39,7 +39,18 @@ class CreateEtablissementsTable extends Migration
 
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `$tableName` comment 'Etablissements du Système.'");
+        switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+        {
+            case 'mysql':
+                DB::statement("ALTER TABLE `$tableName` comment 'Etablissements du Système.'");
+                break;
+            case 'sqlite':
+                //sqlite syntax
+                break;
+            default:
+                //throw new \Exception('Driver not supported.');
+                break;
+        }
     }
 
     /**
