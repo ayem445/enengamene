@@ -25,6 +25,15 @@ class CreateCoursTable extends Migration
             $table->unsignedBigInteger('auteur_id')->nullable()->comment('référence de l auteur (personne) du cours');
             $table->foreign('auteur_id')->references('id')->on('personnes')->onDelete('set null');
 
+            $table->unsignedBigInteger('matiere_id')->nullable()->comment('référence de la matiere du cours');
+            $table->foreign('matiere_id')->references('id')->on('matieres')->onDelete('set null');
+
+            $table->unsignedBigInteger('niveau_etude_id')->nullable()->comment('référence du niveau d étude du cours');
+            $table->foreign('niveau_etude_id')->references('id')->on('niveau_etudes')->onDelete('set null');
+
+            $table->unsignedBigInteger('difficulte_id')->nullable()->comment('niveau de difficulté du cours');
+            $table->foreign('difficulte_id')->references('id')->on('difficultes')->onDelete('set null');
+
             $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
             $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
@@ -57,6 +66,9 @@ class CreateCoursTable extends Migration
         Schema::table('cours', function (Blueprint $table) {
             $table->dropForeign(['quiz_id']);
             $table->dropForeign(['auteur_id']);
+            $table->dropForeign(['difficulte_id']);
+            $table->dropForeign(['matiere_id']);
+            $table->dropForeign(['niveau_etude_id']);
         });
         Schema::dropIfExists('cours');
     }

@@ -36,4 +36,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Retourne la personne qui a ce compte (User).
+     */
+    public function personne()
+    {
+        return $this->belongsTo('App\Personne');
+    }
+
+    /**
+     * Retourne la liste de Notation/Cour effectués par ce compte (User).
+     */
+    public function cour_notation() {
+        return $this->hasMany('App\CourNotation', 'user_id');
+    }
 }

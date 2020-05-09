@@ -24,6 +24,8 @@ class CreateQuizReponsesTable extends Migration
             $table->unsignedBigInteger('quiz_question_id')->nullable()->comment('référence de la Question de Quiz rattachée');
             $table->foreign('quiz_question_id')->references('id')->on('quiz_questions')->onDelete('set null');
 
+            $table->boolean('is_valide')->default(false)->comment('Indique si la Réponse de Quiz est valide ou pas');
+
             $table->boolean('statut')->default(false)->comment('Statut de la Réponse de Quiz');
             $table->boolean('etat')->default(false)->comment('Etat de la Réponse de Quiz');
 

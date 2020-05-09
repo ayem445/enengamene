@@ -21,6 +21,9 @@ class CreateTypeEtablissementsTable extends Migration
             $table->string('nom', 100)->comment('nom du type d établissement');
             $table->string('description')->nullable()->comment('description du type d établissement');
 
+            $table->boolean('statut')->default(false)->comment('Statut du type d établissement');
+            $table->boolean('etat')->default(false)->comment('Etat du type d établissement');
+
             $table->timestamps();
         });
         switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
