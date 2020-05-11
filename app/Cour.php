@@ -63,3 +63,4 @@ class Cour extends Model
         return $this->hasMany('App\CourNotation', 'cour_id');
     }
 }
+

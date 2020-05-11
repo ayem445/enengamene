@@ -16,3 +16,4 @@ class NiveauEtude extends Model
         return $this->hasMany('App\Cour', 'niveau_etude_id');
     }
 }
+

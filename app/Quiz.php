@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quiz extends Model
 {
+    protected $table = 'quizs';
     protected $guarded = [];
 
     /**
@@ -40,3 +41,4 @@ class Quiz extends Model
         return $this->hasMany('App\Session', 'quiz_id');
     }
 }
+

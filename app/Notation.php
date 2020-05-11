@@ -15,3 +15,4 @@ class Notation extends Model
         return $this->hasMany('App\CourNotation', 'notation_id');
     }
 }
+

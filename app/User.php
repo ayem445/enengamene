@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'username','confirm_token',
     ];
 
     /**
@@ -50,5 +50,34 @@ class User extends Authenticatable
      */
     public function cour_notation() {
         return $this->hasMany('App\CourNotation', 'user_id');
+    }
+
+    /**
+     * Retourne toutes les questions de quiz auxquels cet utilisateur a répondu.
+     */
+    public function quiz_questions()
+    {
+        return $this->hasMany('App\QuizQuestionUser', 'user_id');
+    }
+
+    /**
+     * Checks if user's email has been confirmed
+     *
+     * @return boolean
+     */
+    public function isConfirmed()
+    {
+        return $this->confirm_token == null;
+    }
+
+    /**
+     * Confirm a user's email
+     *
+     * @return void
+     */
+    public function confirm()
+    {
+        $this->confirm_token = null;
+        $this->save();
     }
 }

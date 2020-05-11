@@ -32,3 +32,4 @@ class Session extends Model
         return $this->belongsTo('App\Quiz');
     }
 }
+

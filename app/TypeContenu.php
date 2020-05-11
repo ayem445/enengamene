@@ -16,3 +16,4 @@ class TypeContenu extends Model
         return $this->hasMany('App\Session', 'type_contenu_id');
     }
 }
+

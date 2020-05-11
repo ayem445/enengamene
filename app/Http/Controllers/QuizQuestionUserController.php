@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Cour;
+use App\QuizQuestionUser;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateCoursRequest;
-use Illuminate\Support\Str;
 
-class CourController extends Controller
+class QuizQuestionUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class CourController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -26,30 +24,27 @@ class CourController extends Controller
      */
     public function create()
     {
-        return view('admin.cours.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Request\CreateCoursRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCoursRequest $request)
+    public function store(Request $request)
     {
-        // upload du fichier
-        $image = $request->image->storePublicyAs('cours', Str::slug($request->libelle));
-        // créer le cours
-        // rediriger l utilisateur vers une page pour voir tous les cours
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cour  $cour
+     * @param  \App\QuizQuestionUser  $quizQuestionUser
      * @return \Illuminate\Http\Response
      */
-    public function show(Cour $cour)
+    public function show(QuizQuestionUser $quizQuestionUser)
     {
         //
     }
@@ -57,10 +52,10 @@ class CourController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cour  $cour
+     * @param  \App\QuizQuestionUser  $quizQuestionUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cour $cour)
+    public function edit(QuizQuestionUser $quizQuestionUser)
     {
         //
     }
@@ -69,10 +64,10 @@ class CourController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cour  $cour
+     * @param  \App\QuizQuestionUser  $quizQuestionUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cour $cour)
+    public function update(Request $request, QuizQuestionUser $quizQuestionUser)
     {
         //
     }
@@ -80,10 +75,10 @@ class CourController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cour  $cour
+     * @param  \App\QuizQuestionUser  $quizQuestionUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cour $cour)
+    public function destroy(QuizQuestionUser $quizQuestionUser)
     {
         //
     }

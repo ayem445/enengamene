@@ -17,7 +17,7 @@ class CreateQuizReponsesTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('libelle')->unique()->comment('libelle de la Réponse de Quiz');
+            $table->string('libelle')->comment('libelle de la Réponse de Quiz');
             $table->string('description')->nullable()->comment('description de la Réponse de Quiz');
             $table->string('commentaire')->nullable()->comment('commentaire sur la Réponse de Quiz');
 

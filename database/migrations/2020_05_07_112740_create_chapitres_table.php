@@ -20,7 +20,9 @@ class CreateChapitresTable extends Migration
             $table->string('code', 50)->unique()->comment('code du chapitre');
             $table->string('libelle')->comment('libelle du chapitre');
             $table->string('description')->nullable()->comment('description du chapitre');
-            $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
+            $table->string('commentaire')->nullable()->comment('commentaire sur le chapitre');
+
+            $table->integer('num_ordre')->nullable()->comment('numéro d ordre du chapitre dans le cours');
 
             $table->unsignedBigInteger('cour_id')->nullable()->comment('référence du Cours');
             $table->foreign('cour_id')->references('id')->on('cours')->onDelete('set null');

@@ -16,3 +16,4 @@ class Difficulte extends Model
         return $this->hasMany('App\Cour', 'difficulte_id');
     }
 }
+

@@ -16,3 +16,4 @@ class Etablissement extends Model
         return $this->belongsTo('App\TypeEtablissement');
     }
 }
+

@@ -18,9 +18,11 @@ class CreateCoursTable extends Migration
             $table->id();
 
             $table->string('code', 50)->unique()->comment('code du cours');
-            $table->string('libelle')->unique()->comment('libelle du Cours');
+            $table->string('libelle')->comment('libelle du Cours');
             $table->string('description')->nullable()->comment('description du Cours');
             $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
+
+            $table->string('image_url')->nullable()->comment('url de l image du cours');
 
             $table->unsignedBigInteger('auteur_id')->nullable()->comment('référence de l auteur (personne) du cours');
             $table->foreign('auteur_id')->references('id')->on('personnes')->onDelete('set null');

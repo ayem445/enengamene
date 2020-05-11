@@ -24,3 +24,4 @@ class Personne extends Model
         return $this->hasMany('App\Cours', 'auteur_id');
     }
 }
+

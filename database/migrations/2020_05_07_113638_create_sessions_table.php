@@ -23,6 +23,8 @@ class CreateSessionsTable extends Migration
             $table->string('description')->nullable()->comment('description de la session');
             $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
 
+            $table->integer('num_ordre')->nullable()->comment('numéro d ordre de la session dans le chapitre');
+
             $table->unsignedBigInteger('chapitre_id')->nullable()->comment('référence du chapitre');
             $table->foreign('chapitre_id')->references('id')->on('chapitres')->onDelete('set null');
 

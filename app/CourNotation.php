@@ -34,3 +34,4 @@ class CourNotation extends Model
         return $this->belongsTo('App\User');
     }
 }
+

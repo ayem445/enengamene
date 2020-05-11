@@ -31,4 +31,13 @@ class QuizQuestion extends Model
     {
         return $this->hasMany('App\QuizReponse', 'quiz_question_id');
     }
+
+    /**
+     * Retourne toutes les réponses de cette question.
+     */
+    public function nombre_reponses_valides()
+    {
+        return $this->quiz_reponses()->where('is_valide', true)->count();
+    }
 }
+
