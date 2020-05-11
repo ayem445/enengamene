@@ -1,10 +1,10 @@
 @component('mail::message')
-# One more step before joining Bahdcasts !
+# Plus q`un pas avant de rejoindre Enenga Mènè !
 
-We need you to confirm your email
+Nous avons besoin que vous confirmiez votre email
 
 @component('mail::button', ['url' => route('confirm-email') . '?token=' . $user->confirm_token])
-Confirm Email
+Confirmez votre e-mail
 @endcomponent
 
 Thanks,<br>

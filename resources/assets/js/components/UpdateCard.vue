@@ -26,7 +26,7 @@ export default {
                         });
                 })
             }
-        }) 
+        })
     },
     data() {
         return {
@@ -37,8 +37,8 @@ export default {
         update() {
 
             this.handler.open({
-                name: 'Bahdcasts',
-                description: 'Bahdcasts Subscription',
+                name: 'EnengaMene',
+                description: 'Abonnement EnengaMene',
                 email: this.email,
                 panelLabel: 'Update card details'
             })
