@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Cour;
+use Illuminate\Support\Str;
 
 class CreateCoursRequest extends FormRequest
 {
@@ -29,5 +30,42 @@ class CreateCoursRequest extends FormRequest
           'description' => 'required',
           'image' => 'required|image'
       ];
+    }
+
+    /**
+     * Stocke le cours de la Reqête dans la base de données
+     *
+     * @return redirect()
+     */
+    public function storeCours()
+    {
+        $cours = Cour::create([
+            'libelle' => $this->libelle,
+            'code' => Str::slug($this->libelle),
+            'description' => $this->description,
+            'image_url' => 'series/' . $this->fileName
+        ]);
+
+        session()->flash('success', 'Cours créé avec succès.');
+        //return redirect()->route('cours.show', $cours->code);
+        return redirect()->back();
+    }
+
+    /**
+     * Télécharge l'image du cors transmise dans la requête
+     *
+     * @return App\Http\Requests\CreateCoursRequest
+     */
+    public function uploadCoursImage()
+    {
+        $uploadedImage = $this->image;
+
+        $this->fileName = Str::slug($this->libelle) . '.' . $uploadedImage->getClientOriginalExtension();
+
+        $uploadedImage->storePubliclyAs(
+            'public/cours',  $this->fileName
+        );
+
+        return $this;
     }
 }

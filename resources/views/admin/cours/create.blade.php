@@ -27,7 +27,7 @@
           <form action="{{ route('cours.store')  }}" method="POST" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
-              <input class="form-control form-control-lg" type="text" name="title" placeholder="Le Titre du Cours">
+              <input class="form-control form-control-lg" type="text" name="libelle" placeholder="Le Titre du Cours">
             </div>
 
             <div class="form-group">

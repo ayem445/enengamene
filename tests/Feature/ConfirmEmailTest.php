@@ -11,7 +11,7 @@ class ConfirmEmailTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_a_user_can_confirm_email()
+    public function test_un_user_peut_confirmer_l_email()
     {
         $this->withoutExceptionHandling();
 
@@ -22,7 +22,7 @@ class ConfirmEmailTest extends TestCase
         $this->assertTrue($user->fresh()->isConfirmed());
     }
 
-    public function test_a_user_is_redirected_if_token_is_wrong()
+    public function test_un_user_est_redirige_si_le_jeton_est_incorrect()
     {
         $user = factory(User::class)->create();
         $this->get("/register/confirm/?token=WRONG_TOKEN")

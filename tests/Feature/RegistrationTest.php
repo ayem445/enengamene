@@ -14,7 +14,7 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_a_user_has_a_default_username_after_registration()
+    public function test_un_user_a_un_username_par_defaut_après_enregistrement()
     {
         //Mail::fake();
 
@@ -31,7 +31,7 @@ class RegistrationTest extends TestCase
         ]);
     }
 
-    public function test_a_user_has_a_token_after_registration()
+    public function test_un_user_a_un_jeton_apres_enregistrement()
     {
         Mail::fake();
 
@@ -48,7 +48,7 @@ class RegistrationTest extends TestCase
         $this->assertFalse($user->isConfirmed());
     }
 
-    public function test_an_email_is_sent_to_newly_registered_users()
+    public function test_un_email_est_envoye_aux_nouveaux_users_enregistres()
     {
         $this->withoutExceptionHandling();
         Mail::fake();

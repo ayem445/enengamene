@@ -11,7 +11,7 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_correct_response_after_user_logs_in()
+    public function test_reponse_correcte_apres_la_connexion_du_user()
     {
         $user = factory(User::class)->create();
 
@@ -24,7 +24,7 @@ class LoginTest extends TestCase
         ])->assertSessionHas('success', 'Connexion réussie.');
     }
 
-    public function test_a_user_receives_correct_message_when_passing_in_wrong_credentials()
+    public function test_un_user_recoit_le_message_adequat_lorsqu_il_transmet_des_informations_d_identification_incorrectes()
     {
         $user = factory(User::class)->create();
 

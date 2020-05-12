@@ -37,10 +37,8 @@ class CourController extends Controller
      */
     public function store(CreateCoursRequest $request)
     {
-        // upload du fichier
-        $image = $request->image->storePublicyAs('cours', Str::slug($request->libelle));
-        // créer le cours
-        // rediriger l utilisateur vers une page pour voir tous les cours
+        return $request->uploadCoursImage()
+              ->storeCours();
     }
 
     /**
