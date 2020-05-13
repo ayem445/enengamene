@@ -23,7 +23,7 @@
 
     <div class="row gap-y">
       <div class="col-12">
-        {{ $cour->chapitres->first()->sessions }}
+        <vue-chapitres default_chapitres="{{ $cour->chapitres }}"></vue-chapitres>
       </div>
     </div>
   </div>
