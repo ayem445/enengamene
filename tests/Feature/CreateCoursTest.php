@@ -65,4 +65,13 @@ class CreateCoursTest extends TestCase
       		'description' => 'course description'
       	])->assertSessionHasErrors('image');
     }
+
+    public function test_seuls_les_administrateurs_peuvent_creer_des_cours()
+    {
+        $this->actingAs(
+            factory(User::class)->create()
+        );
+        $this->post('admin/cours')
+            ->assertSessionHas('error', 'Vous n`êtes pas autorisé à effectuer cette action');
+    }
 }

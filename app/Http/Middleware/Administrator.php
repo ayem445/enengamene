@@ -15,14 +15,15 @@ class Administrator
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check()) {
-            if (auth()->user()->isAdmin()) {
+        if(auth()->check()) {
+            if(auth()->user()->isAdmin()) {
                 return $next($request);
             } else {
-              return redirect('/');
+                session()->flash('error', 'Vous n`êtes pas autorisé à effectuer cette action');
+                return redirect('/');
             }
         } else {
-          return redirect('/');
+            return redirect('/');
         }
     }
 }
