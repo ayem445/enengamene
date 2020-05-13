@@ -9,6 +9,13 @@ class Chapitre extends Model
     protected $guarded = [];
 
     /**
+     * Eager load relationships
+     *
+     * @var array
+     */
+    protected $with = ['sessions'];
+
+    /**
      * Retourne le cour auquel appartient ce chapitre.
      */
     public function cour()
@@ -32,4 +39,3 @@ class Chapitre extends Model
         return $this->belongsTo('App\Quiz');
     }
 }
-

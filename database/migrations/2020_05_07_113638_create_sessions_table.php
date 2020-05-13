@@ -19,7 +19,7 @@ class CreateSessionsTable extends Migration
 
             $table->string('code', 50)->unique()->comment('code de la session');
             $table->string('libelle')->comment('libelle de la session');
-            $table->string('lien')->nullable()->comment('lien vers le fichier (le cas échéant)');
+            $table->string('lien')->nullable()->comment('lien vers le fichier ou ID de la vidéo (le cas échéant)');
             $table->string('description')->nullable()->comment('description de la session');
             $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
 

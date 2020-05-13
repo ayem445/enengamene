@@ -49,7 +49,8 @@ class CourController extends Controller
      */
     public function show(Cour $cour)
     {
-        dd($cour);
+        //dd($cour);
+        return view('admin.cours.index')->withCour($cour);
     }
 
     /**

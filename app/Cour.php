@@ -9,6 +9,13 @@ class Cour extends Model
     protected $guarded = [];
 
     /**
+     * Eager load relationships
+     *
+     * @var array
+     */
+    protected $with = ['chapitres'];
+
+    /**
      * Retourne l auteur de ce cours.
      */
     public function auteur()
@@ -63,4 +70,3 @@ class Cour extends Model
         return $this->hasMany('App\CourNotation', 'cour_id');
     }
 }
-
