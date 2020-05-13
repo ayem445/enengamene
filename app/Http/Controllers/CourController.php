@@ -49,7 +49,7 @@ class CourController extends Controller
      */
     public function show(Cour $cour)
     {
-        //
+        dd($cour);
     }
 
     /**

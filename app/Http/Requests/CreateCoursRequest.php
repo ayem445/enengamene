@@ -43,12 +43,11 @@ class CreateCoursRequest extends FormRequest
             'libelle' => $this->libelle,
             'code' => Str::slug($this->libelle),
             'description' => $this->description,
-            'image_url' => 'series/' . $this->fileName
+            'image_url' => 'cours/' . $this->fileName
         ]);
 
         session()->flash('success', 'Cours créé avec succès.');
-        //return redirect()->route('cours.show', $cours->code);
-        return redirect()->back();
+        return redirect()->route('cours.show', $cours);
     }
 
     /**
