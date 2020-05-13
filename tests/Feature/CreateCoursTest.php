@@ -19,7 +19,7 @@ class CreateCoursTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        //$this->loginAdmin();
+        $this->loginAdmin();
 
         Storage::fake(config('filesystems.default'));
 
@@ -41,7 +41,7 @@ class CreateCoursTest extends TestCase
 
     public function test_un_cours_doit_etre_cree_avec_un_libelle()
     {
-        //$this->loginAdmin();
+        $this->loginAdmin();
       	$this->post('/admin/cours', [
       		'description' => 'the best vue casts ever',
       		'image' => UploadedFile::fake()->image('image-series.png')
@@ -50,7 +50,7 @@ class CreateCoursTest extends TestCase
 
     public function test_un_cours_doit_etre_cree_avec_un_description()
     {
-        //$this->loginAdmin();
+        $this->loginAdmin();
       	$this->post('/admin/cours', [
       		'libelle' => 'the best vue casts ever',
       		'image' => UploadedFile::fake()->image('image-series.png')
@@ -59,7 +59,7 @@ class CreateCoursTest extends TestCase
 
     public function test_un_cours_doit_etre_cree_avec_une_image()
     {
-        //$this->loginAdmin();
+        $this->loginAdmin();
       	$this->post('/admin/cours', [
       		'libelle' => 'the best vue casts ever',
       		'description' => 'course description'
