@@ -80,4 +80,18 @@ class User extends Authenticatable
         $this->confirm_token = null;
         $this->save();
     }
+
+    /**
+     * Vérifiez si l'utilisateur actuel est un administrateur
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return in_array($this->email, config('enengamene.administrators'));
+    }
+
+    public function getRouteKeyName() {
+        return 'username';
+    }
 }
