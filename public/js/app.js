@@ -2115,6 +2115,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['default_sessions'],
   components: {
@@ -19984,8 +19989,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-      _c("i", { staticClass: "fa fa-map-marker mr-8" }),
-      _vm._v(" San Francisco")
+      _c("i", { staticClass: "fa fa-signal mr-8" }),
+      _vm._v(" Difficulté")
     ])
   }
 ]
@@ -20258,7 +20263,7 @@ var render = function() {
             { staticClass: "row no-gutters pricing-4", attrs: { href: "#" } },
             [
               _c("div", { staticClass: "col-12 col-md-9 plan-description" }, [
-                _c("h5", [_vm._v(_vm._s(session.libelle))]),
+                _c("h6", [_vm._v(_vm._s(session.libelle))]),
                 _vm._v(" "),
                 _c("p", [_vm._v(_vm._s(session.description))])
               ]),
@@ -20282,9 +20287,28 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-md-3 plan-price" }, [
-      _c("h3", [_vm._v("Quiz")]),
-      _vm._v(" "),
-      _c("p", [_vm._v("for 100 MB space")])
+      _c("p", [
+        _c("small", [
+          _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
+            _c("i", { staticClass: "fa fa-hourglass-end mr-8" }),
+            _vm._v(" 00:00")
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
+            _c("i", { staticClass: "fa fa-file-video-o mr-8" }),
+            _vm._v(" 00 Mo")
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
+            _c("i", { staticClass: "fa fa-file-text-o mr-8" }),
+            _vm._v(" 00 Car.")
+          ])
+        ])
+      ])
     ])
   }
 ]

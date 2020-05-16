@@ -14,7 +14,7 @@
           <h3 class="card-title">
             <a class="d-flex" data-toggle="collapse" data-parent="#accordion-chapitres" :href="'#collapse-chapitres-'+index">
               <span class="mr-auto">{{ chapitre.libelle }}</span>
-              <span class="text-lighter hidden-sm-down"><i class="fa fa-map-marker mr-8"></i> San Francisco</span>
+              <span class="text-lighter hidden-sm-down"><i class="fa fa-signal mr-8"></i> Difficulté</span>
             </a>
           </h3>
 

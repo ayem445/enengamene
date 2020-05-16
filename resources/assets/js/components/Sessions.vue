@@ -10,13 +10,18 @@
     <div class="container" v-for="session in formattedSessions">
         <a class="row no-gutters pricing-4" href="#">
           <div class="col-12 col-md-9 plan-description">
-            <h5>{{ session.libelle }}</h5>
+            <h6>{{ session.libelle }}</h6>
             <p>{{ session.description }}</p>
           </div>
 
           <div class="col-12 col-md-3 plan-price">
-            <h3>Quiz</h3>
-            <p>for 100 MB space</p>
+            <p><small>
+            <span class="text-lighter hidden-sm-down"><i class="fa fa-hourglass-end mr-8"></i> 00:00</span>
+            <br>
+            <span class="text-lighter hidden-sm-down"><i class="fa fa-file-video-o mr-8"></i> 00 Mo</span>
+            <br>
+            <span class="text-lighter hidden-sm-down"><i class="fa fa-file-text-o mr-8"></i> 00 Car.</span>
+            </small></p>
           </div>
         </a>
 
