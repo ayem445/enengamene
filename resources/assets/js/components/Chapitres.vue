@@ -23,7 +23,7 @@
               <p>{{ chapitre.description }}</p>
 
               <div class="row">
-                <sessions-list :default_sessions="chapitre.sessions"></sessions-list>
+                <vue-sessions :default_sessions="chapitre.sessions"></vue-sessions>
               </div>
 
             </div>
@@ -41,8 +41,7 @@
     export default {
         props: ['default_chapitres'],
         components: {
-          "creer-chapitre": require('./children/CreerChapitre.vue').default,
-          "sessions-list": require('./children/SessionsList.vue').default
+          "creer-chapitre": require('./children/CreerChapitre.vue').default
         },
         data() {
             return {

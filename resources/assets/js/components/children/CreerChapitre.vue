@@ -17,10 +17,10 @@
 	            </div>
 
 	            <div class="form-group">
-	            	<textarea cols="30" rows="10" class="form-control" v-model="chapitre.description"></textarea>
+	            	<textarea cols="30" rows="10" class="form-control" placeholder="Description" v-model="chapitre.description"></textarea>
 	            </div>
               <div class="form-group">
-	            	<textarea cols="30" rows="10" class="form-control" v-model="chapitre.commentaire"></textarea>
+								<input type="text" class="form-control" placeholder="Commentaire" v-model="chapitre.commentaire">
 	            </div>
 	        </div>
 	        <div class="modal-footer">
