@@ -20,8 +20,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
-Vue.component('vue-session', require('./components/Session.vue'));
-Vue.component('vue-login', require('./components/Login.vue'));
+Vue.component('vue-sessions', require('./components/Sessions.vue'));
+Vue.component('vue-login', require('./components/Login.vue').default);
 
 //import VueChapitre from './components/Chapitre.vue'
 //components: { VueLogin }

@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class TypeContenu extends Model
 {
+    use BaseTrait;
     protected $guarded = [];
 
     /**
@@ -16,4 +18,3 @@ class TypeContenu extends Model
         return $this->hasMany('App\Session', 'type_contenu_id');
     }
 }
-

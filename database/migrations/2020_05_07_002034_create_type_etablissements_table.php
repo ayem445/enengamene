@@ -18,7 +18,7 @@ class CreateTypeEtablissementsTable extends Migration
             $table->id();
 
             $table->string('code', 50)->unique()->comment('code du type d établissement');
-            $table->string('nom', 100)->comment('nom du type d établissement');
+            $table->string('libelle', 100)->comment('libelle du type d établissement');
             $table->string('description')->nullable()->comment('description du type d établissement');
 
             $table->boolean('statut')->default(false)->comment('Statut du type d établissement');

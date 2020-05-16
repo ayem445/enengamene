@@ -27,6 +27,9 @@ class CreateChapitresTable extends Migration
             $table->unsignedBigInteger('cour_id')->nullable()->comment('référence du Cours');
             $table->foreign('cour_id')->references('id')->on('cours')->onDelete('set null');
 
+            $table->unsignedBigInteger('difficulte_id')->nullable()->comment('niveau de difficulté du chapitre');
+            $table->foreign('difficulte_id')->references('id')->on('difficultes')->onDelete('set null');
+
             $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
             $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
@@ -57,8 +60,9 @@ class CreateChapitresTable extends Migration
     public function down()
     {
         Schema::table('chapitres', function (Blueprint $table) {
-            $table->dropForeign(['quiz_id']);
             $table->dropForeign(['cour_id']);
+            $table->dropForeign(['quiz_id']);
+            $table->dropForeign(['difficulte_id']);
         });
         Schema::dropIfExists('chapitres');
     }

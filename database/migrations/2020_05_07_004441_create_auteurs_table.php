@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDifficultesTable extends Migration
+class CreateAuteursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,21 @@ class CreateDifficultesTable extends Migration
      */
     public function up()
     {
-        $tableName = 'difficultes';
+        $tableName = 'auteurs';
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code de la difficulté');
-            $table->string('libelle', 100)->unique()->comment('libelle de la difficulté');
-            $table->integer('level')->comment('niveau hiérarchique');
-            $table->boolean('statut')->default(false)->comment('Statut de la difficulté');
-            $table->boolean('etat')->default(false)->comment('Etat de la difficulté');
+            $table->string('resume', 500)->nullable()->comment('Infos résumées (parcours) sur l auteur');
+
+            $table->unsignedBigInteger('personne_id')->nullable()->comment('référence de la personne');
+            $table->foreign('personne_id')->references('id')->on('personnes')->onDelete('set null');
 
             $table->timestamps();
         });
         switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
         {
             case 'mysql':
-                DB::statement("ALTER TABLE `$tableName` comment 'Niveaux de difficultés (des cours) du Système.'");
+                DB::statement("ALTER TABLE `$tableName` comment 'Les auteurs de cours du Système.'");
                 break;
             case 'sqlite':
                 //sqlite syntax
@@ -46,6 +45,9 @@ class CreateDifficultesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('difficultes');
+        Schema::table('auteurs', function (Blueprint $table) {
+            $table->dropForeign(['personne_id']);
+        });
+        Schema::dropIfExists('auteurs');
     }
 }

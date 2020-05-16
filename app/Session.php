@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class Session extends Model
 {
+    use BaseTrait;
+
     protected $guarded = [];
 
     /**
@@ -32,4 +35,3 @@ class Session extends Model
         return $this->belongsTo('App\Quiz');
     }
 }
-

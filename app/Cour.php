@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class Cour extends Model
 {
+    use BaseTrait;
+
     protected $guarded = [];
 
     /**
@@ -13,14 +16,14 @@ class Cour extends Model
      *
      * @var array
      */
-    protected $with = ['chapitres'];
+    protected $with = ['chapitres', 'chapitres.sessions'];
 
     /**
      * Retourne l auteur de ce cours.
      */
     public function auteur()
     {
-        return $this->belongsTo('App\Personne');
+        return $this->belongsTo('App\Auteur');
     }
 
     /**
@@ -45,14 +48,6 @@ class Cour extends Model
     public function chapitres()
     {
         return $this->hasMany('App\Chapitre', 'cour_id');
-    }
-
-    /**
-     * Retourne la difficulté de ce cours.
-     */
-    public function difficulte()
-    {
-        return $this->belongsTo('App\Difficulte');
     }
 
     /**

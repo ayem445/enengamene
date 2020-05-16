@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Cour;
+use App\Auteur;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateCoursRequest;
-use Illuminate\Support\Str;
 
-class CourController extends Controller
+class AuteurController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class CourController extends Controller
      */
     public function index()
     {
-
+        //
     }
 
     /**
@@ -26,40 +24,38 @@ class CourController extends Controller
      */
     public function create()
     {
-        return view('admin.cours.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Request\CreateCoursRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateCoursRequest $request)
+    public function store(Request $request)
     {
-        return $request->uploadCoursImage()
-              ->storeCours();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cour  $cour
+     * @param  \App\Auteur  $auteur
      * @return \Illuminate\Http\Response
      */
-    public function show(Cour $cour)
+    public function show(Auteur $auteur)
     {
-        //$cour = Cour::with(['chapitres', 'chapitres.sessions'])->find($cour->id);
-        return view('admin.cours.index')->withCour($cour);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cour  $cour
+     * @param  \App\Auteur  $auteur
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cour $cour)
+    public function edit(Auteur $auteur)
     {
         //
     }
@@ -68,10 +64,10 @@ class CourController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cour  $cour
+     * @param  \App\Auteur  $auteur
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cour $cour)
+    public function update(Request $request, Auteur $auteur)
     {
         //
     }
@@ -79,10 +75,10 @@ class CourController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cour  $cour
+     * @param  \App\Auteur  $auteur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cour $cour)
+    public function destroy(Auteur $auteur)
     {
         //
     }

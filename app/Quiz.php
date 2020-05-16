@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class Quiz extends Model
 {
+    use BaseTrait;
+
     protected $table = 'quizs';
     protected $guarded = [];
 
@@ -41,4 +44,3 @@ class Quiz extends Model
         return $this->hasMany('App\Session', 'quiz_id');
     }
 }
-

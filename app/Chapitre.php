@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class Chapitre extends Model
 {
+    use BaseTrait;
+
     protected $guarded = [];
 
     /**
@@ -21,6 +24,14 @@ class Chapitre extends Model
     public function cour()
     {
         return $this->belongsTo('App\Cour');
+    }
+
+    /**
+     * Retourne la difficulté de ce chapitre.
+     */
+    public function difficulte()
+    {
+        return $this->belongsTo('App\Difficulte');
     }
 
     /**

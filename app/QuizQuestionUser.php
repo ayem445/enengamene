@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class QuizQuestionUser extends Model
 {
+    use BaseTrait;
+
     protected $table = 'quiz_question_user';
     protected $guarded = [];
 
@@ -49,4 +52,3 @@ class QuizQuestionUser extends Model
         return ($this->question()->nombre_reponses_valides / $this->nombre_reponses_user_valides()) * 100;
     }
 }
-

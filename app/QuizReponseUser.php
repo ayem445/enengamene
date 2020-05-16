@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class QuizReponseUser extends Model
 {
+    use BaseTrait;
+
     protected $table = 'quiz_reponse_user';
     protected $guarded = [];
 
@@ -17,4 +20,3 @@ class QuizReponseUser extends Model
         return $this->belongsTo('App\QuizQuestionUser');
     }
 }
-

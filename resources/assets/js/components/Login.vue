@@ -15,7 +15,7 @@
             </div>
 
             <div class="form-group">
-              <input type="password" class="form-control" placeholder="Mot de Passe" v-model="password">
+              <input type="password" class="form-control" placeholder="Mot de Passe" v-model="password" @keyup.enter="attemptLogin()">
             </div>
 
             <div class="form-group flexbox py-10">

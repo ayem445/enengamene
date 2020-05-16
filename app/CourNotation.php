@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class CourNotation extends Model
 {
+    use BaseTrait;
+
     public $incrementing = true;
     protected $table = 'cour_notation';
 
@@ -34,4 +37,3 @@ class CourNotation extends Model
         return $this->belongsTo('App\User');
     }
 }
-

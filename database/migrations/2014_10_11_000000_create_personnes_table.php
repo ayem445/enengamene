@@ -26,6 +26,7 @@ class CreatePersonnesTable extends Migration
             $table->string('telephone')->nullable()->comment('telephone de la Personne');
             $table->string('fonction')->nullable()->comment('fonction de la Personne');
             $table->string('pays')->nullable()->comment('fonction de la Personne');
+            $table->string('image_url')->nullable()->comment('url de la photo de la personne');
 
             $table->boolean('statut')->default(false)->comment('Statut de la Personne');
             $table->boolean('etat')->default(false)->comment('Etat de la Personne');

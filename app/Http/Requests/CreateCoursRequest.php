@@ -39,12 +39,15 @@ class CreateCoursRequest extends FormRequest
      */
     public function storeCours()
     {
+        $uniqcode = uniqid(Str::slug($this->libelle), true);
         $cours = Cour::create([
             'libelle' => $this->libelle,
-            'code' => Str::slug($this->libelle),
+            'code' => $uniqcode,
             'description' => $this->description,
             'image_url' => 'cours/' . $this->fileName
         ]);
+        $cours->code = Str::slug($this->libelle) . "_" . $cours->id;
+        $cours->save();
 
         session()->flash('success', 'Cours créé avec succès.');
         return redirect()->route('cours.show', $cours);

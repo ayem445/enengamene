@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class TypeEtablissement extends Model
 {
+    use BaseTrait;
     protected $guarded = [];
 
     /**
@@ -16,4 +18,3 @@ class TypeEtablissement extends Model
         return $this->hasMany('App\Etablissement', 'type_etablissement_id');
     }
 }
-

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class Notation extends Model
 {
+    use BaseTrait;
+
     protected $guarded = [];
 
     /**
@@ -15,4 +18,3 @@ class Notation extends Model
         return $this->hasMany('App\CourNotation', 'notation_id');
     }
 }
-

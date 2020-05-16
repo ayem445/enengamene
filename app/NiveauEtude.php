@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class NiveauEtude extends Model
 {
+    use BaseTrait;
+
     protected $guarded = [];
 
     /**
@@ -16,4 +19,3 @@ class NiveauEtude extends Model
         return $this->hasMany('App\Cour', 'niveau_etude_id');
     }
 }
-

@@ -28,3 +28,4 @@ class CreateUsersSeeder extends Seeder
         }
     }
 }
+

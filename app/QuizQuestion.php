@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\BaseTrait;
 
 class QuizQuestion extends Model
 {
+    use BaseTrait;
+
     protected $guarded = [];
 
     /**
@@ -40,4 +43,3 @@ class QuizQuestion extends Model
         return $this->quiz_reponses()->where('is_valide', true)->count();
     }
 }
-
