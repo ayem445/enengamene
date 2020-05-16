@@ -20,3 +20,4 @@ class QuizReponseUser extends Model
         return $this->belongsTo('App\QuizQuestionUser');
     }
 }
+

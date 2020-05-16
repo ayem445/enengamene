@@ -52,3 +52,4 @@ class QuizQuestionUser extends Model
         return ($this->question()->nombre_reponses_valides / $this->nombre_reponses_user_valides()) * 100;
     }
 }
+

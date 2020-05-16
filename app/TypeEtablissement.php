@@ -18,3 +18,4 @@ class TypeEtablissement extends Model
         return $this->hasMany('App\Etablissement', 'type_etablissement_id');
     }
 }
+

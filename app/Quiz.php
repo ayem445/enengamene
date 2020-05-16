@@ -44,3 +44,4 @@ class Quiz extends Model
         return $this->hasMany('App\Session', 'quiz_id');
     }
 }
+

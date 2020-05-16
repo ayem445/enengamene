@@ -27,3 +27,4 @@ class Etablissement extends Model
         return $this->hasMany('App\Personne', 'etablissement_id');
     }
 }
+

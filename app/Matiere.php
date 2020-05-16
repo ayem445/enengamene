@@ -19,3 +19,4 @@ class Matiere extends Model
         return $this->hasMany('App\Cour', 'matiere_id');
     }
 }
+

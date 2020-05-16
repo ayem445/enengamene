@@ -35,3 +35,4 @@ class Auteur extends Model
         return $this->hasMany('App\Cour', 'auteur_id');
     }
 }
+

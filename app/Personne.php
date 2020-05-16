@@ -43,3 +43,4 @@ class Personne extends Model
         return $this->hasOne('App\Auteur');
     }
 }
+

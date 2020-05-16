@@ -43,3 +43,4 @@ class QuizQuestion extends Model
         return $this->quiz_reponses()->where('is_valide', true)->count();
     }
 }
+

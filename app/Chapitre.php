@@ -50,3 +50,4 @@ class Chapitre extends Model
         return $this->belongsTo('App\Quiz');
     }
 }
+

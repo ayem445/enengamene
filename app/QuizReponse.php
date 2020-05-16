@@ -19,3 +19,4 @@ class QuizReponse extends Model
         return $this->belongsTo('App\QuizQuestion');
     }
 }
+

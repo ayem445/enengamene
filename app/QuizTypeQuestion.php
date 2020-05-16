@@ -18,3 +18,4 @@ class QuizTypeQuestion extends Model
         return $this->hasMany('App\QuizQuestion', 'quiz_type_question_id');
     }
 }
+
