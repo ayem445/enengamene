@@ -36,6 +36,14 @@ class QuizQuestion extends Model
     }
 
     /**
+     * Retourne tous les astuces de cette question.
+     */
+    public function astuces()
+    {
+        return $this->hasMany('App\Astuce', 'quiz_question_id');
+    }
+
+    /**
      * Retourne toutes les réponses de cette question.
      */
     public function nombre_reponses_valides()

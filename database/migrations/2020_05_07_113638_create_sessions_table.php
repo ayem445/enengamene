@@ -25,6 +25,9 @@ class CreateSessionsTable extends Migration
 
             $table->integer('num_ordre')->nullable()->comment('numéro d ordre de la session dans le chapitre');
 
+            $table->integer('taille')->nullable()->comment('taille du fichier de la session');
+            $table->integer('duree')->nullable()->comment('duree en secondes de la session');
+
             $table->unsignedBigInteger('chapitre_id')->nullable()->comment('référence du chapitre');
             $table->foreign('chapitre_id')->references('id')->on('chapitres')->onDelete('set null');
 
