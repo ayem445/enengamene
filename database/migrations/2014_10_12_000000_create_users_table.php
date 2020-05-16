@@ -21,18 +21,30 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('confirm_token')->nullable();
             $table->string('password');
             $table->rememberToken();
 
             $table->unsignedBigInteger('personne_id')->nullable()->comment('référence de la personne');
             $table->foreign('personne_id')->references('id')->on('personnes')->onDelete('set null');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut du compte de l utilisateur');
-            $table->boolean('etat')->is_default(false)->comment('Etat du compte de l utilisateur');
+            $table->boolean('statut')->default(false)->comment('Statut du compte de l utilisateur');
+            $table->boolean('etat')->default(false)->comment('Etat du compte de l utilisateur');
 
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `$tableName` comment 'Comptes utilisateur du Système.'");
+        switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+        {
+            case 'mysql':
+                DB::statement("ALTER TABLE `$tableName` comment 'Comptes utilisateur du Système.'");
+                break;
+            case 'sqlite':
+                //sqlite syntax
+                break;
+            default:
+                //throw new \Exception('Driver not supported.');
+                break;
+        }
     }
 
     /**

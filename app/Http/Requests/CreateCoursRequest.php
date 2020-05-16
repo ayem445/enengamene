@@ -1,0 +1,73 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use App\Cour;
+use Illuminate\Support\Str;
+
+class CreateCoursRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+      return [
+          'libelle' => 'required',
+          'description' => 'required',
+          'image' => 'required|image'
+      ];
+    }
+
+    /**
+     * Stocke le cours de la Reqête dans la base de données
+     *
+     * @return redirect()
+     */
+    public function storeCours()
+    {
+        $uniqcode = uniqid(Str::slug($this->libelle), true);
+        $cours = Cour::create([
+            'libelle' => $this->libelle,
+            'code' => $uniqcode,
+            'description' => $this->description,
+            'image_url' => 'cours/' . $this->fileName
+        ]);
+        $cours->code = Str::slug($this->libelle) . "_" . $cours->id;
+        $cours->save();
+
+        session()->flash('success', 'Cours créé avec succès.');
+        return redirect()->route('cours.show', $cours);
+    }
+
+    /**
+     * Télécharge l'image du cors transmise dans la requête
+     *
+     * @return App\Http\Requests\CreateCoursRequest
+     */
+    public function uploadCoursImage()
+    {
+        $uploadedImage = $this->image;
+
+        $this->fileName = Str::slug($this->libelle) . '.' . $uploadedImage->getClientOriginalExtension();
+
+        $uploadedImage->storePubliclyAs(
+            'public/cours',  $this->fileName
+        );
+
+        return $this;
+    }
+}

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use App\Exceptions\AuthFailedException;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,37 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // On enregistre un message (flash) de succès dans la Session
+        session()->flash('success', 'Connexion réussie.');
+        if (request()->ajax()) {
+            return response()->json([
+                // Confirmer à VueJS que la connexion s'est bien passée
+                'status' => 'ok'
+            ]);
+        }
+        // Puis on redirige l'utilisateur connecté vers la page d'accueil
+        return redirect('/');
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw new AuthFailedException;
     }
 }

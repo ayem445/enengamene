@@ -26,13 +26,25 @@ class CreatePersonnesTable extends Migration
             $table->string('telephone')->nullable()->comment('telephone de la Personne');
             $table->string('fonction')->nullable()->comment('fonction de la Personne');
             $table->string('pays')->nullable()->comment('fonction de la Personne');
+            $table->string('image_url')->nullable()->comment('url de la photo de la personne');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut de la Personne');
-            $table->boolean('etat')->is_default(false)->comment('Etat de la Personne');
+            $table->boolean('statut')->default(false)->comment('Statut de la Personne');
+            $table->boolean('etat')->default(false)->comment('Etat de la Personne');
 
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `$tableName` comment 'Personnes du Système.'");
+        switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+        {
+            case 'mysql':
+                DB::statement("ALTER TABLE `$tableName` comment 'Personnes du Système.'");
+                break;
+            case 'sqlite':
+                //sqlite syntax
+                break;
+            default:
+                //throw new \Exception('Driver not supported.');
+                break;
+        }
     }
 
     /**

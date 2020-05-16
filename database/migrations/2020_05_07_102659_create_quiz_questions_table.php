@@ -17,7 +17,7 @@ class CreateQuizQuestionsTable extends Migration
       Schema::create($tableName, function (Blueprint $table) {
           $table->id();
 
-          $table->string('libelle')->unique()->comment('libelle de la Question de Quiz');
+          $table->string('libelle')->comment('libelle de la Question de Quiz');
           $table->string('description')->nullable()->comment('description de la Question de Quiz');
           $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
 
@@ -27,12 +27,23 @@ class CreateQuizQuestionsTable extends Migration
           $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
           $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
-          $table->boolean('statut')->is_default(false)->comment('Statut de la Question de Quiz');
-          $table->boolean('etat')->is_default(false)->comment('Etat de la Question de Quiz');
+          $table->boolean('statut')->default(false)->comment('Statut de la Question de Quiz');
+          $table->boolean('etat')->default(false)->comment('Etat de la Question de Quiz');
 
           $table->timestamps();
       });
-      DB::statement("ALTER TABLE `$tableName` comment 'Questions d un Quiz du Système.'");
+      switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+      {
+          case 'mysql':
+              DB::statement("ALTER TABLE `$tableName` comment 'Questions d un Quiz du Système.'");
+              break;
+          case 'sqlite':
+              //sqlite syntax
+              break;
+          default:
+              //throw new \Exception('Driver not supported.');
+              break;
+      }
     }
 
     /**
@@ -42,7 +53,7 @@ class CreateQuizQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sessions', function (Blueprint $table) {
+        Schema::table('quiz_questions', function (Blueprint $table) {
             $table->dropForeign(['quiz_id']);
             $table->dropForeign(['quiz_type_question_id']);
         });

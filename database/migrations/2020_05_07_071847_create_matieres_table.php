@@ -22,12 +22,23 @@ class CreateMatieresTable extends Migration
             $table->string('description')->nullable()->comment('description de la matière');
             $table->string('commentaire')->nullable()->comment('commentaire sur la matière');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut de la matière');
-            $table->boolean('etat')->is_default(false)->comment('Etat de la matière');
+            $table->boolean('statut')->default(false)->comment('Statut de la matière');
+            $table->boolean('etat')->default(false)->comment('Etat de la matière');
 
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `$tableName` comment 'Matières du Système.'");
+        switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+        {
+            case 'mysql':
+                DB::statement("ALTER TABLE `$tableName` comment 'Matières du Système.'");
+                break;
+            case 'sqlite':
+                //sqlite syntax
+                break;
+            default:
+                //throw new \Exception('Driver not supported.');
+                break;
+        }
     }
 
     /**

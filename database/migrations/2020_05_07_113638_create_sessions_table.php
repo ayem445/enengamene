@@ -19,9 +19,11 @@ class CreateSessionsTable extends Migration
 
             $table->string('code', 50)->unique()->comment('code de la session');
             $table->string('libelle')->comment('libelle de la session');
-            $table->string('lien')->nullable()->comment('lien vers le fichier (le cas échéant)');
+            $table->string('lien')->nullable()->comment('lien vers le fichier ou ID de la vidéo (le cas échéant)');
             $table->string('description')->nullable()->comment('description de la session');
             $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');
+
+            $table->integer('num_ordre')->nullable()->comment('numéro d ordre de la session dans le chapitre');
 
             $table->unsignedBigInteger('chapitre_id')->nullable()->comment('référence du chapitre');
             $table->foreign('chapitre_id')->references('id')->on('chapitres')->onDelete('set null');
@@ -32,12 +34,23 @@ class CreateSessionsTable extends Migration
             $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
             $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
-            $table->boolean('statut')->is_default(false)->comment('Statut de la session');
-            $table->boolean('etat')->is_default(false)->comment('Etat de la session');
+            $table->boolean('statut')->default(false)->comment('Statut de la session');
+            $table->boolean('etat')->default(false)->comment('Etat de la session');
 
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `$tableName` comment 'Sessions de chapitre de cours du Système.'");
+        switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+        {
+            case 'mysql':
+                DB::statement("ALTER TABLE `$tableName` comment 'Sessions de chapitre de cours du Système.'");
+                break;
+            case 'sqlite':
+                //sqlite syntax
+                break;
+            default:
+                //throw new \Exception('Driver not supported.');
+                break;
+        }
     }
 
     /**

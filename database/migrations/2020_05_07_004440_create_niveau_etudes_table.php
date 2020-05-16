@@ -19,12 +19,24 @@ class CreateNiveauEtudesTable extends Migration
 
             $table->string('code', 50)->unique()->comment('code du niveau d étude');
             $table->string('libelle', 100)->comment('libelle du niveau d étude');
-            $table->boolean('statut')->is_default(false)->comment('Statut du niveau d étude');
-            $table->boolean('etat')->is_default(false)->comment('Etat du niveau d étude');
+            $table->integer('level')->comment('niveau hiérarchique');
+            $table->boolean('statut')->default(false)->comment('Statut du niveau d étude');
+            $table->boolean('etat')->default(false)->comment('Etat du niveau d étude');
 
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE `$tableName` comment 'Niveaux d étude du Système.'");
+        switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))
+        {
+            case 'mysql':
+                DB::statement("ALTER TABLE `$tableName` comment 'Niveaux d étude du Système.'");
+                break;
+            case 'sqlite':
+                //sqlite syntax
+                break;
+            default:
+                //throw new \Exception('Driver not supported.');
+                break;
+        }
     }
 
     /**

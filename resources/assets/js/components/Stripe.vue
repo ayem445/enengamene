@@ -27,7 +27,7 @@ export default {
                         });
                 })
             }
-        }) 
+        })
     },
     data() {
         return {
@@ -47,8 +47,8 @@ export default {
             }
 
             this.handler.open({
-                name: 'Bahdcasts',
-                description: 'Bahdcasts Subscription',
+                name: 'EnengaMene',
+                description: 'Abonnement EnengaMene',
                 amount: this.amount,
                 email: this.email
             })
