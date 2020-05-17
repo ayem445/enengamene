@@ -17,7 +17,7 @@ class CreateSessionsTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code de la session');
+            $table->string('code')->unique()->comment('code de la session');
             $table->string('libelle')->comment('libelle de la session');
             $table->string('lien')->nullable()->comment('lien vers le fichier ou ID de la vidéo (le cas échéant)');
             $table->string('description')->nullable()->comment('description de la session');

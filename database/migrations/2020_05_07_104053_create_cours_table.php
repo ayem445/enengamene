@@ -17,7 +17,7 @@ class CreateCoursTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code du cours');
+            $table->string('code')->unique()->comment('code du cours');
             $table->string('libelle')->comment('libelle du Cours');
             $table->string('description')->nullable()->comment('description du Cours');
             $table->string('commentaire')->nullable()->comment('commentaire sur Quiz');

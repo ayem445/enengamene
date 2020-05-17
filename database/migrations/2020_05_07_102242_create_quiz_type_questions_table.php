@@ -17,7 +17,7 @@ class CreateQuizTypeQuestionsTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code du Type de question');
+            $table->string('code')->unique()->comment('code du Type de question');
             $table->string('libelle', 100)->unique()->comment('libelle du Type de question: Texte-Match, Choix-Multiple');
             $table->string('description')->nullable()->comment('description du Type de question');
 

@@ -17,7 +17,7 @@ class CreateTypeEtablissementsTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code du type d établissement');
+            $table->string('code')->unique()->comment('code du type d établissement');
             $table->string('libelle', 100)->comment('libelle du type d établissement');
             $table->string('description')->nullable()->comment('description du type d établissement');
 

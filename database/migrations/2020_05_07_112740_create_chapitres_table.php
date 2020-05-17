@@ -17,7 +17,7 @@ class CreateChapitresTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code du chapitre');
+            $table->string('code')->unique()->comment('code du chapitre');
             $table->string('libelle')->comment('libelle du chapitre');
             $table->string('description')->nullable()->comment('description du chapitre');
             $table->string('commentaire')->nullable()->comment('commentaire sur le chapitre');

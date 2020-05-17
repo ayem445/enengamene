@@ -17,7 +17,7 @@ class CreateMatieresTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code de la matière');
+            $table->string('code')->unique()->comment('code de la matière');
             $table->string('libelle', 100)->unique()->comment('libelle de la matière');
             $table->string('description')->nullable()->comment('description de la matière');
             $table->string('commentaire')->nullable()->comment('commentaire sur la matière');
