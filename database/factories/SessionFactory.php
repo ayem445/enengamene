@@ -8,9 +8,10 @@ use Faker\Generator as Faker;
 $factory->define(Session::class, function (Faker $faker) {
     $libelle = $faker->sentence(1);
     return [
-      'code' => Str::slug($libelle),
+      'code' => uniqid(Str::slug($libelle), true),
       'libelle' => $libelle,
       'description' => $faker->paragraph(2),
+      'commentaire' => $faker->paragraph(1),
       'chapitre_id' => function() {
         return factory(\App\Chapitre::class)->create()->id;
       },

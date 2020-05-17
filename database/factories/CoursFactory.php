@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 $factory->define(Cour::class, function (Faker $faker) {
     return [
-        'code' => Str::random(10),
+        'code' => uniqid(Str::slug(Str::random(10)), true),
         'libelle' => $faker->sentence(2),
         'image_url' => asset('assets/img/series.jpg'),
         'description' => $faker->paragraph()

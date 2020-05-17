@@ -2129,6 +2129,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['default_sessions', 'chapitre_id'],
   mounted: function mounted() {
@@ -20306,7 +20308,14 @@ var render = function() {
               _c("div", { staticClass: "col-12 col-md-9 plan-description" }, [
                 _c("h6", [_vm._v(_vm._s(session.libelle))]),
                 _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(session.description))])
+                _c("p", {}, [
+                  _vm._v(_vm._s(session.description) + "\n            ")
+                ]),
+                _c("footer", { staticClass: "blockquote-footer" }, [
+                  _vm._v(_vm._s(session.commentaire))
+                ]),
+                _vm._v(" "),
+                _c("p")
               ]),
               _vm._v(" "),
               _vm._m(0, true)

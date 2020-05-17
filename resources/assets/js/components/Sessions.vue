@@ -11,7 +11,9 @@
         <a class="row no-gutters pricing-4" href="#">
           <div class="col-12 col-md-9 plan-description">
             <h6>{{ session.libelle }}</h6>
-            <p>{{ session.description }}</p>
+            <p class="">{{ session.description }}
+              <footer class="blockquote-footer">{{ session.commentaire }}</footer>
+            </p>
           </div>
 
           <div class="col-12 col-md-3 plan-price">
@@ -47,7 +49,7 @@ export default {
     props: ['default_sessions', 'chapitre_id'],
     mounted() {
 			this.$on('session_creee', (session) => {
-			   
+
 				this.sessions.push(session)
 			})
 
