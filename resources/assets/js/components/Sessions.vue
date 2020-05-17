@@ -61,7 +61,10 @@
       props: ['default_sessions', 'chapitre_id'],
       mounted() {
   			this.$on('session_creee', (session) => {
-
+          window.noty({
+  					message: 'Session créée avec succès',
+  					type: 'success'
+  				})
   				this.sessions.push(session)
   			})
 
@@ -71,6 +74,10 @@
   				})
 
   				this.sessions.splice(sessionIndex, 1, session)
+          window.noty({
+  					message: 'Session modifiée avec succès',
+  					type: 'success'
+  				})
 
   			})
   		},
@@ -94,9 +101,12 @@
   					Axios.delete(`/admin/${this.chapitre_id}/sessions/${id}`)
   						 .then(resp => {
   						 	this.sessions.splice(key, 1)
-
+                window.noty({
+  								message: 'Session supprimée avec succès',
+  								type: 'success'
+  							})
   						 }).catch(error => {
-  						 	 console.log(error)
+  						 	 window.handleErrors(error)
   						 })
   				}
   			},

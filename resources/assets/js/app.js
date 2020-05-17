@@ -8,6 +8,26 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+window.events = new Vue();
+
+window.noty = function(notification) {
+	window.events.$emit('notification', notification)
+}
+
+window.handleErrors = function(error) {
+	if(error.response.status == 422) {
+ 		window.noty({
+			message: 'Vous avez des erreurs de validation. Veuillez réessayer.',
+			type: 'danger'
+		})
+ 	}
+
+ 	window.noty({
+		message: 'Quelque chose a mal tourné. Veuillez rafraîchir la page.',
+		type: 'danger'
+	})
+}
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -19,6 +39,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.component('vue-noty', require('./components/Noty.vue').default);
 Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
 Vue.component('vue-sessions', require('./components/Sessions.vue').default);
 Vue.component('vue-login', require('./components/Login.vue').default);
