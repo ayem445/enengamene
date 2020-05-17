@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use App\Cour;
+use App\Chapitre;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -30,9 +32,17 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        // Route::model('cour_by_id', Cour::class);
+        // Route::bind('cour_by_id', function($value){
+        //     return Cour::findOrFail($value);
+        // });
+
+        Route::model('chapitre_by_id', Chapitre::class);
+        Route::bind('chapitre_by_id', function($value){
+            return Chapitre::findOrFail($value);
+        });
     }
 
     /**

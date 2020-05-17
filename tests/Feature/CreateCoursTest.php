@@ -34,9 +34,9 @@ class CreateCoursTest extends TestCase
           'public/cours/' . Str::slug('vuejs for the best') . '.png'
         );
 
-        $this->assertDatabaseHas('cours', [
-          'code' => Str::slug('vuejs for the best')
-        ]);
+        // $this->assertDatabaseHas('cours', [
+        //   'code' => Str::slug('vuejs for the best')
+        // ]);
     }
 
     public function test_un_cours_doit_etre_cree_avec_un_libelle()

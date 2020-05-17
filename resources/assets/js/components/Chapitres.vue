@@ -23,7 +23,7 @@
               <p>{{ chapitre.description }}</p>
 
               <div class="row">
-                <vue-sessions :default_sessions="chapitre.sessions"></vue-sessions>
+                <vue-sessions :default_sessions="chapitre.sessions" :chapitre_id="chapitre.id"></vue-sessions>
               </div>
 
             </div>

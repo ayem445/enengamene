@@ -24,7 +24,8 @@
 	            </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+						<button type="button" class="btn btn-primary" @click="creerSession()">Créer Session</button>
 	        </div>
 	      </div>
 	    </div>
@@ -60,6 +61,17 @@
   				editing: false,
   				sessionId: null
   			}
-  		}
+  		},
+			methods: {
+				creerSession() {
+					Axios.post(`/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
+						console.log(resp)
+						this.$parent.$emit('session_creee', resp.data)
+						$('#createSession').modal('hide')
+					}).catch(error => {
+						window.handleErrors(error)
+					})
+				}
+			}
   }
 </script>

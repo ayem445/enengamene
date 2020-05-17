@@ -15,13 +15,22 @@
           </div>
 
           <div class="col-12 col-md-3 plan-price">
-            <p><small>
-            <span class="text-lighter hidden-sm-down"><i class="fa fa-hourglass-end mr-8"></i> 00:00</span>
-            <br>
-            <span class="text-lighter hidden-sm-down"><i class="fa fa-file-video-o mr-8"></i> 00 Mo</span>
-            <br>
-            <span class="text-lighter hidden-sm-down"><i class="fa fa-file-text-o mr-8"></i> 00 Car.</span>
-            </small></p>
+
+            <div class="row">
+              <div class="col-sm-3"><i class="fa fa-hourglass-end mr-0"></i></div>
+              <div class="col-sm-9">00:01</div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3"><i class="fa fa-file-video-o mr-0"></i></div>
+              <div class="col-sm-9">00:02</div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3"><i class="fa fa-file-text-o mr-0"></i></div>
+              <div class="col-sm-9">00:03</div>
+            </div>
+
           </div>
         </a>
 
@@ -35,7 +44,7 @@
 
 <script>
 export default {
-    props: ['default_sessions'],
+    props: ['default_sessions', 'chapitre_id'],
     components: {
       "creer-session": require('./children/CreerSession.vue').default
     },

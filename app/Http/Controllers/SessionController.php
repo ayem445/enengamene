@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Session;
+use App\Chapitre;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Http\Requests\CreateSessionRequest;
 
 class SessionController extends Controller
 {
@@ -30,12 +33,15 @@ class SessionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateSessionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Chapitre $chapitre, CreateSessionRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['code'] = uniqid(Str::slug($data['libelle']), true);
+
+        return $chapitre->sessions()->create($data);
     }
 
     /**

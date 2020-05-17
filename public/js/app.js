@@ -2120,8 +2120,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['default_sessions'],
+  props: ['default_sessions', 'chapitre_id'],
   components: {
     "creer-session": __webpack_require__(/*! ./children/CreerSession.vue */ "./resources/assets/js/components/children/CreerSession.vue")["default"]
   },
@@ -2271,6 +2280,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
 
 
 var Session = function Session(session) {
@@ -2301,6 +2311,21 @@ var Session = function Session(session) {
       editing: false,
       sessionId: null
     };
+  },
+  methods: {
+    creerSession: function creerSession() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.chapitreId, "/sessions"), this.session).then(function (resp) {
+        console.log(resp);
+
+        _this2.$parent.$emit('session_creee', resp.data);
+
+        $('#createSession').modal('hide');
+      })["catch"](function (error) {
+        window.handleErrors(error);
+      });
+    }
   }
 });
 
@@ -19965,7 +19990,10 @@ var render = function() {
                     { staticClass: "row" },
                     [
                       _c("vue-sessions", {
-                        attrs: { default_sessions: chapitre.sessions }
+                        attrs: {
+                          default_sessions: chapitre.sessions,
+                          chapitre_id: chapitre.id
+                        }
                       })
                     ],
                     1
@@ -20287,27 +20315,28 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 col-md-3 plan-price" }, [
-      _c("p", [
-        _c("small", [
-          _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-            _c("i", { staticClass: "fa fa-hourglass-end mr-8" }),
-            _vm._v(" 00:00")
-          ]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-            _c("i", { staticClass: "fa fa-file-video-o mr-8" }),
-            _vm._v(" 00 Mo")
-          ]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-            _c("i", { staticClass: "fa fa-file-text-o mr-8" }),
-            _vm._v(" 00 Car.")
-          ])
-        ])
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-3" }, [
+          _c("i", { staticClass: "fa fa-hourglass-end mr-0" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:01")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-3" }, [
+          _c("i", { staticClass: "fa fa-file-video-o mr-0" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:02")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-3" }, [
+          _c("i", { staticClass: "fa fa-file-text-o mr-0" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:03")])
       ])
     ])
   }
@@ -20632,7 +20661,30 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Fermer")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.creerSession()
+                  }
+                }
+              },
+              [_vm._v("Créer Session")]
+            )
+          ])
         ])
       ])
     ]
@@ -20661,21 +20713,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
       )
     ])
   }
