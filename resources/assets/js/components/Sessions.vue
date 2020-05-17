@@ -65,12 +65,12 @@
   				this.sessions.push(session)
   			})
 
-  			this.$on('lesson_updated', (lesson) => {
-  				let lessonIndex = this.lessons.findIndex(l => {
-  					return lesson.id == l.id
+  			this.$on('session_updated', (session) => {
+  				let sessionIndex = this.sessions.findIndex(s => {
+  					return session.id == s.id
   				})
 
-  				this.lessons.splice(lessonIndex, 1, lesson)
+  				this.sessions.splice(sessionIndex, 1, session)
 
   			})
   		},
@@ -100,6 +100,10 @@
   						 })
   				}
   			},
+        editSession(session) {
+  				let chapitreId = this.chapitre_id
+  				this.$emit('edit_session', { session, chapitreId })
+  			}
       }
   }
 </script>

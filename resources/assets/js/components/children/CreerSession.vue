@@ -3,7 +3,8 @@
 	    <div class="modal-dialog" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
-	          <h5 class="modal-title" id="exampleModalLabel">Créer Nouvelle Session</h5>
+						<h5 class="modal-title" id="exampleModalLabel" v-if="editing">Modifier Session</h5>
+	          <h5 class="modal-title" id="exampleModalLabel" v-else>Créer Nouvelle Session</h5>
 	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	            <span aria-hidden="true">&times;</span>
 	          </button>
@@ -25,7 +26,8 @@
 	        </div>
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-						<button type="button" class="btn btn-primary" @click="creerSession()">Créer Session</button>
+						<button type="button" class="btn btn-primary" @click="updateSession()" v-if="editing">Enregistrer</button>
+						<button type="button" class="btn btn-primary" @click="creerSession()" v-else>Créer Session</button>
 	        </div>
 	      </div>
 	    </div>
@@ -38,6 +40,7 @@
   class Session {
     constructor(session) {
       this.libelle = session.libelle || ''
+			this.lien = session.lien || ''
       this.num_ordre = session.num_ordre || ''
       this.description = session.description || ''
       this.commentaire = session.commentaire || ''
@@ -50,9 +53,18 @@
           this.chapitreId = chapitreId
           this.editing = false
           this.session = new Session({})
-          console.log('hello parent, we are creating the session')
+
           $('#createSession').modal()
         })
+
+				this.$parent.$on('edit_session', ({ session, chapitreId }) => {
+					this.editing = true
+					this.session = new Session(session)
+					this.chapitreId = chapitreId
+					this.sessionId = session.id
+
+					$('#createSession').modal()
+				})
       },
       data() {
   			return {
@@ -70,6 +82,15 @@
 					}).catch(error => {
 						window.handleErrors(error)
 					})
+				},
+				updateSession() {
+					Axios.put(`/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
+					 .then(resp => {
+					 	$("#createSession").modal('hide')
+					 	this.$parent.$emit('session_updated', resp.data)
+					 }).catch(error => {
+					 	window.handleErrors(error)
+					 })
 				}
 			}
   }

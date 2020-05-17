@@ -7,6 +7,7 @@ use App\Chapitre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Requests\CreateSessionRequest;
+use App\Http\Requests\UpdateSessionRequest;
 
 class SessionController extends Controller
 {
@@ -69,13 +70,15 @@ class SessionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateSessionRequest  $request
      * @param  \App\Session  $session
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Session $session)
+    public function update(Chapitre $chapitre, Session $session, UpdateSessionRequest $request)
     {
-        //
+        $session->update($request->all());
+
+        return $session->fresh();
     }
 
     /**
@@ -87,7 +90,7 @@ class SessionController extends Controller
     public function destroy(Chapitre $chapitre, Session $session)
     {
         $session->delete();
-        
+
         return response()->json(['status' => 'ok'], 200);
     }
 }

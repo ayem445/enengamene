@@ -2151,12 +2151,12 @@ __webpack_require__.r(__webpack_exports__);
     this.$on('session_creee', function (session) {
       _this.sessions.push(session);
     });
-    this.$on('lesson_updated', function (lesson) {
-      var lessonIndex = _this.lessons.findIndex(function (l) {
-        return lesson.id == l.id;
+    this.$on('session_updated', function (session) {
+      var sessionIndex = _this.sessions.findIndex(function (s) {
+        return session.id == s.id;
       });
 
-      _this.lessons.splice(lessonIndex, 1, lesson);
+      _this.sessions.splice(sessionIndex, 1, session);
     });
   },
   components: {
@@ -2182,6 +2182,13 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error);
         });
       }
+    },
+    editSession: function editSession(session) {
+      var chapitreId = this.chapitre_id;
+      this.$emit('edit_session', {
+        session: session,
+        chapitreId: chapitreId
+      });
     }
   }
 });
@@ -2316,12 +2323,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
 
 
 var Session = function Session(session) {
   _classCallCheck(this, Session);
 
   this.libelle = session.libelle || '';
+  this.lien = session.lien || '';
   this.num_ordre = session.num_ordre || '';
   this.description = session.description || '';
   this.commentaire = session.commentaire || '';
@@ -2335,7 +2345,15 @@ var Session = function Session(session) {
       _this.chapitreId = chapitreId;
       _this.editing = false;
       _this.session = new Session({});
-      console.log('hello parent, we are creating the session');
+      $('#createSession').modal();
+    });
+    this.$parent.$on('edit_session', function (_ref) {
+      var session = _ref.session,
+          chapitreId = _ref.chapitreId;
+      _this.editing = true;
+      _this.session = new Session(session);
+      _this.chapitreId = chapitreId;
+      _this.sessionId = session.id;
       $('#createSession').modal();
     });
   },
@@ -2355,6 +2373,17 @@ var Session = function Session(session) {
         _this2.$parent.$emit('session_creee', resp.data);
 
         $('#createSession').modal('hide');
+      })["catch"](function (error) {
+        window.handleErrors(error);
+      });
+    },
+    updateSession: function updateSession() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.chapitreId, "/sessions/").concat(this.sessionId), this.session).then(function (resp) {
+        $("#createSession").modal('hide');
+
+        _this3.$parent.$emit('session_updated', resp.data);
       })["catch"](function (error) {
         window.handleErrors(error);
       });
@@ -20635,7 +20664,27 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "modal-header" }, [
+            _vm.editing
+              ? _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Modifier Session")]
+                )
+              : _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Créer Nouvelle Session")]
+                ),
+            _vm._v(" "),
+            _vm._m(0)
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -20745,19 +20794,33 @@ var render = function() {
               [_vm._v("Fermer")]
             ),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.creerSession()
-                  }
-                }
-              },
-              [_vm._v("Créer Session")]
-            )
+            _vm.editing
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.updateSession()
+                      }
+                    }
+                  },
+                  [_vm._v("Enregistrer")]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.creerSession()
+                      }
+                    }
+                  },
+                  [_vm._v("Créer Session")]
+                )
           ])
         ])
       ])
@@ -20769,26 +20832,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Créer Nouvelle Session")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
