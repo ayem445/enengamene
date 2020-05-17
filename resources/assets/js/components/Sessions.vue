@@ -7,7 +7,7 @@
       </button>
     </h5>
 
-    <div class="container" v-for="session in formattedSessions">
+    <div class="container" v-for="session in sessions">
         <a class="row no-gutters pricing-4" href="#">
           <div class="col-12 col-md-9 plan-description">
             <h6>{{ session.libelle }}</h6>
@@ -45,6 +45,24 @@
 <script>
 export default {
     props: ['default_sessions', 'chapitre_id'],
+    mounted() {
+			this.$on('session_creee', (session) => {
+			   
+				this.sessions.push(session)
+			})
+
+			this.$on('lesson_updated', (lesson) => {
+				let lessonIndex = this.lessons.findIndex(l => {
+					return lesson.id == l.id
+				})
+
+				this.lessons.splice(lessonIndex, 1, lesson)
+				window.noty({
+					message: 'Lesson updated successfully',
+					type: 'success'
+				})
+			})
+		},
     components: {
       "creer-session": require('./children/CreerSession.vue').default
     },
@@ -54,9 +72,7 @@ export default {
         }
     },
     computed: {
-        formattedSessions() {
-            return this.sessions
-        }
+
     },
     methods: {
       creerNouvelleSession() {

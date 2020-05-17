@@ -2131,6 +2131,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['default_sessions', 'chapitre_id'],
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$on('session_creee', function (session) {
+      _this.sessions.push(session);
+    });
+    this.$on('lesson_updated', function (lesson) {
+      var lessonIndex = _this.lessons.findIndex(function (l) {
+        return lesson.id == l.id;
+      });
+
+      _this.lessons.splice(lessonIndex, 1, lesson);
+
+      window.noty({
+        message: 'Lesson updated successfully',
+        type: 'success'
+      });
+    });
+  },
   components: {
     "creer-session": __webpack_require__(/*! ./children/CreerSession.vue */ "./resources/assets/js/components/children/CreerSession.vue")["default"]
   },
@@ -2139,11 +2158,7 @@ __webpack_require__.r(__webpack_exports__);
       sessions: this.default_sessions
     };
   },
-  computed: {
-    formattedSessions: function formattedSessions() {
-      return this.sessions;
-    }
-  },
+  computed: {},
   methods: {
     creerNouvelleSession: function creerNouvelleSession() {
       this.$emit('creer_nouvelle_session', this.chapitre_id);
@@ -2317,8 +2332,6 @@ var Session = function Session(session) {
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.chapitreId, "/sessions"), this.session).then(function (resp) {
-        console.log(resp);
-
         _this2.$parent.$emit('session_creee', resp.data);
 
         $('#createSession').modal('hide');
@@ -20284,7 +20297,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._l(_vm.formattedSessions, function(session) {
+      _vm._l(_vm.sessions, function(session) {
         return _c("div", { staticClass: "container" }, [
           _c(
             "a",

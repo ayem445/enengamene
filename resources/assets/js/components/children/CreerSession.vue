@@ -65,7 +65,6 @@
 			methods: {
 				creerSession() {
 					Axios.post(`/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
-						console.log(resp)
 						this.$parent.$emit('session_creee', resp.data)
 						$('#createSession').modal('hide')
 					}).catch(error => {
