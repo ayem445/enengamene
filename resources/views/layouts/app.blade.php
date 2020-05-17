@@ -43,9 +43,10 @@
             @auth
               <li class="nav-item">
                 <a class="nav-link" href="#">Salut <strong>{{ auth()->user()->name  }}</strong></a></li>
+
               </li>
+              <li class="nav-item"><a href="{{ route('cours.index') }}" class="nav-link">Tous les Cours</a></li>
             @endauth
-            <li class="nav-item"><a href="#" class="nav-link">Tous les Cours</a></li>
 
             @guest
               <li class="nav-item"><a href="#" class="nav-link">Tous les Cours</a></li>

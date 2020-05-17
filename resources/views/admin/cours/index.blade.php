@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-12 col-lg-8 offset-lg-2">
 
-        <h1>{{ $cour->libelle }}</h1>
+        <h1>Modélisation Cours</h1>
         <p class="fs-18 opacity-70">Personnalisez Les Chapitres & Sessions du Cours</p>
 
       </div>

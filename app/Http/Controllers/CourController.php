@@ -16,7 +16,7 @@ class CourController extends Controller
      */
     public function index()
     {
-
+        return view('admin.cours.all')->withCours(Cour::all());
     }
 
     /**
