@@ -2085,6 +2085,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2131,6 +2133,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['default_sessions', 'chapitre_id'],
   mounted: function mounted() {
@@ -2145,11 +2157,6 @@ __webpack_require__.r(__webpack_exports__);
       });
 
       _this.lessons.splice(lessonIndex, 1, lesson);
-
-      window.noty({
-        message: 'Lesson updated successfully',
-        type: 'success'
-      });
     });
   },
   components: {
@@ -2164,6 +2171,17 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     creerNouvelleSession: function creerNouvelleSession() {
       this.$emit('creer_nouvelle_session', this.chapitre_id);
+    },
+    deleteSession: function deleteSession(id, key) {
+      var _this2 = this;
+
+      if (confirm('Voulez-vous vraiment supprimer ?')) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/admin/".concat(this.chapitre_id, "/sessions/").concat(id)).then(function (resp) {
+          _this2.sessions.splice(key, 1);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     }
   }
 });
@@ -20299,28 +20317,62 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._l(_vm.sessions, function(session) {
+      _vm._l(_vm.sessions, function(session, key) {
         return _c("div", { staticClass: "container" }, [
-          _c(
-            "a",
-            { staticClass: "row no-gutters pricing-4", attrs: { href: "#" } },
-            [
-              _c("div", { staticClass: "col-12 col-md-9 plan-description" }, [
-                _c("h6", [_vm._v(_vm._s(session.libelle))]),
-                _vm._v(" "),
-                _c("p", {}, [
-                  _vm._v(_vm._s(session.description) + "\n            ")
-                ]),
-                _c("footer", { staticClass: "blockquote-footer" }, [
-                  _vm._v(_vm._s(session.commentaire))
-                ]),
-                _vm._v(" "),
-                _c("p")
+          _c("div", { staticClass: "row no-gutters pricing-4" }, [
+            _c("div", { staticClass: "col-12 col-md-9 plan-description" }, [
+              _c("h6", [_vm._v(_vm._s(session.libelle))]),
+              _vm._v(" "),
+              _c("p", {}, [
+                _vm._v(_vm._s(session.description) + "\n            ")
+              ]),
+              _c("footer", { staticClass: "blockquote-footer" }, [
+                _vm._v(_vm._s(session.commentaire))
               ]),
               _vm._v(" "),
-              _vm._m(0, true)
-            ]
-          ),
+              _c("p"),
+              _vm._v(" "),
+              _c("p", { staticClass: "footer-copyright text-left" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-xs",
+                    on: {
+                      click: function($event) {
+                        return _vm.editSession(session)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-pencil-square-o",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger btn-xs",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteSession(session.id, key)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-trash-o",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(0, true)
+          ]),
           _vm._v(" "),
           _c("br")
         ])

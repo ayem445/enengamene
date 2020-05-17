@@ -84,8 +84,10 @@ class SessionController extends Controller
      * @param  \App\Session  $session
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Session $session)
+    public function destroy(Chapitre $chapitre, Session $session)
     {
-        //
+        $session->delete();
+        
+        return response()->json(['status' => 'ok'], 200);
     }
 }
