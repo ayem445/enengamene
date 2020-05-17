@@ -17,7 +17,7 @@ class CreatePersonnesTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code de la Personne');
+            $table->string('code')->unique()->comment('code de la Personne');
             $table->string('email')->comment('email de la Personne');
             $table->string('nom')->comment('nom de la Personne');
             $table->string('prenom')->nullable()->comment('prenom de la Personne');

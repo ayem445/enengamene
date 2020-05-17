@@ -17,7 +17,7 @@ class CreateNotationsTable extends Migration
         Schema::create($tableName, function (Blueprint $table) {
             $table->id();
 
-            $table->string('code', 50)->unique()->comment('code de la notation');
+            $table->string('code')->unique()->comment('code de la notation');
             $table->string('libelle', 100)->unique()->comment('libelle de la notation');
             $table->integer('level')->comment('niveau hiérarchique');
             $table->boolean('statut')->default(false)->comment('Statut de la notation');
