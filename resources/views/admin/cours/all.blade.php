@@ -26,12 +26,14 @@
             <table class="table">
                 <thead>
                     <th>Titre</th>
+                    <th>Matière</th>
                     <th colspan="2"></th>
                 </thead>
                 <tbody>
                     @forelse($cours as $c)
                         <tr>
                             <td><a href="{{ route('cours.show', $c->id) }}">{{ $c->libelle }}</a></td>
+                            <td>{{ $c->matiere->libelle }}</td>
 
                             <td style="width: 10px;">
                                 <a href="{{ route('cours.edit', $c->id) }}" alt="Modifer" title="Edit">

@@ -40,9 +40,10 @@ window.handleErrors = function(error) {
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('vue-noty', require('./components/Noty.vue').default);
+Vue.component('vue-login', require('./components/Login.vue').default);
+Vue.component('vue-select', require('./components/Select.vue').default);
 Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
 Vue.component('vue-sessions', require('./components/Sessions.vue').default);
-Vue.component('vue-login', require('./components/Login.vue').default);
 
 //import VueChapitre from './components/Chapitre.vue'
 //components: { VueLogin }

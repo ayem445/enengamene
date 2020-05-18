@@ -21,12 +21,16 @@
 <section class="section" id="section-open-positions">
   <div class="container">
     <header class="section-header">
-      <small>Chapitres du Cours</small>
+
       <h2>{{ $cour->libelle }}</h2>
       <hr>
       <p class="lead">{{ $cour->description }}
         <footer class="blockquote-footer">{{ $cour->commentaire }}</footer>
       </p>
+    </header>
+
+    <header class="section-header">
+      <small>Chapitres du Cours</small>
     </header>
 
     <vue-chapitres default_chapitres="{{ $cour->chapitres }}"></vue-chapitres>

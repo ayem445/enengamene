@@ -16,7 +16,7 @@ class Cour extends Model
      *
      * @var array
      */
-    protected $with = ['chapitres', 'chapitres.sessions'];
+    protected $with = ['matiere', 'chapitres', 'chapitres.sessions'];
 
     /**
      * Retourne l auteur de ce cours.
@@ -65,4 +65,3 @@ class Cour extends Model
         return $this->hasMany('App\CourNotation', 'cour_id');
     }
 }
-

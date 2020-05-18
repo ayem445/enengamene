@@ -65,14 +65,17 @@
   					message: 'Session créée avec succès',
   					type: 'success'
   				})
+
   				this.sessions.push(session)
   			})
 
   			this.$on('session_updated', (session) => {
+          // on récupère l'index de session modifiée
   				let sessionIndex = this.sessions.findIndex(s => {
   					return session.id == s.id
   				})
 
+          // TODO: Inserer la nouvelle session en fonction de son numéro d'ordre (dans le UPDSATE)
   				this.sessions.splice(sessionIndex, 1, session)
           window.noty({
   					message: 'Session modifiée avec succès',

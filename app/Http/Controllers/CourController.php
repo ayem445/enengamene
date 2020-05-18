@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Cour;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCoursRequest;
+use App\Matiere;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class CourController extends Controller
 {
@@ -26,7 +28,17 @@ class CourController extends Controller
      */
     public function create()
     {
-        return view('admin.cours.create');
+        //$matieres = Matiere::all()->pluck('libelle', 'id');
+        //$matieres = $matieres->toArray();
+        //dd($matieres);
+        //
+
+        $matieres_list = DB::table('matieres')->orderBy('libelle', 'asc')->get();
+        $matieres = $matieres_list->map(function($matiere) {
+          return ["value" => $matiere->id,"label" => $matiere->libelle];
+        });
+
+        return view('admin.cours.create')->withMatieres($matieres);//, compact('matieres'));
     }
 
     /**
@@ -37,6 +49,7 @@ class CourController extends Controller
      */
     public function store(CreateCoursRequest $request)
     {
+        dd($request);
         return $request->uploadCoursImage()
               ->storeCours();
     }

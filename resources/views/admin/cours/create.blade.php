@@ -38,6 +38,10 @@
               <textarea class="form-control form-control-lg" name="description" rows="4" placeholder="Description"></textarea>
             </div>
 
+            <div class="form-group">
+              <vue-select default_name="matiere_id" default_options="{{ $matieres->toJson() }}" default_placeholder="Selectionnez une Matière"></vue-select>
+            </div>
+
             <button class="btn btn-lg btn-primary btn-block" type="submit">Créer le Cours</button>
           </form>
 
