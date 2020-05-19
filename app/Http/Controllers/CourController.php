@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cour;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCoursRequest;
+use App\Http\Requests\UpdateCourRequest;
 use App\Matiere;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -73,19 +74,22 @@ class CourController extends Controller
      */
     public function edit(Cour $cour)
     {
-        //
+        return view('admin.cours.edit')->withCour($cour);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Request\UpdateCourRequest  $request
      * @param  \App\Cour  $cour
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cour $cour)
+    public function update(UpdateCourRequest $request, Cour $cour)
     {
-        //
+        $request->updateCour($cour);
+
+        session()->flash('success', 'Cours mis à jour avec succès');
+        return redirect()->route('cours.index');
     }
 
     /**
