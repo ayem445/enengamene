@@ -49,7 +49,6 @@ class CourController extends Controller
      */
     public function store(CreateCoursRequest $request)
     {
-        dd($request);
         return $request->uploadCoursImage()
               ->storeCours();
     }

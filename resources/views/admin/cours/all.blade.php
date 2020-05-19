@@ -10,6 +10,8 @@
         <h1>Liste des Cours</h1>
         <p class="fs-18 opacity-70">Liste Exhaustive des Cours</p>
 
+        <a class="btn btn-lg btn-round btn-white w-200" href="{{ route('cours.create') }}">Créer un Cours</a>
+
       </div>
     </div>
 

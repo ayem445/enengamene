@@ -27,7 +27,7 @@ class CreateCoursRequest extends FormRequest
     {
       return [
           'libelle' => 'required',
-          'description' => 'required',
+          'matiere_id' => 'required',
           'image' => 'required|image'
       ];
     }
@@ -43,6 +43,7 @@ class CreateCoursRequest extends FormRequest
         $cours = Cour::create([
             'libelle' => $this->libelle,
             'code' => $uniqcode,
+            'matiere_id' => $this->matiere_id,
             'description' => $this->description,
             'image_url' => 'cours/' . $this->fileName
         ]);

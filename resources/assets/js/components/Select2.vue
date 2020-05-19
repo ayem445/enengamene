@@ -6,14 +6,14 @@
       value=""
       :options="options"
       :searchable="true"
-      :multiple="false"
+      :multiple="true"
       label="label"
       track-by="value"
       key="value"
       :placeholder="placeholder"
       @select="onSelected" @remove="onRemove" >
     </multiselect>
-    <input hidden type="text" :name="name" :value="selectedVal">
+    <input type="text" :name="name" :value="selectedVals">
   </div>
 </template>
 
@@ -29,8 +29,8 @@
     },
     data () {
       return {
-        selected: null,
-        selectedVal: null,
+        selected: [],
+        selectedVals: [],
         options: JSON.parse(this.default_options),
         placeholder: this.default_placeholder,
         name: this.default_name,
@@ -41,14 +41,15 @@
     },
     methods: {
       onSelected (selectedOption, id) {
-        console.log(selectedOption)
-        this.value = selectedOption
-        this.selectedVal = selectedOption.value
+        //console.log(selectedOption)
+        this.selectedVals.push(selectedOption.value)
       },
       onRemove (removedOption, id) {
-        console.log(removedOption)
-        this.value = null
-        this.selectedVal = null
+        let selIdx = this.selected.findIndex(s => {
+          return removedOption.value == s.value
+        })
+        console.log(removedOption, selIdx)
+        this.selectedVals.splice(selIdx, 1)
       }
     }
   }

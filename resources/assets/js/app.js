@@ -10,6 +10,8 @@ window.Vue = require('vue');
 
 window.events = new Vue();
 
+//import Multiselect from 'vue-multiselect';
+
 window.noty = function(notification) {
 	window.events.$emit('notification', notification)
 }
@@ -39,9 +41,12 @@ window.handleErrors = function(error) {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+//Vue.component('multiselect', Multiselect);
+
 Vue.component('vue-noty', require('./components/Noty.vue').default);
 Vue.component('vue-login', require('./components/Login.vue').default);
 Vue.component('vue-select', require('./components/Select.vue').default);
+Vue.component('vue-select2', require('./components/Select2.vue').default);
 Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
 Vue.component('vue-sessions', require('./components/Sessions.vue').default);
 
