@@ -116,7 +116,7 @@ class InitialisationSystemSeeder extends Seeder
             ['libelle' => "Très Facile", 'level' => 1, 'code' =>"" ],
             ['libelle' => "Facile", 'level' => 2, 'code' =>"" ],
             ['libelle' => "Normale",'level' => 3, 'code' =>"" ],
-            ['libelle' => "Dfficile",'level' => 4, 'code' =>"" ],
+            ['libelle' => "Difficile",'level' => 4, 'code' =>"" ],
             ['libelle' => "Très Dfficile",'level' => 5, 'code' =>"" ],
         ];
     }
@@ -177,4 +177,3 @@ class InitialisationSystemSeeder extends Seeder
         ];
     }
 }
-
