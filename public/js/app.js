@@ -20867,7 +20867,10 @@ var render = function() {
                     _vm._v(_vm._s(chapitre.libelle))
                   ]),
                   _vm._v(" "),
-                  _vm._m(0, true)
+                  _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
+                    _c("i", { staticClass: "fa fa-signal mr-8" }),
+                    _vm._v(" " + _vm._s(chapitre.difficulte.libelle))
+                  ])
                 ]
               )
             ]),
@@ -20908,17 +20911,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-      _c("i", { staticClass: "fa fa-signal mr-8" }),
-      _vm._v(" Difficulté")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

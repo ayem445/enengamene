@@ -16,7 +16,7 @@ class Chapitre extends Model
      *
      * @var array
      */
-    protected $with = ['sessions'];
+    protected $with = ['sessions','difficulte'];
 
     /**
      * Retourne le cour auquel appartient ce chapitre.
@@ -50,4 +50,3 @@ class Chapitre extends Model
         return $this->belongsTo('App\Quiz');
     }
 }
-
