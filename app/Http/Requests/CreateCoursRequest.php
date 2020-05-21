@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Cour;
+use App\Auteur;
+use App\Matiere;
+use App\NiveauEtude;
 use Illuminate\Support\Str;
 
 class CreateCoursRequest extends FormRequest
@@ -13,8 +16,7 @@ class CreateCoursRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         return true;
     }
 
@@ -27,7 +29,10 @@ class CreateCoursRequest extends FormRequest
     {
       return [
           'libelle' => 'required',
-          'matiere_id' => 'required',
+          'description' => 'required',
+          'auteur' => 'required',
+          'matiere' => 'required',
+          'niveau_etude' => 'required',
           'image' => 'required|image'
       ];
     }
@@ -39,16 +44,23 @@ class CreateCoursRequest extends FormRequest
      */
     public function storeCours()
     {
-        $uniqcode = uniqid(Str::slug($this->libelle), true);
+        if (! isset($this->uniqcode)) {
+          $this->uniqcode = Cour::getUniqcode($this->libelle);
+        }
+        $matiere = Matiere::find(json_decode($this->matiere, true)["id"]);
+        $auteur = Auteur::find(json_decode($this->auteur, true)["id"]);
+        $niveau_etude = NiveauEtude::find(json_decode($this->niveau_etude, true)["id"]);
         $cours = Cour::create([
             'libelle' => $this->libelle,
-            'code' => $uniqcode,
-            'matiere_id' => $this->matiere_id,
+            'code' => $this->uniqcode,
+            'matiere_id' => $matiere->id,
+            'auteur_id' => $auteur->id,
+            'niveau_etude_id' => $niveau_etude->id,
             'description' => $this->description,
             'image_url' => 'cours/' . $this->fileName
         ]);
-        $cours->code = Str::slug($this->libelle) . "_" . $cours->id;
-        $cours->save();
+        // $cours->code = Str::slug($this->libelle) . "_" . $cours->id;
+        // $cours->save();
 
         session()->flash('success', 'Cours créé avec succès.');
         return redirect()->route('cours.show', $cours);
@@ -61,9 +73,12 @@ class CreateCoursRequest extends FormRequest
      */
     public function uploadCoursImage()
     {
+        if (! isset($this->uniqcode)) {
+          $this->uniqcode = Cour::getUniqcode($this->libelle);
+        }
         $uploadedImage = $this->image;
 
-        $this->fileName = Str::slug($this->libelle) . '.' . $uploadedImage->getClientOriginalExtension();
+        $this->fileName = $this->uniqcode . '.' . $uploadedImage->getClientOriginalExtension();
 
         $uploadedImage->storePubliclyAs(
             'public/cours',  $this->fileName

@@ -29,6 +29,8 @@
                 <thead>
                     <th>Titre</th>
                     <th>Matière</th>
+                    <th>Niveau</th>
+                    <th>Auteur</th>
                     <th colspan="2"></th>
                 </thead>
                 <tbody>
@@ -36,6 +38,8 @@
                         <tr>
                             <td><a href="{{ route('cours.show', $c->id) }}">{{ $c->libelle }}</a></td>
                             <td>{{ $c->matiere->libelle }}</td>
+                            <td>{{ $c->niveau_etude->libelle }}</td>
+                            <td>{{ $c->auteur->nomComplet }}</td>
 
                             <td style="width: 10px;">
                                 <a href="{{ route('cours.edit', $c->id) }}" alt="Modifer" title="Edit">

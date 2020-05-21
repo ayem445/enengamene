@@ -20,6 +20,17 @@ class Auteur extends Model
     protected $with = ['cours','personne'];
 
     /**
+    * renvoie le nom complet de l'auteur.
+    * -- Must postfix the word 'Attribute' to the function name
+    *
+    * @return string
+    */
+    public function getNomCompletAttribute()
+    {
+        return $this->personne->nomComplet;
+    }
+
+    /**
      * Retourne l auteur de ce cours.
      */
     public function personne()
@@ -35,4 +46,3 @@ class Auteur extends Model
         return $this->hasMany('App\Cour', 'auteur_id');
     }
 }
-

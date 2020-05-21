@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Session::class, function (Faker $faker) {
     $libelle = $faker->sentence(1);
     return [
-      'code' => uniqid(Str::slug($libelle), true),
+      'code' => Session::getUniqcode($libelle),
       'libelle' => $libelle,
       'description' => $faker->paragraph(2),
       'commentaire' => $faker->paragraph(1),

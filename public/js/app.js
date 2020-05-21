@@ -2132,6 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2140,24 +2141,24 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     default_options: {},
     default_placeholder: "",
-    default_name: ""
+    default_name: "",
+    default_selected: {}
   },
+  mounted: function mounted() {},
   data: function data() {
     return {
-      selected: null,
-      selectedVal: null,
+      selected: JSON.stringify(JSON.parse(this.default_selected)) == "[]" ? null : JSON.parse(this.default_selected),
+      selectedVal: JSON.stringify(JSON.parse(this.default_selected)) == "[]" ? null : JSON.stringify(JSON.parse(this.default_selected)),
       options: JSON.parse(this.default_options),
       placeholder: this.default_placeholder,
-      name: this.default_name,
-      optionsProxy: [],
-      selectedResources: []
+      name: this.default_name
     };
   },
   methods: {
     onSelected: function onSelected(selectedOption, id) {
       console.log(selectedOption);
       this.value = selectedOption;
-      this.selectedVal = selectedOption.value;
+      this.selectedVal = JSON.stringify(selectedOption);
     },
     onRemove: function onRemove(removedOption, id) {
       console.log(removedOption);
@@ -21183,15 +21184,16 @@ var render = function() {
     "div",
     [
       _c("multiselect", {
-        key: "value",
+        key: "id",
         attrs: {
           id: "m_select",
+          "selected.sync": "selected",
           value: "",
           options: _vm.options,
           searchable: true,
           multiple: false,
-          label: "label",
-          "track-by": "value",
+          label: "libelle",
+          "track-by": "id",
           placeholder: _vm.placeholder
         },
         on: { select: _vm.onSelected, remove: _vm.onRemove },
@@ -21205,7 +21207,8 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("input", {
-        attrs: { hidden: "", type: "text", name: _vm.name },
+        ref: "selectedVal",
+        attrs: { type: "text", id: _vm.name, name: _vm.name },
         domProps: { value: _vm.selectedVal }
       })
     ],
