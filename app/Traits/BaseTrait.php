@@ -13,6 +13,7 @@ trait BaseTrait
 {
     use CodeTrait;
     use ListTrait;
+    use ImageTrait;
 
     /**
      * Retourne l'actuel object du modèle mappé

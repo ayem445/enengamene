@@ -26,7 +26,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($difficulte_db) {
 
           } else {
-            $difficulte['code'] = Difficulte::getUniqcode($difficulte['libelle']);
+            $difficulte['code'] = Difficulte::getUniqcode();
             $difficulte_new = Difficulte::create($difficulte);
           }
         }
@@ -38,7 +38,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($difficulte_db) {
 
           } else {
-            $matiere['code'] = Matiere::getUniqcode($matiere['libelle']);
+            $matiere['code'] = Matiere::getUniqcode();
             $matiere_new = Matiere::create($matiere);
           }
         }
@@ -50,7 +50,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($niveau_etude_db) {
 
           } else {
-            $niveau_etude['code'] = NiveauEtude::getUniqcode($niveau_etude['libelle']);
+            $niveau_etude['code'] = NiveauEtude::getUniqcode();
             $niveau_etude_new = NiveauEtude::create($niveau_etude);
           }
         }
@@ -62,7 +62,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($notation_db) {
 
           } else {
-            $notation['code'] = Notation::getUniqcode($notation['libelle']);
+            $notation['code'] = Notation::getUniqcode();
             $notation_new = Notation::create($notation);
           }
         }
@@ -74,7 +74,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($quiztypequestion_db) {
 
           } else {
-            $quiztypequestion['code'] = QuizTypeQuestion::getUniqcode($quiztypequestion['libelle']);
+            $quiztypequestion['code'] = QuizTypeQuestion::getUniqcode();
             $quiztypequestion_new = QuizTypeQuestion::create($quiztypequestion);
           }
         }
@@ -86,7 +86,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($typecontenu_db) {
 
           } else {
-            $typecontenu['code'] = TypeContenu::getUniqcode($typecontenu['libelle']);
+            $typecontenu['code'] = TypeContenu::getUniqcode();
             $typecontenu_new = TypeContenu::create($typecontenu);
           }
         }
@@ -98,7 +98,7 @@ class InitialisationSystemSeeder extends Seeder
           if ($typeetablissement_db) {
 
           } else {
-            $typeetablissement['code'] = TypeEtablissement::getUniqcode($typeetablissement['libelle']);
+            $typeetablissement['code'] = TypeEtablissement::getUniqcode();
             $typeetablissement_new = TypeEtablissement::create($typeetablissement);
           }
         }

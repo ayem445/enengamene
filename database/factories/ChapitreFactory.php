@@ -11,7 +11,7 @@ $factory->define(Chapitre::class, function (Faker $faker) {
     $libelle = $faker->sentence(1);
     $difficulte_max_id = Difficulte::max('id');
     return [
-        'code' => Chapitre::getUniqcode($libelle),
+        'code' => Chapitre::getUniqcode(),
         'libelle' => $libelle,
         'description' => $faker->paragraph(2),
         'cour_id' => function() {

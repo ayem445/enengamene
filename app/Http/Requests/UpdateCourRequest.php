@@ -9,7 +9,7 @@ use App\NiveauEtude;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class UpdateCourRequest extends FormRequest
+class UpdateCourRequest extends CourRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -45,16 +45,7 @@ class UpdateCourRequest extends FormRequest
      */
     public function updateCour($cour) {
         if($this->hasFile('image')) {
-            // Supprime l'ancienne image si elle existe
-            if (file_exists( 'public/cours' . '/' . $this->image_url )) {
-                unlink( 'public/cours' . '/' . $this->image_url );
-            }
-            $uploadedImage = $this->image;
-            $this->fileName = $this->code . '.' . $uploadedImage->getClientOriginalExtension();
-
-            $uploadedImage->storePubliclyAs(
-                'public/cours',  $this->fileName
-            );
+            $cour->image_url = $this->fileName;
         }
         $matiere = Matiere::find(json_decode($this->matiere, true)["id"]);
         $auteur = Auteur::find(json_decode($this->auteur, true)["id"]);

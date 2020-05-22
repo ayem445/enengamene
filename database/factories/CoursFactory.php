@@ -19,7 +19,7 @@ $factory->define(Cour::class, function (Faker $faker) {
     $niveauetude_max_id = NiveauEtude::max('id');
     $libelle = $faker->sentence(2);
     return [
-        'code' => Cour::getUniqcode($libelle),
+        'code' => Cour::getUniqcode(),
         'libelle' => $libelle,
         'image_url' => asset('assets/img/series.jpg'),
         'description' => $faker->paragraph(),

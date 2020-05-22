@@ -54,7 +54,7 @@ class CourController extends Controller
         // $matiere = (Matiere) $request->matiere_id;
 
         //dd($matiere,$request);
-        return $request->uploadCoursImage()
+        return $request->verifyAndStoreImage()
               ->storeCours();
     }
 
@@ -97,7 +97,8 @@ class CourController extends Controller
      */
     public function update(UpdateCourRequest $request, Cour $cour)
     {
-        $request->updateCour($cour);
+        $request->verifyAndStoreImage($cour->image_url)
+          ->updateCour($cour);
 
         session()->flash('success', 'Cours mis à jour avec succès');
         return redirect()->route('cours.index');

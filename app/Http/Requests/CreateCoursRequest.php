@@ -9,7 +9,7 @@ use App\Matiere;
 use App\NiveauEtude;
 use Illuminate\Support\Str;
 
-class CreateCoursRequest extends FormRequest
+class CreateCoursRequest extends CourRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -45,7 +45,7 @@ class CreateCoursRequest extends FormRequest
     public function storeCours()
     {
         if (! isset($this->uniqcode)) {
-          $this->uniqcode = Cour::getUniqcode($this->libelle);
+          $this->uniqcode = Cour::getUniqcode();
         }
         $matiere = Matiere::find(json_decode($this->matiere, true)["id"]);
         $auteur = Auteur::find(json_decode($this->auteur, true)["id"]);
@@ -57,33 +57,12 @@ class CreateCoursRequest extends FormRequest
             'auteur_id' => $auteur->id,
             'niveau_etude_id' => $niveau_etude->id,
             'description' => $this->description,
-            'image_url' => 'cours/' . $this->fileName
+            'image_url' => $this->fileName
         ]);
         // $cours->code = Str::slug($this->libelle) . "_" . $cours->id;
         // $cours->save();
 
         session()->flash('success', 'Cours créé avec succès.');
         return redirect()->route('cours.show', $cours);
-    }
-
-    /**
-     * Télécharge l'image du cors transmise dans la requête
-     *
-     * @return App\Http\Requests\CreateCoursRequest
-     */
-    public function uploadCoursImage()
-    {
-        if (! isset($this->uniqcode)) {
-          $this->uniqcode = Cour::getUniqcode($this->libelle);
-        }
-        $uploadedImage = $this->image;
-
-        $this->fileName = $this->uniqcode . '.' . $uploadedImage->getClientOriginalExtension();
-
-        $uploadedImage->storePubliclyAs(
-            'public/cours',  $this->fileName
-        );
-
-        return $this;
     }
 }

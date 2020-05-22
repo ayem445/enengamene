@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Personne::class, function (Faker $faker) {
     $gender = $faker->randomElement(['H', 'F']);
     $lastName = $faker->lastName;
-    $uniqcode = Personne::getUniqcode($lastName);
+    $uniqcode = Personne::getUniqcode();
     return [
         'code' => $uniqcode,
         'email' => $faker->unique()->safeEmail,

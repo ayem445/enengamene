@@ -20,14 +20,13 @@ trait CodeTrait
       $this->save();
     }
 
-    public static function getUniqcode($prefix = "") {
-      // Si le préfixe est vide ...
-      if ($prefix == "") {
-          // ... on retourne le code unique simplement
-          return uniqid("", true);
-      } else {
-          // Sinon, on concatène le préfixe et le code unique
-          return Str::slug($prefix) . "_" . uniqid("", true);
-      }
+    /**
+     * Retourne un code unique pour le modèle
+     * @return string code alphanumérique
+     */
+    public static function getUniqcode() {
+      $caller_class_full = get_called_class();
+      $caller_class = str_replace("App\\", "", $caller_class_full);
+      return Str::slug($caller_class) . "_" . uniqid("", true);
     }
 }
