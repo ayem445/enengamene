@@ -27,6 +27,6 @@ trait CodeTrait
     public static function getUniqcode() {
       $caller_class_full = get_called_class();
       $caller_class = str_replace("App\\", "", $caller_class_full);
-      return Str::slug($caller_class) . "_" . uniqid("", true);
+      return Str::slug($caller_class) . "_" . str_replace(".", "", uniqid("", true));
     }
 }

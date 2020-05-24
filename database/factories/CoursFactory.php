@@ -21,7 +21,7 @@ $factory->define(Cour::class, function (Faker $faker) {
     return [
         'code' => Cour::getUniqcode(),
         'libelle' => $libelle,
-        'image_url' => asset('assets/img/series.jpg'),
+        'image_url' => 'default.jpg',
         'description' => $faker->paragraph(),
         'matiere_id' => $faker->numberBetween($min = 1, $max = $matiere_max_id),
         'auteur_id' => $faker->numberBetween($min = 1, $max = $auteur_max_id),

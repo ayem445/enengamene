@@ -5,6 +5,11 @@ namespace App\Traits;
 trait BaseRequestTrait
 {
     /**
+     * Fonction abstraite que doit définir toutes les requête qui implémenterons ce trait
+     * @var [type]
+     */
+    abstract public function filefolder();
+    /**
      * Does very basic image validity checking and stores it. Redirects back if somethings wrong.
      * @Notice: This is not an alternative to the model validation for this field.
      *
@@ -13,7 +18,7 @@ trait BaseRequestTrait
      */
     public function verifyAndStoreImage( $oldimage = ' ', $fieldname = 'image' ) {
 
-        $images_folder = 'uploads/images';
+        $images_folder = $this->filefolder();//'uploads/images';
 
         if( $this->hasFile( $fieldname ) ) {
 
@@ -26,7 +31,12 @@ trait BaseRequestTrait
 
             // Check if the old image exists inside folder
             if (file_exists( $images_folder . '/' . $oldimage)) {
-                unlink($images_folder . '/' . $oldimage);
+                $oldimage_arr = explode('.', $oldimage);
+                if ($oldimage_arr[0] == 'default') {
+                  // On ne supprime pas l'image par défaut
+                } else {
+                  unlink($images_folder . '/' . $oldimage);
+                }
             }
 
             // Set image name
