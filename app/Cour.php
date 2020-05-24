@@ -16,7 +16,7 @@ class Cour extends Model
      *
      * @var array
      */
-    protected $with = ['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions'];
+    //protected $with = ['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions'];
 
     /**
      * Retourne l auteur de ce cours.

@@ -17,7 +17,7 @@ class Auteur extends Model
      *
      * @var array
      */
-    protected $with = ['cours','personne'];
+    //protected $with = ['cours','personne'];
 
     /**
     * renvoie le nom complet de l'auteur.

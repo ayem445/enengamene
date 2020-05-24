@@ -21,7 +21,10 @@ class CourController extends Controller
      */
     public function index()
     {
-        return view('admin.cours.all')->withCours(Cour::all());
+        $cours = Cour::all();
+        $cours->load(['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions']);
+        
+        return view('admin.cours.all')->withCours($cours);
     }
 
     /**

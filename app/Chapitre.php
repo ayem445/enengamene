@@ -16,7 +16,7 @@ class Chapitre extends Model
      *
      * @var array
      */
-    protected $with = ['sessions','difficulte'];
+    //protected $with = ['sessions','difficulte'];
 
     /**
      * Retourne le cour auquel appartient ce chapitre.
