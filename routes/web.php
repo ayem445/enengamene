@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/redis', function(){
+//   // key: value // string
+//   //Redis::set('friend', 'momo');
+//   dd(Redis::get('friend'));
+//   // key: value // list
+//   // key: value // set
+// });
+
 Auth::routes();
 Route::get('/', 'FrontendController@welcome');
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cour');
