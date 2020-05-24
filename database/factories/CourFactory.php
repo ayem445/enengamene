@@ -3,13 +3,12 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Cour;
-use App\Auteur;
 use App\Matiere;
+use App\Auteur;
 use App\NiveauEtude;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
-$factory->define(Cour::class, function (Faker $faker) {
+$factory->define(App\Cour::class, function (Faker $faker) {
     $matiere_max_id = Matiere::max('id');
     $auteur_max_id = Auteur::max('id');
     if (! $auteur_max_id) {

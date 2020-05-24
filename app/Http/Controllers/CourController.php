@@ -23,7 +23,7 @@ class CourController extends Controller
     {
         $cours = Cour::all();
         $cours->load(['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions']);
-        
+
         return view('admin.cours.all')->withCours($cours);
     }
 
@@ -35,7 +35,7 @@ class CourController extends Controller
     public function create()
     {
         $matieres = Matiere::listMap('libelle');
-        $auteurs = Auteur::listMap('nomComplet');;
+        $auteurs = Auteur::listMap('nom_complet');;
         $niveauEtudes = NiveauEtude::listMap('libelle');
 
         return view('admin.cours.create')
@@ -82,7 +82,7 @@ class CourController extends Controller
     public function edit(Cour $cour)
     {
         $matieres = Matiere::listMap('libelle');
-        $auteurs = Auteur::listMap('nomComplet');
+        $auteurs = Auteur::listMap('nom_complet');
         $niveauEtudes = NiveauEtude::listMap('libelle');
 
         return view('admin.cours.edit')->withCour($cour)

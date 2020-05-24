@@ -19,6 +19,15 @@ class Cour extends Model
     //protected $with = ['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions'];
 
     /**
+     * Retourne le chemin public pour l'image du cours
+     *
+     * @return string
+     */
+    public function getImagePathAttribute() {
+        return asset( config('app.cours_filefolder') . '/' . $this->image_url);
+    }
+
+    /**
      * Retourne l auteur de ce cours.
      */
     public function auteur()
