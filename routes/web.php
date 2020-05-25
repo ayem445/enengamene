@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', 'FrontendController@welcome');
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cour');
+Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
+Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
 
 Route::get('register/confirm', 'ConfirmEmailController@index')->name('confirm-email');
 

@@ -13,12 +13,12 @@
                     <br><br><br>
                     @auth
                       @aDemarreLeCours($cour)
-                        <a href="#" class="btn btn-lg btn-primary mr-16 btn-round">CONTINUE LEARNING</a>
+                        <a href="{{ route('cours.learning', $cour->id) }}" class="btn btn-lg btn-primary mr-16 btn-round">Poursuivre l'Apprentissage</a>
                       @else
-                        <a href="#" class="btn btn-lg btn-primary mr-16 btn-round">START LEARNING</a>
-                      @endif
+                        <a href="{{ route('cours.learning', $cour->id) }}" class="btn btn-lg btn-primary mr-16 btn-round">Commencer à Apprendre</a>
+                      @endaDemarreLeCours
                     @else
-                          <a href="#"  class="btn btn-lg btn-primary mr-16 btn-round">START LEARNING</a>
+                          <a href="{{ route('cours.learning', $cour->id) }}"  class="btn btn-lg btn-primary mr-16 btn-round">Commencer à Apprendre</a>
                     @endauth
                   </div>
 
