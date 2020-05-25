@@ -6,11 +6,11 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\BaseTrait;
+use App\Traits\LearningTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-    use BaseTrait;
+    use Notifiable, BaseTrait, LearningTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -96,5 +96,5 @@ class User extends Authenticatable
     public function getRouteKeyName() {
         return 'username';
     }
-}
 
+}
