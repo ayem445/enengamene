@@ -15,7 +15,7 @@ class CourTest extends TestCase
         $series = factory(\App\Cour::class)->create([
             'image_url' => 'cours-slug.png'
         ]);
-
+        
         $imagePath = $series->image_path;
         $this->assertEquals(asset('uploads/cours/cours-slug.png'), $imagePath);
     }
