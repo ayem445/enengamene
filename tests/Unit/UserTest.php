@@ -88,4 +88,33 @@ class UserTest extends TestCase
         $this->assertTrue(in_array($session2->id, $sessionsTermineesIds ));
         $this->assertFalse(in_array($session3->id, $sessionsTermineesIds));
     }
+
+    public function test_peut_savoir_si_un_user_a_demarrer_un_cour() {
+        //user, 2 chapitre,
+        $this->flushRedis();
+        $user = factory(User::class)->create();
+
+        // on crée un 1er chapitre
+        $chapitre = factory(Chapitre::class)->create();
+
+        // on crée et assigne 2 session au 1er chapitre
+        $session = factory(Session::class)->create([
+            'chapitre_id' => 1
+        ]);
+        $session2 = factory(Session::class)->create([
+            'chapitre_id' => 1
+        ]);
+
+        // on crée un 2e chapitre
+        $chapitre2 = factory(Chapitre::class)->create();
+        // on crée et assigne une session au 2e chapitre
+        $session3 = factory(Session::class)->create([
+            'chapitre_id' => $chapitre2->id
+        ]);
+        //un user lit une session dans le 1er chapitre
+        $user->terminerSession($session2);
+        //affirmer que aDemarreLeCours(1) retourne true
+        $this->assertTrue($user->aDemarreLeCours($chapitre->cour));
+        $this->assertFalse($user->aDemarreLeCours($chapitre2->cour));
+    }
 }

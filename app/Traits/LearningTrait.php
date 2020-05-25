@@ -9,7 +9,7 @@ use App\Session;
 trait LearningTrait
 {
     /**
-     * Marque une session comme terminée par un user
+     * Marque une session comme terminée par le user
      *
      * @param [App\Session] $session
      * @return void
@@ -54,7 +54,7 @@ trait LearningTrait
     }
 
     /**
-     * Vérifie si un user a démarré un chapitre donné
+     * Vérifie si le user a démarré un chapitre donné
      *
      * @param [App\Chapitre] $chapitre
      * @return boolean
@@ -75,4 +75,24 @@ trait LearningTrait
             $this->getSessionsTermineesPourChapitre($chapitre)
         )->get();
     }
+
+
+    /**
+     *  COURS
+     */
+
+     /**
+      * Vérifie si le user a démarré un cour donné
+      *
+      * @param [App\Cour] $cour
+      * @return boolean
+      */
+     public function aDemarreLeCours($cour) {
+         $nbChapitresDemarres = 0;
+         foreach ($cour->chapitres as $chapitre) {
+            $nbChapitresDemarres += ($this->aDemarreLeChapitre($chapitre) ? 1 : 0);
+         }
+
+         return ($nbChapitresDemarres > 0);
+     }
 }

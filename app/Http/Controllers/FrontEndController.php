@@ -24,6 +24,7 @@ class FrontEndController extends Controller
      * @return view
      */
     public function cour(Cour $cour) {
-        dd($cour);
+        $cour = Cour::find($cour->id);
+        return view('cours')->withCour($cour);
     }
 }
