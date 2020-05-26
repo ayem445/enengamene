@@ -4307,6 +4307,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['default_session'],
+  data: function data() {
+    return {
+      session: JSON.parse(this.default_session)
+    };
+  },
   mounted: function mounted() {
     var player = new _vimeo_player__WEBPACK_IMPORTED_MODULE_0__["default"]('handstick');
   }
@@ -23392,24 +23398,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm.session
+      ? _c("div", {
+          attrs: {
+            "data-vimeo-id": _vm.session.lien,
+            "data-vimeo-width": "900",
+            id: "handstick"
+          }
+        })
+      : _vm._e()
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", {
-        attrs: {
-          "data-vimeo-id": "19231868",
-          "data-vimeo-width": "900",
-          id: "handstick"
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

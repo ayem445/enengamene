@@ -23,8 +23,8 @@
 
       <div class="row gap-y text-center">
         <div class="col-12">
-          
-            <vue-player></vue-player>
+
+            <vue-player default_session="{{$session}}"></vue-player>
 
         </div>
         <div class="col-12">
