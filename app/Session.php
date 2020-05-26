@@ -34,5 +34,38 @@ class Session extends Model
     {
         return $this->belongsTo('App\Quiz');
     }
-}
 
+    /**
+     * Renvoie la prochaine session après celle-la
+     *
+     * @return \App\Session
+     */
+    public function getSessionSuiv() {
+        $nextSession = $this->chapitre->sessions()->where('num_ordre', '>', $this->num_ordre)
+                    ->orderBy('num_ordre', 'asc')
+                    ->first();
+
+        if($nextSession) {
+            return $nextSession;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Renvoie la session qui vient avant celle-la
+     *
+     * @return \App\Session
+     */
+    public function getSessionPrec() {
+        $prevSession = $this->chapitre->sessions()->where('num_ordre', '<', $this->num_ordre)
+                    ->orderBy('num_ordre', 'desc')
+                    ->first();
+
+        if($prevSession) {
+            return $prevSession;
+        }
+
+        return $this;
+    }
+}
