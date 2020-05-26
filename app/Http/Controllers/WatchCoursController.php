@@ -32,6 +32,9 @@ class WatchCoursController extends Controller
      * @return view
      */
     public function showSession(Chapitre $chapitre, Session $session) {
-
+      return view('watch', [
+          'chapitre' => $chapitre,
+          'session' => $session
+      ]);
     }
 }

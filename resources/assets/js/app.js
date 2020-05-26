@@ -49,6 +49,7 @@ Vue.component('vue-select', require('./components/Select.vue').default);
 Vue.component('vue-select2', require('./components/Select2.vue').default);
 Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
 Vue.component('vue-sessions', require('./components/Sessions.vue').default);
+Vue.component('vue-player', require('./components/Player.vue').default);
 
 //import VueChapitre from './components/Chapitre.vue'
 //components: { VueLogin }
