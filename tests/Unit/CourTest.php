@@ -33,4 +33,17 @@ class CourTest extends TestCase
         $this->assertEquals($sessions->first()->id, $session2->id);
         $this->assertEquals($sessions->last()->id, $session3->id);
     }
+
+    public function test_peut_obtenir_les_chapitres_ordonnes_pour_un_cour() {
+        // cour , chapitres
+        $chapitre = factory(Chapitre::class)->create(['num_ordre' => 200]);
+        $chapitre2 = factory(Chapitre::class)->create(['num_ordre' => 100, 'cour_id' => 1]);
+        $chapitre3 = factory(Chapitre::class)->create(['num_ordre' => 300, 'cour_id' => 1]);
+        // appel de la méthode getChapitresOrdonnees
+        $chapitres = $chapitre->cour->getChapitresOrdonnes();
+        //s'assurer que les chapitres sont dans le bon ordre
+        $this->assertInstanceOf(Chapitre::class, $chapitres->random());
+        $this->assertEquals($chapitres->first()->id, $chapitre2->id);
+        $this->assertEquals($chapitres->last()->id, $chapitre3->id);
+    }
 }

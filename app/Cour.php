@@ -73,4 +73,13 @@ class Cour extends Model
     public function cour_notation() {
         return $this->hasMany('App\CourNotation', 'cour_id');
     }
+
+    /**
+     * Obtenir une liste de chapitres pour le cours dans l'ordre de visionnage
+     *
+     * @return void
+     */
+    public function getChapitresOrdonnes() {
+        return $this->chapitres()->orderBy('num_ordre', 'asc')->get();
+    }
 }
