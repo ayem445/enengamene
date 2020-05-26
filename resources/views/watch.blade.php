@@ -26,12 +26,22 @@
 
             <vue-player default_session="{{$session}}"></vue-player>
 
-            <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}" class="btn btn-info">Session Précédente</a>
-            <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}" class="btn btn-info">Session Suivante</a>
-            
+            @if($session->getSessionPrec()->id !== $session->id)
+              <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}" class="btn btn-info">Session Précédente</a>
+            @endif
+            @if($session->getSessionSuiv()->id !== $session->id)
+              <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}" class="btn btn-info">Session Suivante</a>
+            @endif
+
         </div>
         <div class="col-12">
-
+          <ul class="list-group">
+            @foreach($chapitre->getSessionsOrdonnees() as $s)
+              <li class="list-group-item">
+                <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">{{ $s->libelle }}</a>
+              </li>
+            @endforeach
+          </ul>
         </div>
       </div>
     </div>
