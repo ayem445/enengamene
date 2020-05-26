@@ -17,7 +17,7 @@ $factory->define(Chapitre::class, function (Faker $faker) {
         'cour_id' => function() {
           return factory(\App\Cour::class)->create()->id;
         },
-        'num_ordre' => 100,
+        'num_ordre' => 1,
         'difficulte_id' => $faker->numberBetween($min = 1, $max = $difficulte_max_id)
     ];
 });

@@ -26,6 +26,9 @@
 
             <vue-player default_session="{{$session}}"></vue-player>
 
+            <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}" class="btn btn-info">Session Précédente</a>
+            <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}" class="btn btn-info">Session Suivante</a>
+            
         </div>
         <div class="col-12">
 

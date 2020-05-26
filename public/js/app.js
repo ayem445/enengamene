@@ -23069,58 +23069,64 @@ var render = function() {
         "div",
         { staticClass: "accordion", attrs: { id: "accordion-chapitres" } },
         _vm._l(_vm.formattedChapitres, function(chapitre, index) {
-          return _c("div", { staticClass: "card" }, [
-            _c("h3", { staticClass: "card-title" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "d-flex",
-                  attrs: {
-                    "data-toggle": "collapse",
-                    "data-parent": "#accordion-chapitres",
-                    href: "#collapse-chapitres-" + index
-                  }
-                },
-                [
-                  _c("span", { staticClass: "mr-auto" }, [
-                    _vm._v(_vm._s(chapitre.libelle))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-                    _c("i", { staticClass: "fa fa-signal mr-8" }),
-                    _vm._v(" " + _vm._s(chapitre.difficulte.libelle))
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse in",
-                attrs: { id: "collapse-chapitres-" + index }
-              },
-              [
-                _c("div", { staticClass: "card-block" }, [
-                  _c("p", [_vm._v(_vm._s(chapitre.description))]),
-                  _vm._v(" "),
+          return _vm.formattedChapitres
+            ? _c("div", { staticClass: "card" }, [
+                _c("h3", { staticClass: "card-title" }, [
                   _c(
-                    "div",
-                    { staticClass: "row" },
+                    "a",
+                    {
+                      staticClass: "d-flex",
+                      attrs: {
+                        "data-toggle": "collapse",
+                        "data-parent": "#accordion-chapitres",
+                        href: "#collapse-chapitres-" + index
+                      }
+                    },
                     [
-                      _c("vue-sessions", {
-                        attrs: {
-                          default_sessions: chapitre.sessions,
-                          chapitre_id: chapitre.id
-                        }
-                      })
-                    ],
-                    1
+                      _c("span", { staticClass: "mr-auto" }, [
+                        _vm._v(_vm._s(chapitre.libelle))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { staticClass: "text-lighter hidden-sm-down" },
+                        [
+                          _c("i", { staticClass: "fa fa-signal mr-8" }),
+                          _vm._v(" " + _vm._s(chapitre.difficulte.libelle))
+                        ]
+                      )
+                    ]
                   )
-                ])
-              ]
-            )
-          ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "collapse in",
+                    attrs: { id: "collapse-chapitres-" + index }
+                  },
+                  [
+                    _c("div", { staticClass: "card-block" }, [
+                      _c("p", [_vm._v(_vm._s(chapitre.description))]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row" },
+                        [
+                          _c("vue-sessions", {
+                            attrs: {
+                              default_sessions: chapitre.sessions,
+                              chapitre_id: chapitre.id
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e()
         }),
         0
       ),
@@ -23934,19 +23940,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.session.num_ordre,
-                    expression: "session.num_ordre"
+                    value: _vm.session.lien,
+                    expression: "session.lien"
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "number", placeholder: "Numéro Ordre" },
-                domProps: { value: _vm.session.num_ordre },
+                attrs: { type: "text", placeholder: "Lien/Id Video" },
+                domProps: { value: _vm.session.lien },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.session, "num_ordre", $event.target.value)
+                    _vm.$set(_vm.session, "lien", $event.target.value)
                   }
                 }
               })

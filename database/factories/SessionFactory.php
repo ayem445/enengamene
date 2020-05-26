@@ -15,7 +15,7 @@ $factory->define(Session::class, function (Faker $faker) {
       'chapitre_id' => function() {
         return factory(\App\Chapitre::class)->create()->id;
       },
-      'num_ordre' => 100,
+      'num_ordre' => 1,
       'lien' => '230485453',
       'type_contenu_id' => 1
     ];

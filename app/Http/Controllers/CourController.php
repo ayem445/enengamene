@@ -69,7 +69,7 @@ class CourController extends Controller
      */
     public function show(Cour $cour)
     {
-        //$cour = Cour::with(['chapitres', 'chapitres.sessions'])->find($cour->id);
+        $cour = Cour::with(['chapitres', 'chapitres.sessions', 'chapitres.difficulte'])->find($cour->id);
         return view('admin.cours.index')->withCour($cour);
     }
 
