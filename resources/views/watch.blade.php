@@ -20,20 +20,23 @@
 @section('content')
   <div class="section bg-grey">
     <div class="container">
-
+      @php
+        $nextSession = $session->getSessionSuiv();
+        $prevSession = $session->getSessionPrec();
+      @endphp
       <div class="row gap-y text-center">
         <div class="col-12">
 
             <vue-player default_session="{{$session}}"
-            @if($session->getSessionSuiv()->id !== $session->id)
+            @if($nextSession->id !== $session->id)
                 next_session_url="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}"
             @endif
             ></vue-player>
 
-            @if($session->getSessionPrec()->id !== $session->id)
+            @if($nextSession->id !== $session->id)
               <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}" class="btn btn-info">Session Précédente</a>
             @endif
-            @if($session->getSessionSuiv()->id !== $session->id)
+            @if($prevSession->id !== $session->id)
               <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}" class="btn btn-info">Session Suivante</a>
             @endif
 

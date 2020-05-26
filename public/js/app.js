@@ -4323,9 +4323,13 @@ __webpack_require__.r(__webpack_exports__);
     displayVideoEndedAlert: function displayVideoEndedAlert() {
       var _this = this;
 
-      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé cette Session !').then(function () {
-        window.location = _this.next_session_url;
-      });
+      if (this.next_session_url) {
+        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé cette Session !').then(function () {
+          window.location = _this.next_session_url;
+        });
+      } else {
+        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé ce Chapitre !');
+      }
     },
     completeLesson: function completeLesson() {
       var _this2 = this;

@@ -17,10 +17,14 @@
         },
         methods: {
             displayVideoEndedAlert() {
-                Swal('Félicitation ! Vous avez terminé cette Session !')
-                  .then(() => {
-                      window.location = this.next_session_url
-                  })
+                if(this.next_session_url) {
+                    Swal('Félicitation ! Vous avez terminé cette Session !')
+                    .then(() => {
+                        window.location = this.next_session_url
+                    })
+                } else {
+                    Swal('Félicitation ! Vous avez terminé ce Chapitre !')
+                }
             },
             completeLesson() {
                 Axios.post(`/chapitre/terminer-session/${this.session.id}`, {})

@@ -19,6 +19,7 @@
         "spatie/laravel-permission": "^3.11"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.3",
         "beyondcode/laravel-er-diagram-generator": "^1.4",
         "cedextech/trait-generator": "^1.0",
         "facade/ignition": "^2.0",
