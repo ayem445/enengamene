@@ -49,4 +49,13 @@ class Chapitre extends Model
     {
         return $this->belongsTo('App\Quiz');
     }
+
+    /**
+     * Obtenir une liste de sessions pour le chapitre dans l'ordre de visionnage
+     *
+     * @return void
+     */
+    public function getSessionsOrdonnees() {
+        return $this->sessions()->orderBy('num_ordre', 'asc')->get();
+    }
 }
