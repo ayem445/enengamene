@@ -24,7 +24,11 @@
       <div class="row gap-y text-center">
         <div class="col-12">
 
-            <vue-player default_session="{{$session}}"></vue-player>
+            <vue-player default_session="{{$session}}"
+            @if($session->getSessionSuiv()->id !== $session->id)
+                next_session_url="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}"
+            @endif
+            ></vue-player>
 
             @if($session->getSessionPrec()->id !== $session->id)
               <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}" class="btn btn-info">Session Précédente</a>

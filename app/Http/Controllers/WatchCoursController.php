@@ -37,4 +37,17 @@ class WatchCoursController extends Controller
           'session' => $session
       ]);
     }
+
+    /**
+     * Terminer une session via ajax
+     *
+     * @param App\Session $session
+     * @return json response
+     */
+    public function terminerSession(Session $session) {
+        auth()->user()->terminerSession($session);
+        return response()->json([
+            'status' => 'ok'
+        ]);
+    }
 }

@@ -4298,7 +4298,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _vimeo_player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @vimeo/player */ "./node_modules/@vimeo/player/dist/player.es.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _vimeo_player__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vimeo/player */ "./node_modules/@vimeo/player/dist/player.es.js");
 //
 //
 //
@@ -4306,15 +4310,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['default_session'],
+  props: ['default_session', 'next_session_url'],
   data: function data() {
     return {
       session: JSON.parse(this.default_session)
     };
   },
+  methods: {
+    displayVideoEndedAlert: function displayVideoEndedAlert() {
+      var _this = this;
+
+      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé cette Session !').then(function () {
+        window.location = _this.next_session_url;
+      });
+    },
+    completeLesson: function completeLesson() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/chapitre/terminer-session/".concat(this.session.id), {}).then(function (resp) {
+        _this2.displayVideoEndedAlert();
+      });
+    }
+  },
   mounted: function mounted() {
-    var player = new _vimeo_player__WEBPACK_IMPORTED_MODULE_0__["default"]('handstick');
+    var _this3 = this;
+
+    var player = new _vimeo_player__WEBPACK_IMPORTED_MODULE_2__["default"]('handstick');
+    player.on('ended', function () {
+      _this3.completeLesson();
+    });
   }
 });
 
