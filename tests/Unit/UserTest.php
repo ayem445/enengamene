@@ -24,7 +24,7 @@ class UserTest extends TestCase
         $user->terminerSession($session);
         $user->terminerSession($session2);
         $this->assertEquals(
-            Redis::smembers('user:1:chapitre:1'),
+            Redis::smembers('user:1:cour:1:chapitre:1'),
             [1, 2]
         );
 
@@ -129,4 +129,36 @@ class UserTest extends TestCase
         $this->assertTrue($user->aTermineeSession($session));
         $this->assertFalse($user->aTermineeSession($session2));
     }
+
+    // public function test_peut_obtenir_tous_les_cours_en_cours_de_visionnage_par_un_user() {
+    //     $this->flushRedis();
+    //     $user = factory(User::class)->create();
+    //     $lesson = factory(Lesson::class)->create();
+    //     $lesson2 = factory(Lesson::class)->create([ 'series_id' => 1 ]);
+    //     $lesson3 = factory(Lesson::class)->create();
+    //     $lesson4 = factory(Lesson::class)->create([ 'series_id' => 2 ]);
+    //     $lesson5 = factory(Lesson::class)->create();
+    //     $lesson6 = factory(Lesson::class)->create([ 'series_id' => 3 ]);
+    //     // complete lesson 1 , 2
+    //     $user->completeLesson($lesson);
+    //     $user->completeLesson($lesson3);
+    //
+    //     $startedSeries = $user->seriesBeingWatched();
+    //     // collection of series
+    //     $this->assertInstanceOf(\Illuminate\Support\Collection::class, $startedSeries);
+    //     $this->assertInstanceOf(\Bahdcasts\Series::class, $startedSeries->random());
+    //     $idsOfStartedSeries = $startedSeries->pluck('id')->all();
+    //
+    //     $this->assertTrue(
+    //         in_array($lesson->series->id, $idsOfStartedSeries)
+    //     );
+    //     $this->assertTrue(
+    //         in_array($lesson3->series->id, $idsOfStartedSeries)
+    //     );
+    //     $this->assertFalse(
+    //         in_array($lesson6->series->id, $idsOfStartedSeries)
+    //     );
+    //     //assert 1 , 2
+    //     // assert 3
+    // }
 }

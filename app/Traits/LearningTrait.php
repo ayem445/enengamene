@@ -16,7 +16,7 @@ trait LearningTrait
      */
     public function terminerSession($session) {
         // Set Add
-        Redis::sadd("user:{$this->id}:chapitre:{$session->chapitre->id}", $session->id);
+        Redis::sadd("user:{$this->id}:cour:{$session->chapitre->cour_id}:chapitre:{$session->chapitre->id}", $session->id);
     }
 
     /**
@@ -26,7 +26,24 @@ trait LearningTrait
      * @return array
      */
     public function getSessionsTermineesPourChapitre($chapitre) {
-        return Redis::smembers("user:{$this->id}:chapitre:{$chapitre->id}");
+        return Redis::smembers("user:{$this->id}:cour:{$chapitre->cour_id}:chapitre:{$chapitre->id}");
+    }
+
+    /**
+     * Obtenir un tableau de sessions terminées pour un cours
+     *
+     * @param [App\Cour] $cour
+     * @return array
+     */
+    public function getSessionsTermineesPourCours($cour) {
+        $keys = Redis::keys("user:{$this->id}:cour:{$cour->id}:chapitre:*");
+        $result_arr = [];
+        foreach ($keys as $key) {
+            $chapitreId = explode(':', $key)[5];
+            $new_list = Redis::smembers("user:{$this->id}:cour:{$cour->id}:chapitre:{$chapitreId}");
+            $result_arr  += $new_list;
+        }
+        return $result_arr;
     }
 
     /**
@@ -38,6 +55,17 @@ trait LearningTrait
      */
     public function getNombreSessionsTermineesPourChapitre($chapitre) {
         return count($this->getSessionsTermineesPourChapitre($chapitre));
+    }
+
+    /**
+     * Get number of completed lessons for a series
+     * Obtenir nombre de sessions terminées pour un chapitre
+     *
+     * @param [App\Chapitre] $chapitre
+     * @return integer
+     */
+    public function getNombreSessionsTermineesPourCours($cour) {
+        return count($this->getSessionsTermineesPourCours($cour));
     }
 
     /**
@@ -101,11 +129,12 @@ trait LearningTrait
       * @return boolean
       */
      public function aDemarreLeCours($cour) {
-         $nbChapitresDemarres = 0;
-         foreach ($cour->chapitres as $chapitre) {
-            $nbChapitresDemarres += ($this->aDemarreLeChapitre($chapitre) ? 1 : 0);
-         }
-
-         return ($nbChapitresDemarres > 0);
+         // $nbChapitresDemarres = 0;
+         // foreach ($cour->chapitres as $chapitre) {
+         //    $nbChapitresDemarres += ($this->aDemarreLeChapitre($chapitre) ? 1 : 0);
+         // }
+         //
+         // return ($nbChapitresDemarres > 0);
+         return $this->getNombreSessionsTermineesPourCours($cour) > 0;
      }
 }
