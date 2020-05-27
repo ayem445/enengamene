@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Redis;
+use App\Cour;
 use App\Chapitre;
 use App\Session;
 
@@ -129,12 +130,33 @@ trait LearningTrait
       * @return boolean
       */
      public function aDemarreLeCours($cour) {
-         // $nbChapitresDemarres = 0;
-         // foreach ($cour->chapitres as $chapitre) {
-         //    $nbChapitresDemarres += ($this->aDemarreLeChapitre($chapitre) ? 1 : 0);
-         // }
-         //
-         // return ($nbChapitresDemarres > 0);
          return $this->getNombreSessionsTermineesPourCours($cour) > 0;
+     }
+
+     /**
+      * Obtenir tous les Ids des cours en cours de visionnage
+      *
+      * @return array
+      */
+     public function coursEnVisionnageIds() {
+         $keys = Redis::keys("user:{$this->id}:cour:*");
+         $coursIds = [];
+         foreach($keys as $key):
+             $coursId = explode(':', $key)[3];
+             array_push($coursIds, $coursId);
+         endforeach;
+
+         return $coursIds;
+     }
+
+     /**
+      * Obtenir tous les cours en cours de visionnage
+      *
+      * @return void
+      */
+     public function coursEnVisionnage() {
+         return collect($this->coursEnVisionnageIds())->map(function($id){
+             return Cour::find($id);
+         })->filter();
      }
 }

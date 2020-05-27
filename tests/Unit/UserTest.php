@@ -6,9 +6,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Redis;
 use App\User;
+use App\Cour;
 use App\Session;
 use App\Chapitre;
-use App\Cours;
 
 class UserTest extends TestCase
 {
@@ -130,35 +130,35 @@ class UserTest extends TestCase
         $this->assertFalse($user->aTermineeSession($session2));
     }
 
-    // public function test_peut_obtenir_tous_les_cours_en_cours_de_visionnage_par_un_user() {
-    //     $this->flushRedis();
-    //     $user = factory(User::class)->create();
-    //     $lesson = factory(Lesson::class)->create();
-    //     $lesson2 = factory(Lesson::class)->create([ 'series_id' => 1 ]);
-    //     $lesson3 = factory(Lesson::class)->create();
-    //     $lesson4 = factory(Lesson::class)->create([ 'series_id' => 2 ]);
-    //     $lesson5 = factory(Lesson::class)->create();
-    //     $lesson6 = factory(Lesson::class)->create([ 'series_id' => 3 ]);
-    //     // complete lesson 1 , 2
-    //     $user->completeLesson($lesson);
-    //     $user->completeLesson($lesson3);
-    //
-    //     $startedSeries = $user->seriesBeingWatched();
-    //     // collection of series
-    //     $this->assertInstanceOf(\Illuminate\Support\Collection::class, $startedSeries);
-    //     $this->assertInstanceOf(\Bahdcasts\Series::class, $startedSeries->random());
-    //     $idsOfStartedSeries = $startedSeries->pluck('id')->all();
-    //
-    //     $this->assertTrue(
-    //         in_array($lesson->series->id, $idsOfStartedSeries)
-    //     );
-    //     $this->assertTrue(
-    //         in_array($lesson3->series->id, $idsOfStartedSeries)
-    //     );
-    //     $this->assertFalse(
-    //         in_array($lesson6->series->id, $idsOfStartedSeries)
-    //     );
-    //     //assert 1 , 2
-    //     // assert 3
-    // }
+    public function test_peut_obtenir_tous_les_cours_en_cours_de_visionnage_par_un_user() {
+        $this->flushRedis();
+        $user = factory(User::class)->create();
+        $session = factory(Session::class)->create();
+        $session2 = factory(Session::class)->create([ 'chapitre_id' => 1 ]); // donc cours 1
+        $session3 = factory(Session::class)->create();
+        $session4 = factory(Session::class)->create([ 'chapitre_id' => 2 ]); // donc cours 2
+        $session5 = factory(Session::class)->create();
+        $session6 = factory(Session::class)->create([ 'chapitre_id' => 3 ]); // donc cours 3
+        // terminer sessions 1 , 2
+        $user->terminerSession($session);
+        $user->terminerSession($session3);
+
+        $startedCours = $user->coursEnVisionnage();
+        // collection de Cour
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $startedCours);
+        $this->assertInstanceOf(\App\Cour::class, $startedCours->random());
+        $idsOfStartedCours = $startedCours->pluck('id')->all();
+
+        $this->assertTrue(
+            in_array($session->chapitre->cour_id, $idsOfStartedCours)
+        );
+        $this->assertTrue(
+            in_array($session3->chapitre->cour_id, $idsOfStartedCours)
+        );
+        $this->assertFalse(
+            in_array($session6->chapitre->cour_id, $idsOfStartedCours)
+        );
+        //assert 1 , 2
+        // assert 3
+    }
 }
