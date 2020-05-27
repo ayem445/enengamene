@@ -117,4 +117,16 @@ class UserTest extends TestCase
         $this->assertTrue($user->aDemarreLeCours($chapitre->cour));
         $this->assertFalse($user->aDemarreLeCours($chapitre2->cour));
     }
+
+    public function test_peut_verifier_si_un_user_a_termine_une_session() {
+        $this->flushRedis();
+        $user = factory(User::class)->create();
+        $session = factory(Session::class)->create();
+        $session2 = factory(Session::class)->create([ 'chapitre_id' => 1 ]);
+        //complete a session
+        $user->terminerSession($session);
+        //assert true,
+        $this->assertTrue($user->aTermineeSession($session));
+        $this->assertFalse($user->aTermineeSession($session2));
+    }
 }
