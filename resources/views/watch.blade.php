@@ -44,8 +44,14 @@
         <div class="col-12">
           <ul class="list-group">
             @foreach($chapitre->getSessionsOrdonnees() as $s)
-              <li class="list-group-item">
-                <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">{{ $s->libelle }}</a>
+              <li class="list-group-item
+              @if($s->id == $session->id)
+                active
+              @endif">
+                <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">{{ $s->libelle }} </a>
+                @if(auth()->user()->aTermineeSession($s))
+                  <small><label class="badge badge-success">terminée</label></small>
+                @endif
               </li>
             @endforeach
           </ul>

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', 'FrontendController@welcome');
+Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cour');
 Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
 Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
