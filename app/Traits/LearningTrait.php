@@ -76,6 +76,19 @@ trait LearningTrait
         )->get();
     }
 
+    /**
+     * Check si un user a terminé une session
+     *
+     * @param [App\Session] $session
+     * @return boolean
+     */
+    public function aTermineeSession($session) {
+        return in_array(
+            $session->id,
+            $this->getSessionsTermineesPourChapitre($session->chapitre)
+        );
+    }
+
 
     /**
      *  COURS

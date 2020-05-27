@@ -40,9 +40,21 @@ class SessionController extends Controller
     public function store(Chapitre $chapitre, CreateSessionRequest $request)
     {
         $data = $request->all();
-        $num_ordre = $chapitre->sessions->count();
-        $num_ordre = $num_ordre + 1;
-        $data['num_ordre'] = $num_ordre;
+        $num_ordre_auto = false;
+        if (isset($data['num_ordre'])) {
+          if (is_null($data['num_ordre'])) {
+            $num_ordre_auto =  true;
+          }
+        } else {
+          $num_ordre_auto =  true;
+        }
+
+        if ($num_ordre_auto) {
+          $num_ordre = $chapitre->sessions->count();
+          $num_ordre = $num_ordre + 1;
+          $data['num_ordre'] = $num_ordre;
+        }
+
         $data['code'] = Session::getUniqcode();
 
         return $chapitre->sessions()->create($data);
