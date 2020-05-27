@@ -118,6 +118,23 @@ trait LearningTrait
         );
     }
 
+    /**
+     * Obtenir le nombre total de sessions que l'utilisateur a déjà terminées
+     *
+     * @return integer
+     */
+    public function getNombreTotalSessionsTerminees() {
+        $keys = Redis::keys("user:{$this->id}:cour:*");
+        $result = 0;
+        foreach($keys as $key):
+            $courId = explode(':', $key)[3];
+            $chapitreId = explode(':', $key)[5];
+            $result = $result + count(Redis::smembers("user:{$this->id}:cour:{$courId}:chapitre:{$chapitreId}"));
+        endforeach;
+
+        return $result;
+    }
+
 
     /**
      *  COURS

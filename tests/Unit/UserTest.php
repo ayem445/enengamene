@@ -161,4 +161,21 @@ class UserTest extends TestCase
         //assert 1 , 2
         // assert 3
     }
+
+    public function test_peut_obtenir_le_nombre_de_sessions_terminees_par_un_user() {
+        //user
+        $this->flushRedis();
+        $user = factory(User::class)->create();
+        $session = factory(Session::class)->create();
+        $session2 = factory(Session::class)->create([ 'chapitre_id' => 1 ]);
+        $session3 = factory(Session::class)->create();
+        $session4 = factory(Session::class)->create([ 'chapitre_id' => 2 ]);
+        $session5 = factory(Session::class)->create([ 'chapitre_id' => 2 ]);
+
+        $user->terminerSession($session);
+        $user->terminerSession($session3);
+        $user->terminerSession($session5);
+
+        $this->assertEquals(3, $user->getNombreTotalSessionsTerminees());
+    }
 }
