@@ -9,6 +9,7 @@ class ProfileController extends Controller
 {
     public function index(User $user) {
         return view('profile')
-                ->withUser($user);
+                ->withUser($user)
+                ->withCours($user->coursEnVisionnage());
     }
 }

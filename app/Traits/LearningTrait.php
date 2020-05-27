@@ -174,6 +174,6 @@ trait LearningTrait
      public function coursEnVisionnage() {
          return collect($this->coursEnVisionnageIds())->map(function($id){
              return Cour::find($id);
-         })->filter();
+         })->filter(); // filter(): pour lister uniquement les valeurs non nulles
      }
 }

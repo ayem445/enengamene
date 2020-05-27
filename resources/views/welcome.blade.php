@@ -42,7 +42,7 @@
       <div class="card mb-30">
         <div class="row">
           <div class="col-12 col-md-4 align-self-center">
-            <a href="{{ route('cour', $c->id) }}"><img src="{{ $c->image_path }}" alt="..."></a>
+            <a href="{{ route('cours', $c->id) }}"><img src="{{ $c->image_path }}" alt="..."></a>
           </div>
 
           <div class="col-12 col-md-8">
@@ -50,7 +50,7 @@
               <h4 class="card-title">{{ $c->libelle }}</h4>
 
               <p class="card-text">{{ $c->description }}</p>
-              <a class="fw-600 fs-12" href="{{ route('cour', $c->id) }}">Plus de détails <i class="fa fa-chevron-right fs-9 pl-8"></i></a>
+              <a class="fw-600 fs-12" href="{{ route('cours', $c->id) }}">Plus de détails <i class="fa fa-chevron-right fs-9 pl-8"></i></a>
             </div>
           </div>
         </div>
