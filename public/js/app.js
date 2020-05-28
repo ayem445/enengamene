@@ -34657,8 +34657,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/judeparfaitngomnze/VMs/VagrantVMs/puppetlabs_ubuntu_14/www/enengamene/resources/assets/js/app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! /Users/judeparfaitngomnze/VMs/VagrantVMs/puppetlabs_ubuntu_14/www/enengamene/resources/assets/sass/app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\enengamene\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\enengamene\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
