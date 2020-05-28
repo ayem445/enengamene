@@ -26,6 +26,9 @@
                     Swal('Félicitation ! Vous avez terminé ce Chapitre !')
                 }
             },
+            displayVideoStartAlert() {
+                Swal('Bravo ! Dédut de lecture')
+            },
             completeLesson() {
                 Axios.post(`/chapitre/terminer-session/${this.session.id}`, {})
                      .then(resp => {
@@ -38,6 +41,10 @@
 
             player.on('ended', () => {
                 this.completeLesson()
+            })
+
+            player.on('playing', () => {
+                this.displayVideoStartAlert()
             })
         }
     }

@@ -4,7 +4,7 @@
 
       <h1 class="text-center">
         <button class="btn btn-primary" @click="creerNouveauChapitre()">
-          Nouveau Chapitre
+          Nouveau Chapitre xxx
         </button>
       </h1>
 
@@ -39,7 +39,11 @@
 
 <script>
     export default {
-        props: ['default_chapitres'],
+        props: {
+          default_chapitres: {
+            default: []
+          }
+        },
         components: {
           "creer-chapitre": require('./children/CreerChapitre.vue').default
         },

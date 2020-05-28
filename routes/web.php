@@ -25,14 +25,17 @@ Auth::routes();
 Route::get('/', 'FrontendController@welcome');
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cours');
-Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
-Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
-Route::post('/chapitre/terminer-session/{session}', 'WatchCoursController@terminerSession');
 
 Route::get('register/confirm', 'ConfirmEmailController@index')->name('confirm-email');
 
 Route::get('/logout', function() { auth()->logout(); return redirect('/'); });
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('auth')->group(function() {
+    Route::post('/chapitre/terminer-session/{session}', 'WatchCoursController@terminerSession');
+    Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
+    Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
+});
 
 Route::middleware('admin')->prefix('admin')->group(function(){
     Route::resource('cours','CourController');

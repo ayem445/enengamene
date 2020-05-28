@@ -4135,7 +4135,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['default_chapitres'],
+  props: {
+    default_chapitres: {
+      "default": []
+    }
+  },
   components: {
     "creer-chapitre": __webpack_require__(/*! ./children/CreerChapitre.vue */ "./resources/assets/js/components/children/CreerChapitre.vue")["default"]
   },
@@ -4331,6 +4335,9 @@ __webpack_require__.r(__webpack_exports__);
         sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé ce Chapitre !');
       }
     },
+    displayVideoStartAlert: function displayVideoStartAlert() {
+      sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Bravo ! Dédut de lecture');
+    },
     completeLesson: function completeLesson() {
       var _this2 = this;
 
@@ -4345,6 +4352,9 @@ __webpack_require__.r(__webpack_exports__);
     var player = new _vimeo_player__WEBPACK_IMPORTED_MODULE_2__["default"]('handstick');
     player.on('ended', function () {
       _this3.completeLesson();
+    });
+    player.on('playing', function () {
+      _this3.displayVideoStartAlert();
     });
   }
 });
@@ -23092,7 +23102,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("\n        Nouveau Chapitre\n      ")]
+          [_vm._v("\n        Nouveau Chapitre xxx\n      ")]
         )
       ]),
       _vm._v(" "),
