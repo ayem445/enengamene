@@ -16,7 +16,16 @@ class Cour extends Model
      *
      * @var array
      */
-    protected $with = ['matiere', 'chapitres', 'chapitres.sessions'];
+    //protected $with = ['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions'];
+
+    /**
+     * Retourne le chemin public pour l'image du cours
+     *
+     * @return string
+     */
+    public function getImagePathAttribute() {
+        return asset( config('app.cours_filefolder') . '/' . $this->image_url);
+    }
 
     /**
      * Retourne l auteur de ce cours.
@@ -63,5 +72,14 @@ class Cour extends Model
      */
     public function cour_notation() {
         return $this->hasMany('App\CourNotation', 'cour_id');
+    }
+
+    /**
+     * Obtenir une liste de chapitres pour le cours dans l'ordre de visionnage
+     *
+     * @return void
+     */
+    public function getChapitresOrdonnes() {
+        return $this->chapitres()->orderBy('num_ordre', 'asc')->get();
     }
 }

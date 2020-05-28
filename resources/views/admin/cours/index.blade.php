@@ -33,7 +33,7 @@
       <small>Chapitres du Cours</small>
     </header>
 
-    <vue-chapitres default_chapitres="{{ $cour->chapitres }}"></vue-chapitres>
+    <vue-chapitres default_chapitres="{{ json_encode($cour->chapitres) }}" cour_id="{{ $cour->id }}"></vue-chapitres>
 
   </div>
 </section>

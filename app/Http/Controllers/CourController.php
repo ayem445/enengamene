@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Cour;
+use App\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCoursRequest;
 use App\Http\Requests\UpdateCourRequest;
-use App\Matiere;
+use App\NiveauEtude;
+use App\Auteur;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +21,10 @@ class CourController extends Controller
      */
     public function index()
     {
-        return view('admin.cours.all')->withCours(Cour::all());
+        $cours = Cour::all();
+        $cours->load(['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions']);
+
+        return view('admin.cours.all')->withCours($cours);
     }
 
     /**
@@ -29,17 +34,15 @@ class CourController extends Controller
      */
     public function create()
     {
-        //$matieres = Matiere::all()->pluck('libelle', 'id');
-        //$matieres = $matieres->toArray();
-        //dd($matieres);
-        //
+        $matieres = Matiere::listMap('libelle');
+        $auteurs = Auteur::listMap('nom_complet');;
+        $niveauEtudes = NiveauEtude::listMap('libelle');
 
-        $matieres_list = DB::table('matieres')->orderBy('libelle', 'asc')->get();
-        $matieres = $matieres_list->map(function($matiere) {
-          return ["value" => $matiere->id,"label" => $matiere->libelle];
-        });
-
-        return view('admin.cours.create')->withMatieres($matieres);//, compact('matieres'));
+        return view('admin.cours.create')
+          ->withMatieres($matieres)
+          ->withAuteurs($auteurs)
+          ->withNiveauEtudes($niveauEtudes)
+          ;//, compact('matieres'));
     }
 
     /**
@@ -50,7 +53,11 @@ class CourController extends Controller
      */
     public function store(CreateCoursRequest $request)
     {
-        return $request->uploadCoursImage()
+        //$matiere = json_decode($request->matiere, true);
+        // $matiere = (Matiere) $request->matiere_id;
+
+        //dd($matiere,$request);
+        return $request->verifyAndStoreImage()
               ->storeCours();
     }
 
@@ -62,7 +69,7 @@ class CourController extends Controller
      */
     public function show(Cour $cour)
     {
-        //$cour = Cour::with(['chapitres', 'chapitres.sessions'])->find($cour->id);
+        $cour = Cour::with(['chapitres', 'chapitres.sessions', 'chapitres.difficulte'])->find($cour->id);
         return view('admin.cours.index')->withCour($cour);
     }
 
@@ -74,7 +81,14 @@ class CourController extends Controller
      */
     public function edit(Cour $cour)
     {
-        return view('admin.cours.edit')->withCour($cour);
+        $matieres = Matiere::listMap('libelle');
+        $auteurs = Auteur::listMap('nom_complet');
+        $niveauEtudes = NiveauEtude::listMap('libelle');
+
+        return view('admin.cours.edit')->withCour($cour)
+          ->withMatieres($matieres)
+          ->withAuteurs($auteurs)
+          ->withNiveauEtudes($niveauEtudes);
     }
 
     /**
@@ -86,7 +100,8 @@ class CourController extends Controller
      */
     public function update(UpdateCourRequest $request, Cour $cour)
     {
-        $request->updateCour($cour);
+        $request->verifyAndStoreImage($cour->image_url)
+          ->updateCour($cour);
 
         session()->flash('success', 'Cours mis à jour avec succès');
         return redirect()->route('cours.index');

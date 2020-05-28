@@ -26,9 +26,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($difficulte_db) {
 
           } else {
-            $difficulte['code'] = uniqid(Str::slug($difficulte['libelle']), true);
+            $difficulte['code'] = Difficulte::getUniqcode();
             $difficulte_new = Difficulte::create($difficulte);
-            $difficulte_new->setCodeWithId($difficulte['libelle']);
           }
         }
 
@@ -39,9 +38,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($difficulte_db) {
 
           } else {
-            $matiere['code'] = uniqid(Str::slug($matiere['libelle']), true);
+            $matiere['code'] = Matiere::getUniqcode();
             $matiere_new = Matiere::create($matiere);
-            $matiere_new->setCodeWithId($matiere['libelle']);
           }
         }
 
@@ -52,9 +50,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($niveau_etude_db) {
 
           } else {
-            $niveau_etude['code'] = uniqid(Str::slug($niveau_etude['libelle']), true);
+            $niveau_etude['code'] = NiveauEtude::getUniqcode();
             $niveau_etude_new = NiveauEtude::create($niveau_etude);
-            $niveau_etude_new->setCodeWithId($niveau_etude['libelle']);
           }
         }
 
@@ -65,9 +62,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($notation_db) {
 
           } else {
-            $notation['code'] = uniqid(Str::slug($notation['libelle']), true);
+            $notation['code'] = Notation::getUniqcode();
             $notation_new = Notation::create($notation);
-            $notation_new->setCodeWithId($notation['libelle']);
           }
         }
 
@@ -78,9 +74,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($quiztypequestion_db) {
 
           } else {
-            $quiztypequestion['code'] = uniqid(Str::slug($quiztypequestion['libelle']), true);
+            $quiztypequestion['code'] = QuizTypeQuestion::getUniqcode();
             $quiztypequestion_new = QuizTypeQuestion::create($quiztypequestion);
-            $quiztypequestion_new->setCodeWithId($quiztypequestion['libelle']);
           }
         }
 
@@ -91,9 +86,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($typecontenu_db) {
 
           } else {
-            $typecontenu['code'] = uniqid(Str::slug($typecontenu['libelle']), true);
+            $typecontenu['code'] = TypeContenu::getUniqcode();
             $typecontenu_new = TypeContenu::create($typecontenu);
-            $typecontenu_new->setCodeWithId($typecontenu['libelle']);
           }
         }
 
@@ -104,9 +98,8 @@ class InitialisationSystemSeeder extends Seeder
           if ($typeetablissement_db) {
 
           } else {
-            $typeetablissement['code'] = uniqid(Str::slug($typeetablissement['libelle']), true);
+            $typeetablissement['code'] = TypeEtablissement::getUniqcode();
             $typeetablissement_new = TypeEtablissement::create($typeetablissement);
-            $typeetablissement_new->setCodeWithId($typeetablissement['libelle']);
           }
         }
     }

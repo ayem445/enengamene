@@ -3,17 +3,18 @@
     <multiselect
       id="m_select"
       v-model="selected"
+      selected.sync="selected"
       value=""
       :options="options"
       :searchable="true"
       :multiple="false"
-      label="label"
-      track-by="value"
-      key="value"
+      label="libelle"
+      track-by="id"
+      key="id"
       :placeholder="placeholder"
       @select="onSelected" @remove="onRemove" >
     </multiselect>
-    <input hidden type="text" :name="name" :value="selectedVal">
+    <input type="text" :id="name" ref="selectedVal" :name="name" :value="selectedVal">
   </div>
 </template>
 
@@ -25,25 +26,26 @@
     props: {
       default_options: {},
       default_placeholder: "",
-      default_name: ""
+      default_name: "",
+      default_selected: {}
+    },
+    mounted() {
+
     },
     data () {
       return {
-        selected: null,
-        selectedVal: null,
+        selected: JSON.stringify(JSON.parse(this.default_selected)) == "[]" ? null : JSON.parse(this.default_selected),
+        selectedVal: JSON.stringify(JSON.parse(this.default_selected)) == "[]" ? null : JSON.stringify(JSON.parse(this.default_selected)),
         options: JSON.parse(this.default_options),
         placeholder: this.default_placeholder,
         name: this.default_name,
-
-        optionsProxy: [],
-        selectedResources: [],
       }
     },
     methods: {
       onSelected (selectedOption, id) {
         console.log(selectedOption)
         this.value = selectedOption
-        this.selectedVal = selectedOption.value
+        this.selectedVal = JSON.stringify(selectedOption)
       },
       onRemove (removedOption, id) {
         console.log(removedOption)

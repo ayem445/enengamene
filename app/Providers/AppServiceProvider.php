@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Providers;
-
+use App\Chapitre;
+use App\Cour;
 use Illuminate\Support\ServiceProvider;
+use Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::if('aDemarreLeCours', function($cour) {
+            return auth()->user()->aDemarreLeCours($cour);
+        });
+        Blade::if('admin', function() {
+            return auth()->user()->isAdmin();
+        });
     }
 }

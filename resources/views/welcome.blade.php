@@ -30,16 +30,35 @@
 
 @section('content')
 
-      <section class="section bg-gray">
-        <div class="container">
-          <header class="section-header">
-            <small>lessons</small>
-            <h2>Featured Screencasts</h2>
-            <hr>
-            <p class="lead"></p>
-          </header>
+<section class="section bg-gray">
+  <div class="container">
+    <header class="section-header">
+      <small>lessons</small>
+      <h2>Featured Screencasts</h2>
+      <hr>
+      <p class="lead"></p>
+    </header>
+    @forelse($cours as $c)
+      <div class="card mb-30">
+        <div class="row">
+          <div class="col-12 col-md-4 align-self-center">
+            <a href="{{ route('cours', $c->id) }}"><img src="{{ $c->image_path }}" alt="..."></a>
+          </div>
 
+          <div class="col-12 col-md-8">
+            <div class="card-block">
+              <h4 class="card-title">{{ $c->libelle }}</h4>
 
+              <p class="card-text">{{ $c->description }}</p>
+              <a class="fw-600 fs-12" href="{{ route('cours', $c->id) }}">Plus de détails <i class="fa fa-chevron-right fs-9 pl-8"></i></a>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+    @empty
+    @endforelse
+
+  </div>
+</section>
+
 @stop

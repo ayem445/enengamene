@@ -12,6 +12,17 @@ class Personne extends Model
     protected $guarded = [];
 
     /**
+    * renvoie le nom complet de la personne.
+    * -- Must postfix the word 'Attribute' to the function name
+    *
+    * @return string
+    */
+    public function getNomCompletAttribute()
+    {
+        return "{$this->nom} {$this->prenom}";
+    }
+
+    /**
      * Retourne tous les comptes de la personne.
      */
     public function comptes()
@@ -43,4 +54,3 @@ class Personne extends Model
         return $this->hasOne('App\Auteur');
     }
 }
-
