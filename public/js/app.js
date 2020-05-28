@@ -2496,7 +2496,7 @@ var Chapitre = function Chapitre(chapitre) {
   this.libelle = chapitre.libelle || '';
   this.num_ordre = chapitre.num_ordre || '';
   this.description = chapitre.description || '';
-  this.commentaire = chapitre.commentaire || '';
+  this.commentaire = chapitre.commentaire || ' ';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({

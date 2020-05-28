@@ -42,7 +42,7 @@
       this.libelle = chapitre.libelle || ''
       this.num_ordre = chapitre.num_ordre || ''
       this.description = chapitre.description || ''
-      this.commentaire = chapitre.commentaire || ''
+      this.commentaire = chapitre.commentaire || ' '
     }
   }
   export default {
