@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Cour;
 use App\Chapitre;
+use Illuminate\Support\Str;
+use App\Http\Requests\CreateChapitreRequest;
+use App\Http\Requests\UpdateChapitreRequest;
 use Illuminate\Http\Request;
 
 class ChapitreController extends Controller
@@ -30,12 +34,34 @@ class ChapitreController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\CreateChapitreRequest
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    // public function store($cour, CreateChapitreRequest $request)
+    // {
+    //     $chapitre = new chapitre;
+
+    //     $chapitre-> code = uniqid(Str::slug($request['libelle']), true);
+    //     $chapitre-> libelle =  $request['libelle'];
+    //     $chapitre-> description = $request['description'];
+    //     $chapitre-> difficulte_id = 1;
+    //     $chapitre-> cour_id = $cour;
+        
+    //    // $chapitre-> save();
+        
+    //    // $data = $request->all();
+    //    // $data['code'] = uniqid(Str::slug($data['libelle']), true);
+
+    //     return $chapitre->save();
+    // }
+
+    public function store(Cour $cour, CreateChapitreRequest $request)
+    {   
+        $data = $request->all();
+        $data['code'] = uniqid(Str::slug($data['libelle']), true);
+        $data['difficulte_id']=1;
+
+        return $cour->chapitres()->create($data);
     }
 
     /**
@@ -67,9 +93,22 @@ class ChapitreController extends Controller
      * @param  \App\Chapitre  $chapitre
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Chapitre $chapitre)
-    {
-        //
+    public function update(Cour $cour, Chapitre $chapitreId , UpdateChapitreRequest $request)
+    {   dd($chapitreId);
+        $chapitreId->update($request->all());
+
+        return $chapitreId->fresh();
+        // //
+        // $chapitre = \App\Chapitre::find($chapitreId);
+        
+        // $chapitre-> code = uniqid(Str::slug($request['libelle']), true);
+        // $chapitre-> libelle =  $request['libelle'];
+        // $chapitre-> description = $request['description'];
+        // $chapitre-> difficulte_id = 1;
+        
+       // $chapitre-> cour_id = $cour;
+
+    //    return $chapitre->save();
     }
 
     /**
@@ -78,8 +117,11 @@ class ChapitreController extends Controller
      * @param  \App\Chapitre  $chapitre
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chapitre $chapitre)
-    {
-        //
+    public function destroy($cour, $chapitre)
+    {   d($chapitre);
+        $chapitre = \App\Chapitre::find($chapitreId);
+        $chapitre->delete();
+
+        return response()->json(['status' => 'ok'], 200);
     }
 }

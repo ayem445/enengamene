@@ -12,13 +12,6 @@ class Cour extends Model
     protected $guarded = [];
 
     /**
-     * Eager load relationships
-     *
-     * @var array
-     */
-    protected $with = ['matiere', 'chapitres', 'chapitres.sessions'];
-
-    /**
      * Retourne l auteur de ce cours.
      */
     public function auteur()

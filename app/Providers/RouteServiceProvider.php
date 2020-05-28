@@ -34,10 +34,10 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        // Route::model('cour_by_id', Cour::class);
-        // Route::bind('cour_by_id', function($value){
-        //     return Cour::findOrFail($value);
-        // });
+           Route::model('cour_by_id', Cour::class);
+           Route::bind('cour_by_id', function($value){
+            return Cour::findOrFail($value);
+         });
 
         Route::model('chapitre_by_id', Chapitre::class);
         Route::bind('chapitre_by_id', function($value){

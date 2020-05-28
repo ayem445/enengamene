@@ -3,7 +3,8 @@
 	    <div class="modal-dialog" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
-	          <h5 class="modal-title" id="exampleModalLabel">Créer Nouveau Chapitre</h5>
+			  <h5 class="modal-title" id="exampleModalLabel" v-if="editing">Modifier chapitre</h5>
+	          <h5 class="modal-title" id="exampleModalLabel" v-else>Créer Nouveau Chapitre</h5>
 	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	            <span aria-hidden="true">&times;</span>
 	          </button>
@@ -24,7 +25,9 @@
 	            </div>
 	        </div>
 	        <div class="modal-footer">
-	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+	          			<button type="button" class="btn btn-primary" @click="updateChapitre()" v-if="editing">Enregistrer</button>
+						<button type="button" class="btn btn-primary" @click="creerChapitre()" v-else>Créer Chapitre</button>
 	        </div>
 	      </div>
 	    </div>
@@ -49,9 +52,16 @@
           this.courId = courId
           this.editing = false
           this.chapitre = new Chapitre({})
-          console.log('hello parent, we are creating the chapitre')
           $('#createChapitre').modal()
-        })
+		})
+		this.$parent.$on('edit_chapitre', ({ chapitre, chapitreId, courId }) => {
+					this.editing = true
+					this.chapitre = new Chapitre(chapitre)
+					this.courId = courId
+					this.chapitreId = chapitre.id
+					
+					$('#createChapitre').modal()
+				})
       },
       data() {
   			return {
@@ -60,6 +70,31 @@
   				editing: false,
   				chapitreId: null
   			}
-  		}
+		  },
+		  
+		  methods: {
+				creerChapitre() {
+					Axios.post(`/enengamene/public/admin/${this.courId}/chapitres`, this.chapitre).then(resp => {
+						
+						this.$parent.$emit('chapitre_cree', resp.data)
+						
+						$('#createChapitre').modal('hide')
+					}).catch(error => {
+						
+						window.handleErrors(error)
+					})
+				},
+				updateChapitre() {
+					Axios.put(`/enengamene/public/admin/${this.courId}/chapitres/${this.chapitreId}`, this.chapitre).then(resp => {
+					
+						 this.$parent.$emit('chapitre_updated', resp.data)
+						 	
+						 $("#createChapitre").modal('hide')
+					 }).catch(error => {
+
+					 	window.handleErrors(error)
+					 })
+				}
+			}
   }
 </script>

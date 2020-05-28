@@ -1908,6 +1908,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1947,8 +1949,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['default_chapitres'],
+  props: ['default_chapitres', 'cour_id'],
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$on('chapitre_cree', function (chapitre) {
+      window.noty({
+        message: 'Chapitre créée avec succès',
+        type: 'success'
+      }); // insert le nouveau dans le tableau des chapitres
+
+      _this.chapitres.push(chapitre);
+    });
+    this.$on('chapitre_updated', function (chapitre) {
+      // on récupère l'index du chapitre modifiée
+      var chapitreIndex = _this.chapitre.findIndex(function (s) {
+        return chapitre.id == s.id;
+      }); // TODO: Inserer la nouveau chapitre en fonction de son numéro d'ordre (dans le UPDSATE)
+
+
+      _this.chapitre.splice(chapitreIndex, 1, chapitre);
+
+      window.noty({
+        message: 'Chapitre modifié avec succès',
+        type: 'success'
+      });
+    });
+  },
   components: {
     "creer-chapitre": __webpack_require__(/*! ./children/CreerChapitre.vue */ "./resources/assets/js/components/children/CreerChapitre.vue")["default"]
   },
@@ -1959,12 +2000,37 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     formattedChapitres: function formattedChapitres() {
-      return JSON.parse(this.chapitres);
+      return JSON.parse(this.default_chapitres);
     }
   },
   methods: {
     creerNouveauChapitre: function creerNouveauChapitre() {
       this.$emit('creer_nouveau_chapitre', this.cour_id);
+    },
+    deleteChapitre: function deleteChapitre(id, key) {
+      var _this2 = this;
+
+      if (confirm('Voulez-vous vraiment supprimer ?')) {
+        Axios["delete"]("/enengamene/public/admin/".concat(this.cour_id, "/chapitres/").concat(id)).then(function (resp) {
+          _this2.sessions.splice(key, 1);
+
+          window.noty({
+            message: 'Chapitre supprimé avec succès',
+            type: 'success'
+          });
+        })["catch"](function (error) {
+          window.handleErrors(error);
+        });
+      }
+    },
+    editChapitre: function editChapitre(chapitre) {
+      var chapitreId = this.chapitre_id;
+      var courId = this.cour_id;
+      this.$emit('edit_chapitre', {
+        chapitre: chapitre,
+        chapitreId: chapitreId,
+        courId: courId
+      });
     }
   }
 });
@@ -2047,7 +2113,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.errors = [];
       this.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/enengamene/public/login', {
         email: this.email,
         password: this.password,
         remember: this.remember
@@ -2349,7 +2415,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/admin/".concat(this.chapitre_id, "/sessions/").concat(id)).then(function (resp) {
+        Axios["delete"]("/admin/".concat(this.chapitre_id, "/sessions/").concat(id)).then(function (resp) {
           _this2.sessions.splice(key, 1);
 
           window.noty({
@@ -2419,6 +2485,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
 
 
 var Chapitre = function Chapitre(chapitre) {
@@ -2438,7 +2507,16 @@ var Chapitre = function Chapitre(chapitre) {
       _this.courId = courId;
       _this.editing = false;
       _this.chapitre = new Chapitre({});
-      console.log('hello parent, we are creating the chapitre');
+      $('#createChapitre').modal();
+    });
+    this.$parent.$on('edit_chapitre', function (_ref) {
+      var chapitre = _ref.chapitre,
+          chapitreId = _ref.chapitreId,
+          courId = _ref.courId;
+      _this.editing = true;
+      _this.chapitre = new Chapitre(chapitre);
+      _this.courId = courId;
+      _this.chapitreId = chapitre.id;
       $('#createChapitre').modal();
     });
   },
@@ -2449,6 +2527,30 @@ var Chapitre = function Chapitre(chapitre) {
       editing: false,
       chapitreId: null
     };
+  },
+  methods: {
+    creerChapitre: function creerChapitre() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/enengamene/public/admin/".concat(this.courId, "/chapitres"), this.chapitre).then(function (resp) {
+        _this2.$parent.$emit('chapitre_cree', resp.data);
+
+        $('#createChapitre').modal('hide');
+      })["catch"](function (error) {
+        window.handleErrors(error);
+      });
+    },
+    updateChapitre: function updateChapitre() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/enengamene/public/admin/".concat(this.courId, "/chapitres/").concat(this.chapitreId), this.chapitre).then(function (resp) {
+        _this3.$parent.$emit('chapitre_updated', resp.data);
+
+        $("#createChapitre").modal('hide');
+      })["catch"](function (error) {
+        window.handleErrors(error);
+      });
+    }
   }
 });
 
@@ -2547,7 +2649,7 @@ var Session = function Session(session) {
     creerSession: function creerSession() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.chapitreId, "/sessions"), this.session).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/enengamene/public/admin/".concat(this.chapitreId, "/sessions"), this.session).then(function (resp) {
         _this2.$parent.$emit('session_creee', resp.data);
 
         $('#createSession').modal('hide');
@@ -2558,7 +2660,7 @@ var Session = function Session(session) {
     updateSession: function updateSession() {
       var _this3 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.chapitreId, "/sessions/").concat(this.sessionId), this.session).then(function (resp) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/enengamene/public/admin/".concat(this.chapitreId, "/sessions/").concat(this.sessionId), this.session).then(function (resp) {
         $("#createSession").modal('hide');
 
         _this3.$parent.$emit('session_updated', resp.data);
@@ -20849,61 +20951,110 @@ var render = function() {
       _c(
         "div",
         { staticClass: "accordion", attrs: { id: "accordion-chapitres" } },
-        _vm._l(_vm.formattedChapitres, function(chapitre, index) {
-          return _c("div", { staticClass: "card" }, [
-            _c("h3", { staticClass: "card-title" }, [
+        [
+          _c(
+            "div",
+            _vm._b(
+              { staticClass: "card" },
+              "div",
+              (_vm.chapitre, _vm.index) in _vm.formattedChapitres,
+              false
+            ),
+            [
+              _c("h3", { staticClass: "card-title" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "d-flex",
+                    attrs: {
+                      "data-toggle": "collapse",
+                      "data-parent": "#accordion-chapitres",
+                      href: "#collapse-chapitres-" + _vm.index
+                    }
+                  },
+                  [
+                    _c("span", { staticClass: "mr-auto" }, [
+                      _vm._v(_vm._s(_vm.chapitre.libelle))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
+                      _c("i", { staticClass: "fa fa-signal mr-8" }),
+                      _vm._v(" " + _vm._s(_vm.chapitre.difficulte.libelle))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
               _c(
-                "a",
+                "div",
                 {
-                  staticClass: "d-flex",
-                  attrs: {
-                    "data-toggle": "collapse",
-                    "data-parent": "#accordion-chapitres",
-                    href: "#collapse-chapitres-" + index
-                  }
+                  staticClass: "collapse in",
+                  attrs: { id: "collapse-chapitres-" + _vm.index }
                 },
                 [
-                  _c("span", { staticClass: "mr-auto" }, [
-                    _vm._v(_vm._s(chapitre.libelle))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-                    _c("i", { staticClass: "fa fa-signal mr-8" }),
-                    _vm._v(" " + _vm._s(chapitre.difficulte.libelle))
+                  _c("div", { staticClass: "card-block" }, [
+                    _c("p", {}, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-xs",
+                          on: {
+                            click: function($event) {
+                              return _vm.editChapitre(_vm.chapitre)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-pencil-square-o",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-xs",
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteChapitre(
+                                _vm.chapitre.id,
+                                _vm.key
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-trash-o",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.chapitre.description))]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      [
+                        _c("vue-sessions", {
+                          attrs: {
+                            default_sessions: _vm.chapitre.sessions,
+                            chapitre_id: _vm.chapitre.id
+                          }
+                        })
+                      ],
+                      1
+                    )
                   ])
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse in",
-                attrs: { id: "collapse-chapitres-" + index }
-              },
-              [
-                _c("div", { staticClass: "card-block" }, [
-                  _c("p", [_vm._v(_vm._s(chapitre.description))]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "row" },
-                    [
-                      _c("vue-sessions", {
-                        attrs: {
-                          default_sessions: chapitre.sessions,
-                          chapitre_id: chapitre.id
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ])
-        }),
-        0
+            ]
+          )
+        ]
       ),
       _vm._v(" "),
       _c("creer-chapitre")
@@ -21442,7 +21593,27 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "modal-header" }, [
+            _vm.editing
+              ? _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Modifier chapitre")]
+                )
+              : _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Créer Nouveau Chapitre")]
+                ),
+            _vm._v(" "),
+            _vm._m(0)
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -21542,7 +21713,44 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", "data-dismiss": "modal" }
+              },
+              [_vm._v("Fermer")]
+            ),
+            _vm._v(" "),
+            _vm.editing
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.updateChapitre()
+                      }
+                    }
+                  },
+                  [_vm._v("Enregistrer")]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.creerChapitre()
+                      }
+                    }
+                  },
+                  [_vm._v("Créer Chapitre")]
+                )
+          ])
         ])
       ])
     ]
@@ -21553,41 +21761,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Créer Nouveau Chapitre")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
@@ -34007,9 +34192,13 @@ module.exports = function(module) {
 /*!************************************!*\
   !*** ./resources/assets/js/app.js ***!
   \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -34018,7 +34207,8 @@ module.exports = function(module) {
 __webpack_require__(/*! ./bootstrap */ "./resources/assets/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-window.events = new Vue(); //import Multiselect from 'vue-multiselect';
+window.events = new Vue();
+ //import Multiselect from 'vue-multiselect';
 
 window.noty = function (notification) {
   window.events.$emit('notification', notification);
@@ -34657,8 +34847,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/judeparfaitngomnze/VMs/VagrantVMs/puppetlabs_ubuntu_14/www/enengamene/resources/assets/js/app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! /Users/judeparfaitngomnze/VMs/VagrantVMs/puppetlabs_ubuntu_14/www/enengamene/resources/assets/sass/app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\enengamene\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\enengamene\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
