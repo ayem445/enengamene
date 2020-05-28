@@ -11,13 +11,13 @@ $factory->define(Chapitre::class, function (Faker $faker) {
     $libelle = $faker->sentence(1);
     $difficulte_max_id = Difficulte::max('id');
     return [
-        'code' => uniqid(Str::slug($libelle), true),
+        'code' => Chapitre::getUniqcode(),
         'libelle' => $libelle,
         'description' => $faker->paragraph(2),
         'cour_id' => function() {
           return factory(\App\Cour::class)->create()->id;
         },
-        'num_ordre' => 100,
+        'num_ordre' => 1,
         'difficulte_id' => $faker->numberBetween($min = 1, $max = $difficulte_max_id)
     ];
 });

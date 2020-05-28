@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :data-vimeo-id="lesson.video_id" data-vimeo-width="900" v-if="lesson" id="handstick"></div>
+    <div :data-vimeo-id="session.lien" data-vimeo-width="900" v-if="session" id="handstick"></div>
   </div>
 </template>
 
@@ -9,26 +9,25 @@
     import Swal from 'sweetalert'
     import Player from '@vimeo/player'
     export default {
-        props: ['default_lesson', 'next_lesson_url'],
+        props: ['default_session', 'next_session_url'],
         data() {
             return {
-                lesson: JSON.parse(this.default_lesson)
+                session: JSON.parse(this.default_session)
             }
         },
         methods: {
             displayVideoEndedAlert() {
-                if(this.next_lesson_url) {
-                    Swal('Yaaay ! You completed this lesson !')
+                if(this.next_session_url) {
+                    Swal('Félicitation ! Vous avez terminé cette Session !')
                     .then(() => {
-                        window.location = this.next_lesson_url
+                        window.location = this.next_session_url
                     })
                 } else {
-                    Swal('Yaaay ! You completed this series !')
+                    Swal('Félicitation ! Vous avez terminé ce Chapitre !')
                 }
-                
             },
             completeLesson() {
-                Axios.post(`/series/complete-lesson/${this.lesson.id}`, {})
+                Axios.post(`/chapitre/terminer-session/${this.session.id}`, {})
                      .then(resp => {
                          this.displayVideoEndedAlert()
                      })
@@ -42,4 +41,5 @@
             })
         }
     }
+
 </script>

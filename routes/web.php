@@ -13,13 +13,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/redis', function(){
+//   // key: value // string
+//   //Redis::set('friend', 'momo');
+//   dd(Redis::get('friend'));
+//   // key: value // list
+//   // key: value // set
+// });
+
+Auth::routes();
+Route::get('/', 'FrontendController@welcome');
+Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
+Route::get('/cours/{cour}', 'FrontendController@cour')->name('cours');
+Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
+Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
+Route::post('/chapitre/terminer-session/{session}', 'WatchCoursController@terminerSession');
 
 Route::get('register/confirm', 'ConfirmEmailController@index')->name('confirm-email');
 
-Auth::routes();
 Route::get('/logout', function() { auth()->logout(); return redirect('/'); });
 Route::get('/home', 'HomeController@index')->name('home');
 

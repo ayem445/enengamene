@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-12 col-lg-8 offset-lg-2">
 
-        <h1>Modification: {{  $cour->libelle }}</h1>
+        <h1>Modification du cours: {{  $cour->libelle }}</h1>
         <p class="fs-20 opacity-70">Modification des détails du cours</p>
 
       </div>
@@ -32,7 +32,19 @@
             </div>
 
             <div class="form-group">
+              <vue-select default_selected="{{ json_encode($cour->matiere->mapped('libelle')) }}" default_name="matiere" default_options="{{ $matieres->toJson() }}" default_placeholder="Matière"></vue-select>
+            </div>
+
+            <div class="form-group">
               <input class="form-control form-control-lg" type="file" name="image">
+            </div>
+
+            <div class="form-group">
+              <vue-select default_selected="{{ json_encode($cour->auteur->mapped('nomComplet')) }}" default_name="auteur" default_options="{{ $auteurs->toJson() }}" default_placeholder="Auteur"></vue-select>
+            </div>
+
+            <div class="form-group">
+              <vue-select default_selected="{{ json_encode($cour->niveau_etude->mapped('libelle')) }}" default_name="niveau_etude" default_options="{{ $niveauEtudes->toJson() }}" default_placeholder="Niveau"></vue-select>
             </div>
 
             <div class="form-group">

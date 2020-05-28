@@ -8,14 +8,14 @@ use Faker\Generator as Faker;
 $factory->define(Session::class, function (Faker $faker) {
     $libelle = $faker->sentence(1);
     return [
-      'code' => uniqid(Str::slug($libelle), true),
+      'code' => Session::getUniqcode(),
       'libelle' => $libelle,
       'description' => $faker->paragraph(2),
       'commentaire' => $faker->paragraph(1),
       'chapitre_id' => function() {
         return factory(\App\Chapitre::class)->create()->id;
       },
-      'num_ordre' => 100,
+      'num_ordre' => 1,
       'lien' => '230485453',
       'type_contenu_id' => 1
     ];

@@ -31,15 +31,23 @@
             </div>
 
             <div class="form-group">
+              <vue-select default_selected="[]" default_name="matiere" default_options="{{ $matieres->toJson() }}" default_placeholder="Matière"></vue-select>
+            </div>
+
+            <div class="form-group">
+              <vue-select default_selected="[]" default_name="niveau_etude" default_options="{{ $niveauEtudes->toJson() }}" default_placeholder="Niveau"></vue-select>
+            </div>
+
+            <div class="form-group">
+              <vue-select default_selected="[]" default_name="auteur" default_options="{{ $auteurs->toJson() }}" default_placeholder="Auteur"></vue-select>
+            </div>
+
+            <div class="form-group">
               <input class="form-control form-control-lg" type="file" name="image">
             </div>
 
             <div class="form-group">
               <textarea class="form-control form-control-lg" name="description" rows="4" placeholder="Description"></textarea>
-            </div>
-
-            <div class="form-group">
-              <vue-select default_name="matiere_id" default_options="{{ $matieres->toJson() }}" default_placeholder="Selectionnez une Matière"></vue-select>
             </div>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Créer le Cours</button>

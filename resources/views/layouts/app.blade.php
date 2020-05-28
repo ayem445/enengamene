@@ -42,7 +42,7 @@
             <li class="nav-item"><a class="nav-link" href="/">Accueil</a></li>
             @auth
               <li class="nav-item">
-                <a class="nav-link" href="#">Salut <strong>{{ auth()->user()->name  }}</strong></a></li>
+                <a class="nav-link" href="{{ route('profile', auth()->user()->username) }}">Salut <strong>{{ auth()->user()->name  }}</strong></a></li>
 
               </li>
               <li class="nav-item"><a href="{{ route('cours.index') }}" class="nav-link">Tous les Cours</a></li>

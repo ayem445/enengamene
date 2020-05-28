@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'cours_filefolder' => env('FILE_FOLDER_COURS', 'uploads/cours'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

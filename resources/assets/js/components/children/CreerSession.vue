@@ -13,9 +13,9 @@
 		         <div class="form-group">
 	              <input type="text" class="form-control" placeholder="Titre" v-model="session.libelle">
 	            </div>
-	            <div class="form-group">
-	              <input type="number" class="form-control" placeholder="Numéro Ordre" v-model="session.num_ordre">
-	            </div>
+							<div class="form-group">
+ 	              <input type="text" class="form-control" placeholder="Lien/Id Video" v-model="session.lien">
+ 	            </div>
 
 	            <div class="form-group">
 	            	<textarea cols="30" rows="10" class="form-control" placeholder="Description" v-model="session.description"></textarea>
