@@ -20849,61 +20849,69 @@ var render = function() {
       _c(
         "div",
         { staticClass: "accordion", attrs: { id: "accordion-chapitres" } },
-        _vm._l(_vm.formattedChapitres, function(chapitre, index) {
-          return _c("div", { staticClass: "card" }, [
-            _c("h3", { staticClass: "card-title" }, [
+        [
+          _c(
+            "div",
+            _vm._b(
+              { staticClass: "card" },
+              "div",
+              (_vm.chapitre, _vm.index) in _vm.formattedChapitres,
+              false
+            ),
+            [
+              _c("h3", { staticClass: "card-title" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "d-flex",
+                    attrs: {
+                      "data-toggle": "collapse",
+                      "data-parent": "#accordion-chapitres",
+                      href: "#collapse-chapitres-" + _vm.index
+                    }
+                  },
+                  [
+                    _c("span", { staticClass: "mr-auto" }, [
+                      _vm._v(_vm._s(_vm.chapitre.libelle))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
+                      _c("i", { staticClass: "fa fa-signal mr-8" }),
+                      _vm._v(" " + _vm._s(_vm.chapitre.difficulte.libelle))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
               _c(
-                "a",
+                "div",
                 {
-                  staticClass: "d-flex",
-                  attrs: {
-                    "data-toggle": "collapse",
-                    "data-parent": "#accordion-chapitres",
-                    href: "#collapse-chapitres-" + index
-                  }
+                  staticClass: "collapse in",
+                  attrs: { id: "collapse-chapitres-" + _vm.index }
                 },
                 [
-                  _c("span", { staticClass: "mr-auto" }, [
-                    _vm._v(_vm._s(chapitre.libelle))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-lighter hidden-sm-down" }, [
-                    _c("i", { staticClass: "fa fa-signal mr-8" }),
-                    _vm._v(" " + _vm._s(chapitre.difficulte.libelle))
+                  _c("div", { staticClass: "card-block" }, [
+                    _c("p", [_vm._v(_vm._s(_vm.chapitre.description))]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row" },
+                      [
+                        _c("vue-sessions", {
+                          attrs: {
+                            default_sessions: _vm.chapitre.sessions,
+                            chapitre_id: _vm.chapitre.id
+                          }
+                        })
+                      ],
+                      1
+                    )
                   ])
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse in",
-                attrs: { id: "collapse-chapitres-" + index }
-              },
-              [
-                _c("div", { staticClass: "card-block" }, [
-                  _c("p", [_vm._v(_vm._s(chapitre.description))]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "row" },
-                    [
-                      _c("vue-sessions", {
-                        attrs: {
-                          default_sessions: chapitre.sessions,
-                          chapitre_id: chapitre.id
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ])
-        }),
-        0
+            ]
+          )
+        ]
       ),
       _vm._v(" "),
       _c("creer-chapitre")

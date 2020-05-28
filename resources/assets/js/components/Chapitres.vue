@@ -10,7 +10,7 @@
 
       <div class="accordion" id="accordion-chapitres">
 
-        <div class="card" v-for="(chapitre, index) in formattedChapitres">
+        <div class="card" v-bind="(chapitre, index) in formattedChapitres">
           <h3 class="card-title">
             <a class="d-flex" data-toggle="collapse" data-parent="#accordion-chapitres" :href="'#collapse-chapitres-'+index">
               <span class="mr-auto">{{ chapitre.libelle }}</span>
