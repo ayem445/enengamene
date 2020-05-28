@@ -9,7 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 window.events = new Vue();
-
+import axios from 'axios';
 //import Multiselect from 'vue-multiselect';
 
 window.noty = function(notification) {
@@ -50,6 +50,7 @@ Vue.component('vue-select2', require('./components/Select2.vue').default);
 Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
 Vue.component('vue-sessions', require('./components/Sessions.vue').default);
 Vue.component('vue-player', require('./components/Player.vue').default);
+
 
 //import VueChapitre from './components/Chapitre.vue'
 //components: { VueLogin }

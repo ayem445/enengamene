@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use App\Chapitre;
+use App\Cour;
 use Illuminate\Support\ServiceProvider;
 use Blade;
 

@@ -3,7 +3,7 @@
 	    <div class="modal-dialog" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel" v-if="editing">Modifier Session</h5>
+				<h5 class="modal-title" id="exampleModalLabel" v-if="editing">Modifier Session</h5>
 	          <h5 class="modal-title" id="exampleModalLabel" v-else>Créer Nouvelle Session</h5>
 	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	            <span aria-hidden="true">&times;</span>
@@ -76,7 +76,7 @@
   		},
 			methods: {
 				creerSession() {
-					Axios.post(`/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
+					Axios.post(`/enengamene/public/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
 						this.$parent.$emit('session_creee', resp.data)
 						$('#createSession').modal('hide')
 					}).catch(error => {
@@ -84,7 +84,7 @@
 					})
 				},
 				updateSession() {
-					Axios.put(`/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
+					Axios.put(`/enengamene/public/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
 					 .then(resp => {
 					 	$("#createSession").modal('hide')
 					 	this.$parent.$emit('session_updated', resp.data)

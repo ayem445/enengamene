@@ -37,4 +37,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware('admin')->prefix('admin')->group(function(){
     Route::resource('cours','CourController');
     Route::resource('{chapitre_by_id}/sessions','SessionController');
+    Route::resource('{cour_by_id}/chapitres','ChapitreController');
+    Route::resource('{cour_by_id}/chapitres/{chapitre_by_id}','ChapitreController');
 });
