@@ -3,7 +3,7 @@
 	    <div class="modal-dialog" role="document">
 	      <div class="modal-content">
 	        <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel" v-if="editing">Modifier Session</h5>
+						<h5 class="modal-title" id="exampleModalLabel" v-if="editing">Modifier Session</h5>
 	          <h5 class="modal-title" id="exampleModalLabel" v-else>Créer Nouvelle Session</h5>
 	          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	            <span aria-hidden="true">&times;</span>
@@ -30,18 +30,23 @@
 						<button type="button" class="btn btn-primary" @click="creerSession()" v-else>Créer Session</button>
 	        </div>
 	      </div>
+
+				<div id="made-in-ny"></div>
+
 	    </div>
 	  </div>
 </template>
 
 <script>
   import Axios from 'axios'
+	import Player from '@vimeo/player'
 
   class Session {
     constructor(session) {
       this.libelle = session.libelle || ''
 			this.lien = session.lien || ''
-      this.num_ordre = session.num_ordre || ''
+			this.num_ordre = session.num_ordre || ''
+      this.duree = session.duree || ''
       this.description = session.description || ''
       this.commentaire = session.commentaire || ''
     }
@@ -75,7 +80,11 @@
   			}
   		},
 			methods: {
+				setCurrentVideoInfos(dur) {
+					this.session.duree = dur
+				},
 				creerSession() {
+					// Poster les données sur le serveur
 					Axios.post(`/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
 						this.$parent.$emit('session_creee', resp.data)
 						$('#createSession').modal('hide')

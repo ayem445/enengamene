@@ -4817,6 +4817,7 @@ var Chapitre = function Chapitre(chapitre) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vimeo_player__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vimeo/player */ "./node_modules/@vimeo/player/dist/player.es.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //
@@ -4855,6 +4856,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+
 
 
 var Session = function Session(session) {
@@ -4863,6 +4868,7 @@ var Session = function Session(session) {
   this.libelle = session.libelle || '';
   this.lien = session.lien || '';
   this.num_ordre = session.num_ordre || '';
+  this.duree = session.duree || '';
   this.description = session.description || '';
   this.commentaire = session.commentaire || '';
 };
@@ -4896,9 +4902,13 @@ var Session = function Session(session) {
     };
   },
   methods: {
+    setCurrentVideoInfos: function setCurrentVideoInfos(dur) {
+      this.session.duree = dur;
+    },
     creerSession: function creerSession() {
       var _this2 = this;
 
+      // Poster les données sur le serveur
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.chapitreId, "/sessions"), this.session).then(function (resp) {
         _this2.$parent.$emit('session_creee', resp.data);
 
@@ -23794,7 +23804,19 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(0, true)
+            _c("div", { staticClass: "col-12 col-md-3 plan-price" }, [
+              _vm._m(0, true),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _vm._m(1, true),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-9" }, [
+                  _vm._v(_vm._s(session.duree))
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2, true)
+            ])
           ]),
           _vm._v(" "),
           _c("br")
@@ -23811,30 +23833,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 col-md-3 plan-price" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("i", { staticClass: "fa fa-hourglass-end mr-0" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:01")])
+    return _c("div", { staticClass: "row", attrs: { hidden: "" } }, [
+      _c("div", { staticClass: "col-sm-3" }, [
+        _c("i", { staticClass: "fa fa-hourglass-end mr-0" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("i", { staticClass: "fa fa-file-video-o mr-0" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:02")])
+      _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:01")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-3" }, [
+      _c("i", { staticClass: "fa fa-file-video-o mr-0" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row", attrs: { hidden: "" } }, [
+      _c("div", { staticClass: "col-sm-3" }, [
+        _c("i", { staticClass: "fa fa-file-text-o mr-0" })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-3" }, [
-          _c("i", { staticClass: "fa fa-file-text-o mr-0" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:03")])
-      ])
+      _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:03")])
     ])
   }
 ]
@@ -24250,7 +24274,9 @@ var render = function() {
                   [_vm._v("Créer Session")]
                 )
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "made-in-ny" } })
       ])
     ]
   )

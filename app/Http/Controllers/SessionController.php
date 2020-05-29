@@ -55,6 +55,13 @@ class SessionController extends Controller
           $data['num_ordre'] = $num_ordre;
         }
 
+        $vimeodata = $this->getVimeoVideoData($data['lien']);
+        if (is_null($vimeodata)) {
+            $data['duree'] = 0;
+        } else {
+            $data['duree'] = $vimeodata->duration;
+        }
+
         $data['code'] = Session::getUniqcode();
 
         return $chapitre->sessions()->create($data);
@@ -91,7 +98,14 @@ class SessionController extends Controller
      */
     public function update(Chapitre $chapitre, Session $session, UpdateSessionRequest $request)
     {
-        $session->update($request->all());
+        $data = $request->all();
+        $vimeodata = $this->getVimeoVideoData($data['lien']);
+        if (is_null($vimeodata)) {
+            $data['duree'] = 0;
+        } else {
+            $data['duree'] = $vimeodata->duration;
+        }
+        $session->update($data);
 
         return $session->fresh();
     }
@@ -107,5 +121,43 @@ class SessionController extends Controller
         $session->delete();
 
         return response()->json(['status' => 'ok'], 200);
+    }
+
+    /**
+     * Vimeo video duration in seconds
+     *
+     * @param $video_url
+     * @return object|null vimeo video's data infos
+     */
+    public function getVimeoVideoData($video_id) {
+
+        //$video_id = "230485453";
+        //$video_id = (int)substr(parse_url($video_url, PHP_URL_PATH), 1);
+
+        $json_url = 'http://vimeo.com/api/v2/video/' . $video_id . '.xml';
+
+        $ch = curl_init($json_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = curl_exec($ch);
+        curl_close($ch);
+        $data = new \SimpleXmlElement($data, LIBXML_NOCDATA);
+
+        //dd($json_url,$ch,$data);
+
+        if (!isset($data->video)) {
+            return null;
+        }
+
+        // object attributes:
+        // id,title,description,url,upload_date,thumbnail_small,thumbnail_medium,thumbnail_large,
+        // user_id,user_name,user_url,user_portrait_small,user_portrait_medium,user_portrait_large,
+        // user_portrait_huge,stats_number_of_likes,stats_number_of_plays,stats_number_of_comments,
+        // duration,width,height,
+        // tags => SimpleXMLElement,
+        // embed_privacy
+
+        //$duration = $data->video->duration;
+        return $data->video;
     }
 }

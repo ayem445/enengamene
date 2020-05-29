@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
+
 Route::get('/', 'FrontendController@welcome');
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cours');
