@@ -4198,7 +4198,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
+<<<<<<< HEAD
         Axios["delete"]("/enengamene/public/admin/".concat(this.cour_id, "/chapitres/").concat(id)).then(function (resp) {
+=======
+        Axios["delete"]("/admin/".concat(this.cour_id, "/chapitres/").concat(id)).then(function (resp) {
+>>>>>>> 61ca235c9b67a7dd1900e1cb1a67c1e0556f71e5
           _this2.sessions.splice(key, 1);
 
           window.noty({
@@ -4782,7 +4786,11 @@ var Chapitre = function Chapitre(chapitre) {
     creerChapitre: function creerChapitre() {
       var _this2 = this;
 
+<<<<<<< HEAD
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/enengamene/public/admin/".concat(this.courId, "/chapitres"), this.chapitre).then(function (resp) {
+=======
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.courId, "/chapitres"), this.chapitre).then(function (resp) {
+>>>>>>> 61ca235c9b67a7dd1900e1cb1a67c1e0556f71e5
         _this2.$parent.$emit('chapitre_cree', resp.data);
 
         $('#createChapitre').modal('hide');
@@ -4793,7 +4801,11 @@ var Chapitre = function Chapitre(chapitre) {
     updateChapitre: function updateChapitre() {
       var _this3 = this;
 
+<<<<<<< HEAD
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/enengamene/public/admin/".concat(this.courId, "/chapitres/").concat(this.chapitreId), this.chapitre).then(function (resp) {
+=======
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.courId, "/chapitres/").concat(this.chapitreId), this.chapitre).then(function (resp) {
+>>>>>>> 61ca235c9b67a7dd1900e1cb1a67c1e0556f71e5
         _this3.$parent.$emit('chapitre_updated', resp.data);
 
         $("#createChapitre").modal('hide');

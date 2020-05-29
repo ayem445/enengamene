@@ -76,7 +76,7 @@
   		},
 			methods: {
 				creerSession() {
-					Axios.post(`/enengamene/public/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
+					Axios.post(`/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
 						this.$parent.$emit('session_creee', resp.data)
 						$('#createSession').modal('hide')
 					}).catch(error => {
@@ -84,7 +84,7 @@
 					})
 				},
 				updateSession() {
-					Axios.put(`/enengamene/public/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
+					Axios.put(`/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
 					 .then(resp => {
 					 	$("#createSession").modal('hide')
 					 	this.$parent.$emit('session_updated', resp.data)
