@@ -101,7 +101,7 @@ import axios from 'axios'
           },
           deleteChapitre(id, key) {
   				if(confirm('Voulez-vous vraiment supprimer ?')) {
-  					Axios.delete(`/enengamene/public/admin/${this.cour_id}/chapitres/${id}`)
+  					Axios.delete(`/admin/${this.cour_id}/chapitres/${id}`)
   						 .then(resp => {
   						 	this.sessions.splice(key, 1)
                 window.noty({

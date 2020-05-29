@@ -59,7 +59,7 @@
 					this.chapitre = new Chapitre(chapitre)
 					this.courId = courId
 					this.chapitreId = chapitre.id
-					
+
 					$('#createChapitre').modal()
 				})
       },
@@ -71,24 +71,24 @@
   				chapitreId: null
   			}
 		  },
-		  
+
 		  methods: {
 				creerChapitre() {
-					Axios.post(`/enengamene/public/admin/${this.courId}/chapitres`, this.chapitre).then(resp => {
-						
+					Axios.post(`/admin/${this.courId}/chapitres`, this.chapitre).then(resp => {
+
 						this.$parent.$emit('chapitre_cree', resp.data)
-						
+
 						$('#createChapitre').modal('hide')
 					}).catch(error => {
-						
+
 						window.handleErrors(error)
 					})
 				},
 				updateChapitre() {
-					Axios.put(`/enengamene/public/admin/${this.courId}/chapitres/${this.chapitreId}`, this.chapitre).then(resp => {
-					
+					Axios.put(`/admin/${this.courId}/chapitres/${this.chapitreId}`, this.chapitre).then(resp => {
+
 						 this.$parent.$emit('chapitre_updated', resp.data)
-						 	
+
 						 $("#createChapitre").modal('hide')
 					 }).catch(error => {
 

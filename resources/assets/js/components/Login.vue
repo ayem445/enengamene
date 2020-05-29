@@ -63,7 +63,7 @@
           attemptLogin() {
             this.errors = []
             this.loading = true
-            axios.post('/enengamene/public/login', {
+            axios.post('/login', {
               email: this.email, password: this.password, remember: this.remember
             }).then(resp => {
               // Tout s'est bien passé, alors on actualise la page actuelle
