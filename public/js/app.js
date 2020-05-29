@@ -4868,9 +4868,15 @@ var Session = function Session(session) {
   this.libelle = session.libelle || '';
   this.lien = session.lien || '';
   this.num_ordre = session.num_ordre || '';
-  this.duree = session.duree || '';
   this.description = session.description || '';
   this.commentaire = session.commentaire || '';
+  this.duree_s = session.duree_s || '';
+  this.duree_hhmmss = session.duree_hhmmss || '';
+  this.width = session.width || '';
+  this.height = session.height || '';
+  this.stats_number_of_likes = session.stats_number_of_likes || '';
+  this.stats_number_of_plays = session.stats_number_of_plays || '';
+  this.stats_number_of_comments = session.stats_number_of_comments || '';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -23811,7 +23817,7 @@ var render = function() {
                 _vm._m(1, true),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-9" }, [
-                  _vm._v(_vm._s(session.duree))
+                  _vm._v(_vm._s(session.duree_hhmmss))
                 ])
               ]),
               _vm._v(" "),

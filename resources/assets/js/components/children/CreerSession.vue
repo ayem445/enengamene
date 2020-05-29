@@ -46,9 +46,15 @@
       this.libelle = session.libelle || ''
 			this.lien = session.lien || ''
 			this.num_ordre = session.num_ordre || ''
-      this.duree = session.duree || ''
       this.description = session.description || ''
       this.commentaire = session.commentaire || ''
+			this.duree_s = session.duree_s || ''
+			this.duree_hhmmss = session.duree_hhmmss || ''
+			this.width = session.width || ''
+			this.height = session.height || ''
+			this.stats_number_of_likes = session.stats_number_of_likes || ''
+			this.stats_number_of_plays = session.stats_number_of_plays || ''
+			this.stats_number_of_comments = session.stats_number_of_comments || ''
     }
   }
   export default {

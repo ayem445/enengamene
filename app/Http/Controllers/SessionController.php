@@ -39,7 +39,7 @@ class SessionController extends Controller
      */
     public function store(Chapitre $chapitre, CreateSessionRequest $request)
     {
-        $data = $request->all();
+        $data = $this->setVideoData($request->all());
         $num_ordre_auto = false;
         if (isset($data['num_ordre'])) {
           if (is_null($data['num_ordre'])) {
@@ -53,13 +53,6 @@ class SessionController extends Controller
           $num_ordre = $chapitre->sessions->count();
           $num_ordre = $num_ordre + 1;
           $data['num_ordre'] = $num_ordre;
-        }
-
-        $vimeodata = $this->getVimeoVideoData($data['lien']);
-        if (is_null($vimeodata)) {
-            $data['duree'] = 0;
-        } else {
-            $data['duree'] = $vimeodata->duration;
         }
 
         $data['code'] = Session::getUniqcode();
@@ -98,13 +91,8 @@ class SessionController extends Controller
      */
     public function update(Chapitre $chapitre, Session $session, UpdateSessionRequest $request)
     {
-        $data = $request->all();
-        $vimeodata = $this->getVimeoVideoData($data['lien']);
-        if (is_null($vimeodata)) {
-            $data['duree'] = 0;
-        } else {
-            $data['duree'] = $vimeodata->duration;
-        }
+        $data = $this->setVideoData($request->all());
+
         $session->update($data);
 
         return $session->fresh();
@@ -121,6 +109,31 @@ class SessionController extends Controller
         $session->delete();
 
         return response()->json(['status' => 'ok'], 200);
+    }
+
+    public function setVideoData($data) {
+        $vimeodata = $this->getVimeoVideoData($data['lien']);
+        if (is_null($vimeodata)) {
+            $data['duree_s'] = 0;
+            $data['duree_hhmmss'] = $this->secondsToHHMMSS(0);
+            $data['width'] = 0;
+            $data['height'] = 0;
+            $data['stats_number_of_likes'] = 0;
+            $data['stats_number_of_plays'] = 0;
+            $data['stats_number_of_comments'] = 0;
+        } else {
+            $data['duree_s'] = $vimeodata->duration;
+            $data['duree_hhmmss'] = $this->secondsToHHMMSS($vimeodata->duration);
+            $data['width'] = $vimeodata->width;
+            $data['height'] = $vimeodata->height;
+            $data['stats_number_of_likes'] = $vimeodata->stats_number_of_likes;
+            $data['stats_number_of_plays'] = $vimeodata->stats_number_of_plays;
+            $data['stats_number_of_comments'] = $vimeodata->stats_number_of_comments;
+        }
+
+        $data['taille_o'] = 0;
+
+        return $data;
     }
 
     /**
@@ -159,5 +172,10 @@ class SessionController extends Controller
 
         //$duration = $data->video->duration;
         return $data->video;
+    }
+
+    function secondsToHHMMSS($seconds) {
+      $t = round($seconds);
+      return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);
     }
 }

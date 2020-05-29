@@ -34,7 +34,7 @@
 
             <div class="row">
               <div class="col-sm-3"><i class="fa fa-file-video-o mr-0"></i></div>
-              <div class="col-sm-9">{{ session.duree }}</div>
+              <div class="col-sm-9">{{ session.duree_hhmmss }}</div>
             </div>
 
             <div class="row" hidden>
