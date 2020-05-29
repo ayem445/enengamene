@@ -25,9 +25,6 @@ class CreateSessionsTable extends Migration
 
             $table->integer('num_ordre')->nullable()->comment('numéro d ordre de la session dans le chapitre');
 
-            $table->integer('taille')->nullable()->comment('taille du fichier de la session');
-            $table->integer('duree')->nullable()->comment('duree en secondes de la session');
-
             $table->unsignedBigInteger('chapitre_id')->nullable()->comment('référence du chapitre');
             $table->foreign('chapitre_id')->references('id')->on('chapitres')->onDelete('set null');
 
@@ -36,6 +33,24 @@ class CreateSessionsTable extends Migration
 
             $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
             $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
+
+            // Infos Hebergeur video
+            // object attributes:
+            // id,title,description,url,upload_date,thumbnail_small,thumbnail_medium,thumbnail_large,
+            // user_id,user_name,user_url,user_portrait_small,user_portrait_medium,user_portrait_large,
+            // user_portrait_huge,stats_number_of_likes,stats_number_of_plays,stats_number_of_comments,
+            // duration,width,height,
+            // tags => SimpleXMLElement,
+            // embed_privacy
+
+            $table->integer('taille_o')->nullable()->comment('taille du fichier de la session (en octet)');
+            $table->integer('duree_s')->nullable()->comment('duree de la session (en secondes)');
+            $table->string('duree_hhmmss')->nullable()->comment('duree de la session (en hh:mm:ss)');
+            $table->integer('width')->nullable()->comment('largeur de la session');
+            $table->integer('height')->nullable()->comment('hauteur de la session');
+            $table->integer('stats_number_of_likes')->nullable()->comment('nombre de likes');
+            $table->integer('stats_number_of_plays')->nullable()->comment('nombre de fois que la video a été jouée');
+            $table->integer('stats_number_of_comments')->nullable()->comment('nombre de commentaires recus par la video');
 
             $table->boolean('statut')->default(false)->comment('Statut de la session');
             $table->boolean('etat')->default(false)->comment('Etat de la session');
