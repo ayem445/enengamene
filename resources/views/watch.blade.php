@@ -21,26 +21,26 @@
   <div class="section bg-grey">
     <div class="container">
       @php
-        $nextSession = $session->getSessionSuiv();
-        $prevSession = $session->getSessionPrec();
+        $nextSession = $session->sessionSuiv();
+        $prevSession = $session->sessionPrec();
       @endphp
       <div class="row gap-y text-center">
         <div class="col-12">
 
             <vue-player default_session="{{$session}}"
             @if($nextSession->id !== $session->id)
-                next_session_url="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}"
+                next_session_url="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->sessionSuiv()->id]) }}"
             @endif
             ></vue-player>
 
             <nav class="flexbox mb-50">
               @if($prevSession->id !== $session->id)
-              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
+              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->sessionPrec()->id]) }}"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
               @else
               <a class="btn btn-white disabled" href="#"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
               @endif
               @if($nextSession->id !== $session->id)
-              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
+              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->sessionSuiv()->id]) }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
               @else
               <a class="btn btn-white disabled" href="#">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
               @endif

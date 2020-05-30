@@ -17,10 +17,10 @@ class SessionTest extends TestCase
         $session2 = factory(Session::class)->create(['num_ordre' => 100, 'chapitre_id' => 1]);
         $session3 = factory(Session::class)->create(['num_ordre' => 300, 'chapitre_id' => 1]);
         // obtenir suivant session, et precedente session
-        $this->assertEquals($session->getSessionSuiv()->id, $session3->id);
-        $this->assertEquals($session3->getSessionPrec()->id, $session->id);
-        $this->assertEquals($session2->getSessionSuiv()->id, $session->id);
-        $this->assertEquals($session2->getSessionPrec()->id, $session2->id);
-        $this->assertEquals($session3->getSessionSuiv()->id, $session3->id);
+        $this->assertEquals($session->sessionSuiv()->id, $session3->id);
+        $this->assertEquals($session3->sessionPrec()->id, $session->id);
+        $this->assertEquals($session2->sessionSuiv()->id, $session->id);
+        $this->assertEquals($session2->sessionPrec()->id, $session2->id);
+        $this->assertEquals($session3->sessionSuiv()->id, $session3->id);
     }
 }

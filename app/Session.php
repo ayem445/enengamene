@@ -40,7 +40,7 @@ class Session extends Model
      *
      * @return \App\Session
      */
-    public function getSessionSuiv() {
+    public function sessionSuiv() {
         $nextSession = $this->chapitre->sessions()->where('num_ordre', '>', $this->num_ordre)
                     ->orderBy('num_ordre', 'asc')
                     ->first();
@@ -57,7 +57,7 @@ class Session extends Model
      *
      * @return \App\Session
      */
-    public function getSessionPrec() {
+    public function sessionPrec() {
         $prevSession = $this->chapitre->sessions()->where('num_ordre', '<', $this->num_ordre)
                     ->orderBy('num_ordre', 'desc')
                     ->first();
