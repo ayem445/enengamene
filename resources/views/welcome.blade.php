@@ -14,7 +14,7 @@
 
         <br><br><br>
 
-        <a class="btn btn-lg btn-round w-200 btn-primary mr-16" href="/series">Voir plus</a>
+        <a class="btn btn-lg btn-round w-200 btn-primary mr-16" href="/cours">Voir plus</a>
 
         </div>
 

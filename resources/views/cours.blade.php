@@ -46,6 +46,9 @@
             <p class="text-center">
               {{ $cour->description }}
             </p>
+            <p class="text-center">
+              <span class="badge badge-dark">{{ $cour->duree }}</span>
+            </p>
           </div>
         </div>
 
@@ -58,18 +61,53 @@
             <h2>Les Chapitres du Cours</h2>
           </header>
 
-          @forelse($cour->chapitres as $chapitre)
-            <div class="card mb-30">
-              <div class="row">
-                <div class="col-12 col-md-8">
-                  <div class="card-block">
-                    <h4 class="card-title">{{ $chapitre->libelle }}</h4>
+          <div class="accordion" id="accordion-chapitres">
+
+              @forelse($cour->chapitres as $chapitre)
+
+                <div class="card">
+                  <h3 class="card-title">
+                    <a class="d-flex" data-toggle="collapse" data-parent="#accordion-chapitres" href="#{{ $chapitre->code }}">
+                      <span class="mr-auto">{{ $chapitre->libelle }}</span>
+                      <span class="text-lighter hidden-sm-down"><i class="fa fa-signal mr-8"></i> {{ $chapitre->difficulte->libelle }}</span>
+                    </a>
+                  </h3>
+
+                  <div id="{{ $chapitre->code }}" class="collapse in">
+                    <div class="card-block">
+                    <p>{{ $chapitre->description }}</p>
+                    <table class="table table-cart">
+                      <tbody valign="middle">
+
+                        @forelse($chapitre->sessions as $session)
+                        <tr>
+
+                          <td>
+                            <h5>{{ $session->libelle }}</h5>
+                            <p>{{ $session->description }}</p>
+                          </td>
+
+                          <td valign="center">
+                            <label><i class="fa fa-file-video-o mr-0"></i></label>
+                            <p>{{ $session->duree_hhmmss }}</p>
+                          </td>
+
+                          <td>
+                            <a class="btn btn-xs btn-round btn-success" href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $session->id]) }}">Visionner <i class="fa fa-play-circle-o" aria-hidden="true"></i></a>
+                          </td>
+                        </tr>
+                        @empty
+                        @endforelse
+                      </tbody>
+                    </table>
+
+                  </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          @empty
-          @endforelse
+
+              @empty
+              @endforelse
+          </div>
 
         </div>
       </section>
