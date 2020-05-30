@@ -33,15 +33,32 @@
             @endif
             ></vue-player>
 
-            @if($nextSession->id !== $session->id)
-              <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}" class="btn btn-info">Session Précédente</a>
-            @endif
-            @if($prevSession->id !== $session->id)
-              <a href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}" class="btn btn-info">Session Suivante</a>
-            @endif
+            <nav class="flexbox mb-50">
+              @if($prevSession->id !== $session->id)
+              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionPrec()->id]) }}"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
+              @else
+              <a class="btn btn-white disabled" href="#"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
+              @endif
+              @if($nextSession->id !== $session->id)
+              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->getSessionSuiv()->id]) }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
+              @else
+              <a class="btn btn-white disabled" href="#">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
+              @endif
+            </nav>
 
         </div>
         <div class="col-12">
+
+          <header class="section-header">
+            <small><strong>Chapitre:</strong></small>
+            <h2>{{ $chapitre->libelle }}</h2>
+            <hr>
+            <p>{{ $chapitre->description }}</p>
+            <p class="text-center">
+              <span class="badge badge-danger">{{ $chapitre->duree }}</span>
+            </p>
+          </header>
+
           <ul class="list-group">
             @foreach($chapitre->getSessionsOrdonnees() as $s)
               <li class="list-group-item
@@ -49,9 +66,11 @@
                 active
               @endif">
                 <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">{{ $s->libelle }} </a>
+                <small><span class="badge badge badge-secondary p-5"> {{ $s->duree_hhmmss }}</span>
                 @if(auth()->user()->aTermineeSession($s))
-                  <small><label class="badge badge-success">terminée</label></small>
+                  <label class="badge badge-success">terminée</label>
                 @endif
+                </small>
               </li>
             @endforeach
           </ul>
