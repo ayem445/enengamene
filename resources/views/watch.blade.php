@@ -67,9 +67,11 @@
               @endif">
                 <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">{{ $s->libelle }} </a>
                 <small><span class="badge badge badge-secondary p-5"> {{ $s->duree_hhmmss }}</span>
-                @if(auth()->user()->aTermineeSession($s))
-                  <label class="badge badge-success">terminée</label>
-                @endif
+                @auth
+                  @if(auth()->user()->aTermineeSession($s))
+                    <label class="badge badge-success">terminée</label>
+                  @endif
+                @endauth
                 </small>
               </li>
             @endforeach
