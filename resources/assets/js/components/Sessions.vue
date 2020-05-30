@@ -70,6 +70,7 @@
   			})
 
   			this.$on('session_updated', (session) => {
+          this.$parent.$emit('chapitre_updated', this.chapitre_id)
           // on récupère l'index de session modifiée
   				let sessionIndex = this.sessions.findIndex(s => {
   					return session.id == s.id

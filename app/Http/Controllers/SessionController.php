@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Requests\CreateSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
+use App\Traits\DateTimeTrait;
 
 class SessionController extends Controller
 {
+    use DateTimeTrait;
+
     /**
      * Display a listing of the resource.
      *
@@ -115,7 +118,7 @@ class SessionController extends Controller
         $vimeodata = $this->getVimeoVideoData($data['lien']);
         if (is_null($vimeodata)) {
             $data['duree_s'] = 0;
-            $data['duree_hhmmss'] = $this->secondsToHHMMSS(0);
+            $data['duree_hhmmss'] = $this->secondsToHhmmss(0);
             $data['width'] = 0;
             $data['height'] = 0;
             $data['stats_number_of_likes'] = 0;
@@ -123,12 +126,12 @@ class SessionController extends Controller
             $data['stats_number_of_comments'] = 0;
         } else {
             $data['duree_s'] = $vimeodata->duration;
-            $data['duree_hhmmss'] = $this->secondsToHHMMSS($vimeodata->duration);
-            $data['width'] = $vimeodata->width;
-            $data['height'] = $vimeodata->height;
-            $data['stats_number_of_likes'] = $vimeodata->stats_number_of_likes;
-            $data['stats_number_of_plays'] = $vimeodata->stats_number_of_plays;
-            $data['stats_number_of_comments'] = $vimeodata->stats_number_of_comments;
+            $data['duree_hhmmss'] = $this->secondsToHhmmss($vimeodata->duration);
+            $data['width'] = (int)$vimeodata->width;
+            $data['height'] = (int)$vimeodata->height;
+            $data['stats_number_of_likes'] = (int)$vimeodata->stats_number_of_likes;
+            $data['stats_number_of_plays'] = (int)$vimeodata->stats_number_of_plays;
+            $data['stats_number_of_comments'] = (int)$vimeodata->stats_number_of_comments;
         }
 
         $data['taille_o'] = 0;
@@ -172,10 +175,5 @@ class SessionController extends Controller
 
         //$duration = $data->video->duration;
         return $data->video;
-    }
-
-    function secondsToHHMMSS($seconds) {
-      $t = round($seconds);
-      return sprintf('%02d:%02d:%02d', ($t/3600),($t/60%60), $t%60);
     }
 }

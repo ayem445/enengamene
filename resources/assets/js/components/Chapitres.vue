@@ -31,7 +31,7 @@
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                   </button>
               </p>
-              <p>{{ chapitre.description }}</p>
+              <p>{{ chapitre.description }}<br> Durée du chapitre: {{ chapitre.duree }}</p>
 
               <div class="row">
                 <vue-sessions :default_sessions="chapitre.sessions" :chapitre_id="chapitre.id" ></vue-sessions>
@@ -56,31 +56,31 @@ import axios from 'axios'
     export default {
         props: ['default_chapitres', 'cour_id'],
 
-              mounted() {
-  			this.$on('chapitre_cree', (chapitre) => {
-          window.noty({
-  					message: 'Chapitre créée avec succès',
-  					type: 'success'
-  				})
-          // insert le nouveau dans le tableau des chapitres
-  				this.chapitres.push(chapitre)
-  			})
+        mounted() {
+    			this.$on('chapitre_cree', (chapitre) => {
+            window.noty({
+    					message: 'Chapitre créée avec succès',
+    					type: 'success'
+    				})
+            // insert le nouveau dans le tableau des chapitres
+    				this.chapitres.push(chapitre)
+    			})
 
-  			this.$on('chapitre_updated', (chapitre) => {
-          // on récupère l'index du chapitre modifiée
-  				let chapitreIndex = this.chapitre.findIndex(s => {
-  					return chapitre.id == s.id
-  			})
+    			this.$on('chapitre_updated', (chapitre) => {
+            // on récupère l'index du chapitre modifiée
+    				let chapitreIndex = this.chapitre.findIndex(s => {
+    					return chapitre.id == s.id
+    			  })
 
-          // TODO: Inserer la nouveau chapitre en fonction de son numéro d'ordre (dans le UPDSATE)
-  				this.chapitre.splice(chapitreIndex, 1, chapitre)
-          window.noty({
-  					message: 'Chapitre modifié avec succès',
-  					type: 'success'
-  				})
+            // TODO: Inserer la nouveau chapitre en fonction de son numéro d'ordre (dans le UPDSATE)
+  				  this.chapitre.splice(chapitreIndex, 1, chapitre)
+            window.noty({
+  					   message: 'Chapitre modifié avec succès',
+  					   type: 'success'
+  				 })
 
-  			})
-  		},
+  			 })
+  		  },
         components: {
           "creer-chapitre": require('./children/CreerChapitre.vue').default
         },

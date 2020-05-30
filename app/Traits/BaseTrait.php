@@ -11,9 +11,7 @@ use Illuminate\Support\Str;
  */
 trait BaseTrait
 {
-    use CodeTrait;
-    use ListTrait;
-    use ImageTrait;
+    use CodeTrait, ListTrait, ImageTrait, DateTimeTrait;
 
     /**
      * Retourne l'actuel object du modèle mappé

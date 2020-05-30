@@ -10,7 +10,8 @@ class Cour extends Model
     use BaseTrait;
 
     protected $guarded = [];
-
+    protected $appends = ['duree'];
+    
     /**
      * Eager load relationships
      *
@@ -25,6 +26,24 @@ class Cour extends Model
      */
     public function getImagePathAttribute() {
         return asset( config('app.cours_filefolder') . '/' . $this->image_url);
+    }
+
+    /**
+     * Retourne la durée du cours en secondes
+     * @return [integer] durée en ss
+     */
+    public function getDureeSAttribute()
+    {
+        return $this->chapitres->sum('duree_s');
+    }
+
+    /**
+     * Retourne la durée du cours en hh:mm:ss
+     * @return [String] durée en hh:mm:ss
+     */
+    public function getDureeAttribute()
+    {
+        return $this->secondsToHhmmss($this->duree_s);
     }
 
     /**

@@ -4634,7 +4634,9 @@ __webpack_require__.r(__webpack_exports__);
       _this.sessions.push(session);
     });
     this.$on('session_updated', function (session) {
-      // on récupère l'index de session modifiée
+      _this.$parent.$emit('chapitre_updated', _this.chapitre_id); // on récupère l'index de session modifiée
+
+
       var sessionIndex = _this.sessions.findIndex(function (s) {
         return session.id == s.id;
       }); // TODO: Inserer la nouvelle session en fonction de son numéro d'ordre (dans le UPDSATE)
@@ -23294,7 +23296,11 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(chapitre.description))]),
+                      _c("p", [
+                        _vm._v(_vm._s(chapitre.description)),
+                        _c("br"),
+                        _vm._v(" Durée du chapitre: " + _vm._s(chapitre.duree))
+                      ]),
                       _vm._v(" "),
                       _c(
                         "div",

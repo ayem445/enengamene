@@ -58,7 +58,7 @@
     <section class="section bg-gray">
         <div class="container">
           <header class="section-header">
-            <h2>Video Lessons</h2>
+            <h2>Les Chapitres du Cours</h2>
             <hr>
             <p class="lead">Sneak peek of the lessons already available in this course</p>
           </header>
