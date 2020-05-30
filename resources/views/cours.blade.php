@@ -41,10 +41,7 @@
           <hr>
         </header>
 
-
-
         <div class="row gap-y">
-
           <div class="col-12 offset-md-2 col-md-8 mb-30">
             <p class="text-center">
               {{ $cour->description }}
@@ -59,9 +56,21 @@
         <div class="container">
           <header class="section-header">
             <h2>Les Chapitres du Cours</h2>
-            <hr>
-            <p class="lead">Sneak peek of the lessons already available in this course</p>
           </header>
+
+          @forelse($cour->chapitres as $chapitre)
+            <div class="card mb-30">
+              <div class="row">
+                <div class="col-12 col-md-8">
+                  <div class="card-block">
+                    <h4 class="card-title">{{ $chapitre->libelle }}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          @empty
+          @endforelse
+
         </div>
       </section>
 @endsection

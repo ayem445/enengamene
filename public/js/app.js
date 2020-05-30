@@ -4605,20 +4605,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['default_sessions', 'chapitre_id'],
@@ -4634,9 +4620,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.sessions.push(session);
     });
     this.$on('session_updated', function (session) {
-      _this.$parent.$emit('chapitre_updated', _this.chapitre_id); // on récupère l'index de session modifiée
-
-
+      // on récupère l'index de session modifiée
       var sessionIndex = _this.sessions.findIndex(function (s) {
         return session.id == s.id;
       }); // TODO: Inserer la nouvelle session en fonction de son numéro d'ordre (dans le UPDSATE)
@@ -23762,82 +23746,71 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._l(_vm.sessions, function(session, key) {
-        return _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row no-gutters pricing-4" }, [
-            _c("div", { staticClass: "col-12 col-md-9 plan-description" }, [
-              _c("h6", [_vm._v(_vm._s(session.libelle))]),
-              _vm._v(" "),
-              _c("p", {}, [
-                _vm._v(_vm._s(session.description) + "\n            ")
-              ]),
-              _c("footer", { staticClass: "blockquote-footer" }, [
-                _vm._v(_vm._s(session.commentaire))
-              ]),
-              _vm._v(" "),
-              _c("p"),
-              _vm._v(" "),
-              _c("p", { staticClass: "footer-copyright text-left" }, [
+      _c("table", { staticClass: "table table-cart" }, [
+        _c(
+          "tbody",
+          { attrs: { valign: "middle" } },
+          _vm._l(_vm.sessions, function(session, key) {
+            return _c("tr", [
+              _c("td", [
                 _c(
-                  "button",
+                  "a",
                   {
-                    staticClass: "btn btn-primary btn-xs",
+                    staticClass: "item-remove",
+                    attrs: { href: "#" },
                     on: {
                       click: function($event) {
-                        return _vm.editSession(session)
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-pencil-square-o",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger btn-xs",
-                    on: {
-                      click: function($event) {
+                        $event.preventDefault()
                         return _vm.deleteSession(session.id, key)
                       }
                     }
                   },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-trash-o",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ]
+                  [_c("i", { staticClass: "ti-close" })]
                 )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12 col-md-3 plan-price" }, [
-              _vm._m(0, true),
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _vm._m(1, true),
+              _c("td", [
+                _c("h5", [
+                  _c(
+                    "a",
+                    {
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.editSession(session)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(session.libelle))]
+                  )
+                ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-sm-9" }, [
-                  _vm._v(_vm._s(session.duree_hhmmss))
+                _c("p", [_vm._v(_vm._s(session.description))])
+              ]),
+              _vm._v(" "),
+              _c("td", [
+                _c("label", [_vm._v("Dimensions")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(_vm._s(session.width) + "/" + _vm._s(session.height))
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(2, true)
+              _c("td", { attrs: { valign: "center" } }, [
+                _vm._m(0, true),
+                _vm._v(" "),
+                _c("p", [_vm._v(_vm._s(session.duree_hhmmss))])
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("br")
-        ])
-      }),
+          }),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c("creer-session")
     ],
-    2
+    1
   )
 }
 var staticRenderFns = [
@@ -23845,33 +23818,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row", attrs: { hidden: "" } }, [
-      _c("div", { staticClass: "col-sm-3" }, [
-        _c("i", { staticClass: "fa fa-hourglass-end mr-0" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:01")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-3" }, [
-      _c("i", { staticClass: "fa fa-file-video-o mr-0" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row", attrs: { hidden: "" } }, [
-      _c("div", { staticClass: "col-sm-3" }, [
-        _c("i", { staticClass: "fa fa-file-text-o mr-0" })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-9" }, [_vm._v("00:03")])
-    ])
+    return _c("label", [_c("i", { staticClass: "fa fa-file-video-o mr-0" })])
   }
 ]
 render._withStripped = true

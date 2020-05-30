@@ -7,46 +7,32 @@
       </button>
     </h5>
 
-    <div class="container" v-for="session, key in sessions">
-        <div class="row no-gutters pricing-4">
-          <div class="col-12 col-md-9 plan-description">
-            <h6>{{ session.libelle }}</h6>
-            <p class="">{{ session.description }}
-              <footer class="blockquote-footer">{{ session.commentaire }}</footer>
-            </p>
+    <table class="table table-cart">
+      <tbody valign="middle">
 
-            <p class="footer-copyright text-left">
-              <button class="btn btn-primary btn-xs" @click="editSession(session)">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </button>
-              <button class="btn btn-danger btn-xs" @click="deleteSession(session.id, key)">
-                <i class="fa fa-trash-o" aria-hidden="true"></i>
-              </button>
-            </p>
+        <tr v-for="session, key in sessions">
+          <td>
+            <a class="item-remove" href="#" @click.prevent="deleteSession(session.id, key)"><i class="ti-close"></i></a>
+          </td>
 
-          </div>
+          <td>
+            <h5><a href="#" @click.prevent="editSession(session)">{{ session.libelle }}</a></h5>
+            <p>{{ session.description }}</p>
+          </td>
 
-          <div class="col-12 col-md-3 plan-price">
-            <div class="row" hidden>
-              <div class="col-sm-3"><i class="fa fa-hourglass-end mr-0"></i></div>
-              <div class="col-sm-9">00:01</div>
-            </div>
+          <td>
+            <label>Dimensions</label>
+            <p>{{ session.width }}/{{ session.height }}</p>
+          </td>
 
-            <div class="row">
-              <div class="col-sm-3"><i class="fa fa-file-video-o mr-0"></i></div>
-              <div class="col-sm-9">{{ session.duree_hhmmss }}</div>
-            </div>
+          <td valign="center">
+            <label><i class="fa fa-file-video-o mr-0"></i></label>
+            <p>{{ session.duree_hhmmss }}</p>
+          </td>
+        </tr>
 
-            <div class="row" hidden>
-              <div class="col-sm-3"><i class="fa fa-file-text-o mr-0"></i></div>
-              <div class="col-sm-9">00:03</div>
-            </div>
-          </div>
-
-        </div>
-
-        <br>
-    </div>
+      </tbody>
+    </table>
 
     <creer-session></creer-session>
   </div>
@@ -70,7 +56,6 @@
   			})
 
   			this.$on('session_updated', (session) => {
-          this.$parent.$emit('chapitre_updated', this.chapitre_id)
           // on récupère l'index de session modifiée
   				let sessionIndex = this.sessions.findIndex(s => {
   					return session.id == s.id
