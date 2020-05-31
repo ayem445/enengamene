@@ -78,4 +78,72 @@ class Chapitre extends Model
         return $this->sessions()->orderBy('num_ordre', 'asc')->get();
     }
 
+    /**
+     * Renvoie le prochain chapitre après celui-la
+     *
+     * @return \App\Chapitre
+     */
+    public function chapitreSuiv() {
+        $nextChapitre = $this->cour->chapitres()->where('num_ordre', '>', $this->num_ordre)
+                    ->orderBy('num_ordre', 'asc')
+                    ->first();
+
+        if($nextChapitre) {
+            return $nextChapitre;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Renvoie le chapitre qui vient avant celui-la
+     *
+     * @return \App\Chapitre
+     */
+    public function chapitrePrec() {
+        $prevChapitre = $this->cour->chapitres()->where('num_ordre', '<', $this->num_ordre)
+                    ->orderBy('num_ordre', 'desc')
+                    ->first();
+
+        if($prevChapitre) {
+            return $prevChapitre;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Renvoie la 1ère session de ce chapitre
+     *
+     * @return \App\Session
+     */
+    public function premiereSession() {
+        $firstSession = $this->sessions()
+                    ->orderBy('num_ordre', 'asc')
+                    ->first();
+
+        if($firstSession) {
+            return $firstSession;
+        }
+
+        return null;
+    }
+
+    /**
+     * Renvoie la dernière session de ce chapitre
+     *
+     * @return \App\Session
+     */
+    public function derniereSession() {
+        $firstSession = $this->sessions()
+                    ->orderBy('num_ordre', 'desc')
+                    ->first();
+
+        if($firstSession) {
+            return $firstSession;
+        }
+
+        return null;
+    }
+
 }

@@ -49,7 +49,12 @@ class Session extends Model
             return $nextSession;
         }
 
-        return $this;
+        //return $this;
+        $nextChapitre = $this->chapitre->chapitreSuiv();
+        if ($nextChapitre->id == $this->chapitre_id) {
+          return $this;
+        }
+        return $nextChapitre->premiereSession();
     }
 
     /**
@@ -66,6 +71,11 @@ class Session extends Model
             return $prevSession;
         }
 
-        return $this;
+        //return $this;
+        $prevChapitre = $this->chapitre->chapitrePrec();
+        if ($prevChapitre->id == $this->chapitre_id) {
+          return $this;
+        }
+        return $prevChapitre->derniereSession();
     }
 }

@@ -8,7 +8,7 @@
       <div class="col-12 col-lg-8 offset-lg-2">
 
         <h1>{{ $session->libelle }}</h1>
-        <p class="fs-20 opacity-70">{{  $chapitre->libelle }}</p>
+        <p class="fs-20 opacity-70">{{  $session->description }}</p>
 
       </div>
     </div>
@@ -35,12 +35,12 @@
 
             <nav class="flexbox mb-50">
               @if($prevSession->id !== $session->id)
-              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->sessionPrec()->id]) }}"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
+              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->sessionPrec()->chapitre, 'session' => $session->sessionPrec()->id]) }}"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
               @else
               <a class="btn btn-white disabled" href="#"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
               @endif
               @if($nextSession->id !== $session->id)
-              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->sessionSuiv()->id]) }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
+              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->sessionSuiv()->chapitre, 'session' => $session->sessionSuiv()->id]) }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
               @else
               <a class="btn btn-white disabled" href="#">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
               @endif
@@ -51,21 +51,27 @@
 
           <header class="section-header">
             <small><strong>Chapitre:</strong></small>
-            <h2>{{ $chapitre->libelle }}</h2>
+            <h2>{{ $session->chapitre->libelle }}</h2>
             <hr>
-            <p>{{ $chapitre->description }}</p>
+            <p>{{ $session->chapitre->description }}</p>
             <p class="text-center">
-              <span class="badge badge-danger">{{ $chapitre->duree }}</span>
+              <span class="badge badge-danger">{{ $session->chapitre->duree }}</span>
             </p>
+            <p class="text-center mt-50"><a class="btn btn-white" href="{{ route('cours', $session->chapitre->cour_id) }}">Aller au Cours</a></p>
           </header>
 
           <ul class="list-group">
-            @foreach($chapitre->getSessionsOrdonnees() as $s)
+            @foreach($session->chapitre->getSessionsOrdonnees() as $s)
               <li class="list-group-item
               @if($s->id == $session->id)
                 active
               @endif">
-                <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">{{ $s->libelle }} </a>
+              @if($s->id == $session->id)
+                <a>
+              @else
+                <a href="{{ route('cours.watch', ['chapitre' => $chapitre->id, 'session' => $s->id]) }}">
+              @endif
+                {{ $s->libelle }} </a>
                 <small><span class="badge badge badge-secondary p-5"> {{ $s->duree_hhmmss }}</span>
                 @auth
                   @if(auth()->user()->aTermineeSession($s))
