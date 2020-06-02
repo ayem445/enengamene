@@ -15,7 +15,10 @@
             <a class="d-flex" data-toggle="collapse" data-parent="#accordion-questions" :href="'#collapse-questions-'+index">
               <span class="mr-auto">{{ question.libelle }}</span>
 
-              <span class="text-lighter hidden-sm-down"><i class="fa fa-signal mr-8"></i> XXX</span>
+              <span class="text-lighter">
+                <small v-if="question.quiz_type_question_id == 1"><i class="fa fa-check" aria-hidden="true"></i> Choix-multiple</small>
+                <small v-else><i class="fa fa-pencil" aria-hidden="true"></i> Libre</small>
+              </span>
             </a>
           </h3>
 
