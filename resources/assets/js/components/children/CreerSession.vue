@@ -101,6 +101,7 @@
 				updateSession() {
 					Axios.put(`/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
 					 .then(resp => {
+						console.log(resp)
 					 	$("#createSession").modal('hide')
 					 	this.$parent.$emit('session_updated', resp.data)
 					 }).catch(error => {

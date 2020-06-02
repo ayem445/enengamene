@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\QuizReponse;
+use App\QuizQuestion;
 use Illuminate\Http\Request;
 
 class QuizReponseController extends Controller
@@ -33,9 +34,10 @@ class QuizReponseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuizQuestion $quizquestion, Request $request)
     {
-        //
+        $data = $request->all();
+        return $quizquestion->reponses()->create($data);
     }
 
     /**
@@ -67,9 +69,13 @@ class QuizReponseController extends Controller
      * @param  \App\QuizReponse  $quizReponse
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, QuizReponse $quizReponse)
+    public function update(QuizQuestion $quizquestion, QuizReponse $quizReponse, Request $request)
     {
-        //
+        $data = $request->all();
+        $quizreponse = QuizReponse::find($data['id']);
+        $quizreponse->update($data);
+        //$quizReponse->update($data);
+        return $quizreponse->fresh();
     }
 
     /**

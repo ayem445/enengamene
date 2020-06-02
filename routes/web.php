@@ -37,7 +37,20 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware('admin')->prefix('admin')->group(function(){
     Route::resource('cours','CourController');
+    Route::resource('quizs','QuizController');
     Route::resource('{chapitre_by_id}/sessions','SessionController');
     Route::resource('{cour_by_id}/chapitres','ChapitreController');
-    Route::resource('{cour_by_id}/chapitres/{chapitre_by_id}','ChapitreController');
+    //Route::resource('{cour_by_id}/chapitres/{chapitre_by_id}','ChapitreController');
+
+    // Route::resource('{cour_by_id}/quizcours','QuizCourController');
+    // Route::resource('{chapitre_by_id}/quizchapitres','QuizChapitreController');
+    // Route::resource('{session_by_id}/quizsessions','QuizSessionController');
+    //
+    Route::get('/quizsessions/create/{session_by_id}','QuizController@createsession')->name('quizsessions.create');
+    Route::post('/quizsessions/store/{session_by_id}','QuizController@storesession')->name('quizsessions.store');
+
+    //Route::resource('quizquestions','QuizQuestionController');
+    Route::resource('{quiz_by_id}/quizquestions','QuizQuestionController');
+    Route::resource('{quizquestion_by_id}/quizreponses','QuizReponseController');
+    //Route::resource('taxonomy/{term}','QuizReponseController', ['parameters' => ['{term}' => 'your_name']]);
 });

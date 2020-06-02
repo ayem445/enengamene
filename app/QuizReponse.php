@@ -14,9 +14,8 @@ class QuizReponse extends Model
     /**
      * Retourne la question a laquelle cette reponse est liee.
      */
-    public function quiz_question()
+    public function question()
     {
         return $this->belongsTo('App\QuizQuestion');
     }
 }
-

@@ -15,7 +15,7 @@ class Quiz extends Model
     /**
      * Retourne toutes les questions de ce Quiz.
      */
-    public function quiz_questions()
+    public function questions()
     {
         return $this->hasMany('App\QuizQuestion', 'quiz_id');
     }
@@ -44,4 +44,3 @@ class Quiz extends Model
         return $this->hasMany('App\Session', 'quiz_id');
     }
 }
-

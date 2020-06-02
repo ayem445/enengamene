@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Quiz;
-use App\QuizQuestion;
 use Illuminate\Http\Request;
+use App\Session;
 
-class QuizQuestionController extends Controller
+class QuizSessionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,9 +22,14 @@ class QuizQuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Session $session)
     {
-        //
+        //dd($session);
+        $store_route = "QuizSessionController@store";
+        return view('admin.quizs.create')
+          ->withElem($session)
+          ->withStoreRoute("QuizSessionController@store")
+          ;//, compact('matieres'));
     }
 
     /**
@@ -34,22 +38,18 @@ class QuizQuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Quiz $quiz, Request $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-        //$data['quiz_type_question_id'] = 1;
-
-        //return QuizQuestion::create($data);
-        return $quiz->questions()->create($data);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\QuizQuestion  $quizQuestion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(QuizQuestion $quizQuestion)
+    public function show($id)
     {
         //
     }
@@ -57,10 +57,10 @@ class QuizQuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\QuizQuestion  $quizQuestion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(QuizQuestion $quizQuestion)
+    public function edit($id)
     {
         //
     }
@@ -69,26 +69,21 @@ class QuizQuestionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\QuizQuestion  $quizQuestion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Quiz $quiz, QuizQuestion $quizQuestion, Request $request)
+    public function update(Request $request, $id)
     {
-        $data = $request->all();
-        // TODO: A retirer
-        $quizquestion = QuizQuestion::find($data['id']);
-        $quizquestion->update($data);
-
-        return $quizquestion->fresh();
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\QuizQuestion  $quizQuestion
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(QuizQuestion $quizQuestion)
+    public function destroy($id)
     {
         //
     }

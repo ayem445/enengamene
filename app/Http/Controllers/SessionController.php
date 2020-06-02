@@ -31,7 +31,7 @@ class SessionController extends Controller
      */
     public function create()
     {
-        //
+        dd('session.create');
     }
 
     /**

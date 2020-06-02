@@ -30,7 +30,7 @@ class QuizQuestion extends Model
     /**
      * Retourne toutes les réponses de cette question.
      */
-    public function quiz_reponses()
+    public function reponses()
     {
         return $this->hasMany('App\QuizReponse', 'quiz_question_id');
     }
@@ -51,4 +51,3 @@ class QuizQuestion extends Model
         return $this->quiz_reponses()->where('is_valide', true)->count();
     }
 }
-

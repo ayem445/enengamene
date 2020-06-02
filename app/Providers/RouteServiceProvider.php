@@ -5,7 +5,11 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use App\Cour;
+use App\Quiz;
 use App\Chapitre;
+use App\QuizQuestion;
+use App\Session;
+
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -42,6 +46,21 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('chapitre_by_id', Chapitre::class);
         Route::bind('chapitre_by_id', function($value){
             return Chapitre::findOrFail($value);
+        });
+
+        Route::model('session_by_id', Session::class);
+        Route::bind('session_by_id', function($value){
+            return Session::findOrFail($value);
+        });
+
+        Route::model('quiz_by_id', Quiz::class);
+        Route::bind('quiz_by_id', function($value){
+            return Quiz::findOrFail($value);
+        });
+
+        Route::model('quizquestion_by_id', QuizQuestion::class);
+        Route::bind('quizquestion_by_id', function($value){
+            return QuizQuestion::findOrFail($value);
         });
     }
 

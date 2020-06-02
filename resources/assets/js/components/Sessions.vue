@@ -1,6 +1,7 @@
 <template>
 
   <div class="container">
+
     <h5 class="text-left">
       <button class="btn btn-outline-success btn-sm" @click="creerNouvelleSession()">
         Nouvelle Session
@@ -28,6 +29,14 @@
           <td valign="center">
             <label><i class="fa fa-file-video-o mr-0"></i></label>
             <p>{{ session.duree_hhmmss }}</p>
+          </td>
+
+          <td valign="center">
+            <label>Quiz</i></label>
+            <p>
+              <a :href="'/admin/quizs/' + session.id " v-if="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+              <a :href="'/admin/quizsessions/create/' + session.id " v-else="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+            </p>
           </td>
         </tr>
 
