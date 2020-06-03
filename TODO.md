@@ -9,3 +9,6 @@ Notification (formulaires Blade)
 QUIZ QUESTIONS/REPONSES
 Update à partir du vue component (Axios)
 --> TODO: Revoir la logique pour retirer l'id du Request.data
+
+Delete d'une question
+--> TODO: Faire un delete cascade des réponses

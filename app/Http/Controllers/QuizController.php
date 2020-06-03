@@ -6,6 +6,7 @@ use App\Quiz;
 use Illuminate\Http\Request;
 use App\Session;
 use App\Chapitre;
+use App\QuizTypeQuestion;
 use App\Cour;
 
 class QuizController extends Controller
@@ -60,7 +61,7 @@ class QuizController extends Controller
         $quiz = Quiz::create($data);
         $session->quiz_id = $quiz->id;
         $session->save();
-        
+
         session()->flash('success', 'Quiz créé avec succès.');
         return redirect()->route('quizs.show', $quiz);
     }
@@ -84,8 +85,11 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        $quiz = Quiz::with(['questions', 'questions.reponses'])->find($quiz->id);
-        return view('admin.quizs.index')->withQuiz($quiz);
+        $typequestions = QuizTypeQuestion::listMap('libelle');
+        $quiz = Quiz::with(['questions', 'questions.reponses', 'questions.typequestion'])->find($quiz->id);
+        return view('admin.quizs.index')
+          ->withQuiz($quiz)
+          ->withTypequestions($typequestions);
     }
 
     /**

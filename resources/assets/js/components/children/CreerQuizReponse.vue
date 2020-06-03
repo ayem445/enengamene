@@ -37,8 +37,8 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-					<button type="button" class="btn btn-primary" @click="updateReponse()" v-if="editing">Enregistrer</button>
-					<button type="button" class="btn btn-primary" @click="creerReponse()" v-else>Créer Reponse</button>
+					<button type="button" class="btn btn-primary" @click="updateReponse()" :disabled="!isValidCreateForm" v-if="editing">Enregistrer</button>
+					<button type="button" class="btn btn-primary" @click="creerReponse()" :disabled="!isValidCreateForm" v-else>Créer Reponse</button>
 				</div>
 
 			</div>
@@ -88,6 +88,7 @@
   				reponse: {},
   				questionId: '',
   				editing: false,
+					loading: false,
   				reponseId: null
   			}
   		},
@@ -97,21 +98,32 @@
 				},
 				creerReponse() {
 					// Poster les données sur le serveur
+					this.loading = true
 					Axios.post(`/admin/${this.questionId}/quizreponses`, this.reponse).then(resp => {
+						this.loading = false
 						this.$parent.$emit('reponse_creee', resp.data, this.questionId)
 						$('#createReponse').modal('hide')
 					}).catch(error => {
+						this.loading = false
 						window.handleErrors(error)
 					})
 				},
 				updateReponse() {
+					this.loading = true
 					Axios.put(`/admin/${this.questionId}/quizreponses/${this.reponseId}`, this.reponse)
 					 .then(resp => {
+						this.loading = false
 					 	$("#createReponse").modal('hide')
 					 	this.$parent.$emit('reponse_updated', resp.data, this.questionId)
 					 }).catch(error => {
-					 	window.handleErrors(error)
+							this.loading = false
+							window.handleErrors(error)
 					 })
+				}
+			},
+			computed: {
+				isValidCreateForm() {
+					return this.reponse.libelle && this.reponse.description && !this.loading
 				}
 			}
   }

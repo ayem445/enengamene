@@ -16,8 +16,8 @@
               <span class="mr-auto">{{ question.libelle }}</span>
 
               <span class="text-lighter">
-                <small v-if="question.quiz_type_question_id == 1"><i class="fa fa-check" aria-hidden="true"></i> Choix-multiple</small>
-                <small v-else><i class="fa fa-pencil" aria-hidden="true"></i> Libre</small>
+                <small><i class="fa fa-check" aria-hidden="true" v-if="question.quiz_type_question_id == 1"></i>
+                <i class="fa fa-pencil" aria-hidden="true" v-else ></i> {{ question.typequestion.libelle }}</small>
               </span>
             </a>
           </h3>
@@ -49,7 +49,7 @@
 
       </div>
 
-      <CreerQuizQuestion></CreerQuizQuestion>
+      <CreerQuizQuestion :typequestions_toselect="default_typequestions"></CreerQuizQuestion>
       <CreerQuizReponse></CreerQuizReponse>
     </div>
 
@@ -64,10 +64,14 @@
     import CreerQuizReponse from './children/CreerQuizReponse.vue'
 
     export default {
-        props: ['default_questions', 'quiz_id'],
+        //props: ['default_questions', 'quiz_id', 'default_typequestions'],
+        props: {
+          default_questions: {},
+          quiz_id: "",
+          default_typequestions: {}
+        },
         mounted() {
     			this.$on('question_creee', (question) => {
-            console.log(question)
             window.noty({
     					message: 'Question créée avec succès',
     					type: 'success'
@@ -110,7 +114,8 @@
         },
         data() {
             return {
-                questions: JSON.parse(this.default_questions)
+                questions: JSON.parse(this.default_questions),
+                typequestions: JSON.parse(this.default_typequestions)
             }
         },
         computed: {
@@ -143,7 +148,10 @@
               let questionId = this.question_id
               let quizId = this.quiz_id
       				this.$emit('edit_question', { question, questionId, quizId})
-    			  }
+    			 },
+          handleFcAfterDateBack (event) {
+              console.log('data after child handle: ', event) // get the data after child dealing
+          }
       }
 
     }

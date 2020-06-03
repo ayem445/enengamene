@@ -10,13 +10,14 @@ class QuizQuestion extends Model
     use BaseTrait;
 
     protected $guarded = [];
+    //protected $with = ['typequestion'];
 
     /**
      * Retourne le type de question de la question.
      */
-    public function type_question()
+    public function typequestion()
     {
-        return $this->belongsTo('App\QuizTypeQuestion');
+        return $this->belongsTo('App\QuizTypeQuestion', 'quiz_type_question_id');
     }
 
     /**

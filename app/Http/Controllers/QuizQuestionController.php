@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Quiz;
 use App\QuizQuestion;
+use App\QuizTypeQuestion;
 use Illuminate\Http\Request;
 
 class QuizQuestionController extends Controller
@@ -38,9 +39,13 @@ class QuizQuestionController extends Controller
     {
         $data = $request->all();
         //$data['quiz_type_question_id'] = 1;
-
+        //$typequestion = QuizTypeQuestion::find(json_decode($data['typequestion'], true)["id"]);
+        $typequestion = QuizTypeQuestion::find($data['typequestion']["id"]);
+        $data['quiz_type_question_id'] = $typequestion->id;
+        unset($data['typequestion']);
         //return QuizQuestion::create($data);
-        return $quiz->questions()->create($data);
+        //$quizquestion->fresh()->load('typequestion')
+        return $quiz->questions()->create($data)->load('typequestion');
     }
 
     /**
@@ -77,9 +82,13 @@ class QuizQuestionController extends Controller
         $data = $request->all();
         // TODO: A retirer
         $quizquestion = QuizQuestion::find($data['id']);
+        $typequestion = QuizTypeQuestion::find($data['typequestion']["id"]);
+        $data['quiz_type_question_id'] = $typequestion->id;
+        unset($data['typequestion']);
         $quizquestion->update($data);
 
-        return $quizquestion->fresh();
+        // On rafaichie la question nouvellement modifiée en y rattachant le typequestion
+        return $quizquestion->fresh()->load('typequestion');
     }
 
     /**

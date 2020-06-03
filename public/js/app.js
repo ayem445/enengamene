@@ -4495,12 +4495,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['default_questions', 'quiz_id'],
+  //props: ['default_questions', 'quiz_id', 'default_typequestions'],
+  props: {
+    default_questions: {},
+    quiz_id: "",
+    default_typequestions: {}
+  },
   mounted: function mounted() {
     var _this = this;
 
     this.$on('question_creee', function (question) {
-      console.log(question);
       window.noty({
         message: 'Question créée avec succès',
         type: 'success'
@@ -4546,7 +4550,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      questions: JSON.parse(this.default_questions)
+      questions: JSON.parse(this.default_questions),
+      typequestions: JSON.parse(this.default_typequestions)
     };
   },
   computed: {
@@ -4587,6 +4592,9 @@ __webpack_require__.r(__webpack_exports__);
         questionId: questionId,
         quizId: quizId
       });
+    },
+    handleFcAfterDateBack: function handleFcAfterDateBack(event) {
+      console.log('data after child handle: ', event); // get the data after child dealing
     }
   }
 });
@@ -5132,6 +5140,8 @@ var Chapitre = function Chapitre(chapitre) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //
@@ -5171,19 +5181,44 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+ //@select="onSelected" @remove="onRemove"
 
 var Question = function Question(question) {
   _classCallCheck(this, Question);
 
   this.id = question.id || '';
   this.libelle = question.libelle || '';
+  this.typequestion = question.typequestion || '';
   this.description = question.description || '';
   this.commentaire = question.commentaire || '';
   this.quiz_id = question.quiz_id || '';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
+  //props: ['default_typequestions'],
+  props: {
+    typequestions_toselect: {}
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -5209,7 +5244,9 @@ var Question = function Question(question) {
       question: {},
       quizId: '',
       editing: false,
-      questionId: null
+      loading: false,
+      questionId: null,
+      typequestions: JSON.parse(this.typequestions_toselect)
     };
   },
   methods: {
@@ -5217,11 +5254,15 @@ var Question = function Question(question) {
       var _this2 = this;
 
       // Poster les données sur le serveur
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.quizId, "/quizquestions"), this.question).then(function (resp) {
+        _this2.loading = false;
+
         _this2.$parent.$emit('question_creee', resp.data);
 
         $('#createQuestion').modal('hide');
       })["catch"](function (error) {
+        _this2.loading = false;
         window.handleErrors(error);
       });
     },
@@ -5229,12 +5270,26 @@ var Question = function Question(question) {
       var _this3 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.quizId, "/quizquestions/").concat(this.questionId), this.question).then(function (resp) {
+        _this3.loading = false;
         $("#createQuestion").modal('hide');
 
         _this3.$parent.$emit('question_updated', resp.data);
       })["catch"](function (error) {
         window.handleErrors(error);
       });
+    },
+    onSelected: function onSelected(selectedOption, id) {
+      this.value = selectedOption;
+      this.selectedVal = JSON.stringify(selectedOption);
+    },
+    onRemove: function onRemove(removedOption, id) {
+      this.value = null;
+      this.selectedVal = null;
+    }
+  },
+  computed: {
+    isValidCreateForm: function isValidCreateForm() {
+      return this.question.libelle && this.question.typequestion && this.question.description && !this.loading;
     }
   }
 });
@@ -5346,6 +5401,7 @@ var Reponse = function Reponse(reponse) {
       reponse: {},
       questionId: '',
       editing: false,
+      loading: false,
       reponseId: null
     };
   },
@@ -5357,24 +5413,36 @@ var Reponse = function Reponse(reponse) {
       var _this2 = this;
 
       // Poster les données sur le serveur
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.questionId, "/quizreponses"), this.reponse).then(function (resp) {
+        _this2.loading = false;
+
         _this2.$parent.$emit('reponse_creee', resp.data, _this2.questionId);
 
         $('#createReponse').modal('hide');
       })["catch"](function (error) {
+        _this2.loading = false;
         window.handleErrors(error);
       });
     },
     updateReponse: function updateReponse() {
       var _this3 = this;
 
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.questionId, "/quizreponses/").concat(this.reponseId), this.reponse).then(function (resp) {
+        _this3.loading = false;
         $("#createReponse").modal('hide');
 
         _this3.$parent.$emit('reponse_updated', resp.data, _this3.questionId);
       })["catch"](function (error) {
+        _this3.loading = false;
         window.handleErrors(error);
       });
+    }
+  },
+  computed: {
+    isValidCreateForm: function isValidCreateForm() {
+      return this.reponse.libelle && this.reponse.description && !this.loading;
     }
   }
 });
@@ -24253,21 +24321,18 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-lighter" }, [
-                        question.quiz_type_question_id == 1
-                          ? _c("small", [
-                              _c("i", {
+                        _c("small", [
+                          question.quiz_type_question_id == 1
+                            ? _c("i", {
                                 staticClass: "fa fa-check",
                                 attrs: { "aria-hidden": "true" }
-                              }),
-                              _vm._v(" Choix-multiple")
-                            ])
-                          : _c("small", [
-                              _c("i", {
+                              })
+                            : _c("i", {
                                 staticClass: "fa fa-pencil",
                                 attrs: { "aria-hidden": "true" }
                               }),
-                              _vm._v(" Libre")
-                            ])
+                          _vm._v(" " + _vm._s(question.typequestion.libelle))
+                        ])
                       ])
                     ]
                   )
@@ -24371,7 +24436,9 @@ var render = function() {
         0
       ),
       _vm._v(" "),
-      _c("CreerQuizQuestion"),
+      _c("CreerQuizQuestion", {
+        attrs: { typequestions_toselect: _vm.default_typequestions }
+      }),
       _vm._v(" "),
       _c("CreerQuizReponse")
     ],
@@ -25027,6 +25094,35 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("multiselect", {
+                  key: "id",
+                  attrs: {
+                    id: "m_select",
+                    "selected.sync": "question.typequestion",
+                    value: "",
+                    options: _vm.typequestions,
+                    searchable: true,
+                    multiple: false,
+                    label: "libelle",
+                    "track-by": "id",
+                    placeholder: "Type Question"
+                  },
+                  model: {
+                    value: _vm.question.typequestion,
+                    callback: function($$v) {
+                      _vm.$set(_vm.question, "typequestion", $$v)
+                    },
+                    expression: "question.typequestion"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("textarea", {
                 directives: [
@@ -25115,7 +25211,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.updateQuestion()
@@ -25128,7 +25224,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.creerQuestion()
@@ -25399,7 +25495,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.updateReponse()
@@ -25412,7 +25508,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.creerReponse()

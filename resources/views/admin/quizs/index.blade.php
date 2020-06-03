@@ -33,7 +33,7 @@
       <small>questions du Quiz</small>
     </header>
 
-    <vue-quizquestions default_questions="{{ json_encode($quiz->questions) }}" quiz_id="{{ $quiz->id }}"></vue-quizquestions>
+    <vue-quizquestions default_questions="{{ json_encode($quiz->questions) }}" quiz_id="{{ $quiz->id }}" default_typequestions="{{ $typequestions->toJson() }}"></vue-quizquestions>
 
   </div>
 </section>
