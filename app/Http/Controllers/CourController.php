@@ -7,6 +7,7 @@ use App\Matiere;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCoursRequest;
 use App\Http\Requests\UpdateCourRequest;
+use App\Difficulte;
 use App\NiveauEtude;
 use App\Auteur;
 use Illuminate\Support\Str;
@@ -69,8 +70,11 @@ class CourController extends Controller
      */
     public function show(Cour $cour)
     {
+        $difficultes = Difficulte::listMap('libelle');
         $cour = Cour::with(['chapitres', 'chapitres.sessions', 'chapitres.difficulte'])->find($cour->id);
-        return view('admin.cours.index')->withCour($cour);
+        return view('admin.cours.index')
+          ->withCour($cour)
+          ->withDifficultes($difficultes);
     }
 
     /**

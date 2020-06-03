@@ -26,8 +26,8 @@
 	        </div>
 	        <div class="modal-footer">
 	          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-						<button type="button" class="btn btn-primary" @click="updateSession()" v-if="editing">Enregistrer</button>
-						<button type="button" class="btn btn-primary" @click="creerSession()" v-else>Créer Session</button>
+						<button type="button" class="btn btn-primary" @click="updateSession()" :disabled="!isValidCreateForm" v-if="editing">Enregistrer</button>
+						<button type="button" class="btn btn-primary" @click="creerSession()" :disabled="!isValidCreateForm" v-else>Créer Session</button>
 	        </div>
 	      </div>
 
@@ -64,7 +64,7 @@
           this.chapitreId = chapitreId
           this.editing = false
           this.session = new Session({})
-
+					console.log('reception creer_nouvelle_session',chapitreId,this.session)
           $('#createSession').modal()
         })
 
@@ -82,6 +82,7 @@
   				session: {},
   				chapitreId: '',
   				editing: false,
+					loading: false,
   				sessionId: null
   			}
   		},
@@ -91,22 +92,32 @@
 				},
 				creerSession() {
 					// Poster les données sur le serveur
+					this.loading = true
 					Axios.post(`/admin/${this.chapitreId}/sessions`, this.session).then(resp => {
-						this.$parent.$emit('session_creee', resp.data)
+						this.loading = false
+						this.$parent.$emit('session_creee', resp.data, this.chapitreId)
 						$('#createSession').modal('hide')
 					}).catch(error => {
+						this.loading = false
 						window.handleErrors(error)
 					})
 				},
 				updateSession() {
+					this.loading = true
 					Axios.put(`/admin/${this.chapitreId}/sessions/${this.sessionId}`, this.session)
 					 .then(resp => {
-						console.log(resp)
+						 this.loading = false
 					 	$("#createSession").modal('hide')
-					 	this.$parent.$emit('session_updated', resp.data)
+					 	this.$parent.$emit('session_updated', resp.data, this.chapitreId)
 					 }).catch(error => {
+						 this.loading = false
 					 	window.handleErrors(error)
 					 })
+				}
+			},
+			computed: {
+				isValidCreateForm() {
+					return this.session.libelle  && this.session.lien && this.session.description && !this.loading
 				}
 			}
   }

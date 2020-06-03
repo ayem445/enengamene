@@ -106,11 +106,11 @@ class InitialisationSystemSeeder extends Seeder
 
     private function dfficultes_list() {
         return [
-            ['libelle' => "Très Facile", 'level' => 1, 'code' =>"" ],
-            ['libelle' => "Facile", 'level' => 2, 'code' =>"" ],
-            ['libelle' => "Normale",'level' => 3, 'code' =>"" ],
-            ['libelle' => "Difficile",'level' => 4, 'code' =>"" ],
-            ['libelle' => "Très Dfficile",'level' => 5, 'code' =>"" ],
+            ['libelle' => "Très Facile", 'level' => 1, 'illustration1' => "&#128513;", 'code' =>"" ],
+            ['libelle' => "Facile", 'level' => 2, 'illustration1' => "&#128512;", 'code' =>"" ],
+            ['libelle' => "Normale", 'level' => 3, 'illustration1' => "&#128528;", 'code' =>"" ],
+            ['libelle' => "Difficile", 'level' => 4, 'illustration1' => "&#128529;", 'code' =>"" ],
+            ['libelle' => "Très Dfficile", 'level' => 5, 'illustration1' => "&#129488;", 'code' =>"" ],
         ];
     }
 
@@ -152,7 +152,7 @@ class InitialisationSystemSeeder extends Seeder
     private function quiztypequestions_list() {
         return [
           ['libelle' => "Choix-Multiple", 'description' => "la(les) réponse(s) à ce type de question se trouve parmis une liste de réponses proposée", 'code' =>"" ],
-          ['libelle' => "Texte-Match", 'description' => "la réponse doit être saisie pour correspondre aux éléments de réponse (qui ne seront pas affichés)", 'code' =>"" ],
+          ['libelle' => "Texte-Libre", 'description' => "la réponse doit être saisie pour correspondre aux éléments de réponse (qui ne seront pas affichés)", 'code' =>"" ],
         ];
     }
 

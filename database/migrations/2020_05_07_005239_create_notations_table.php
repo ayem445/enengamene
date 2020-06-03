@@ -20,6 +20,7 @@ class CreateNotationsTable extends Migration
             $table->string('code')->unique()->comment('code de la notation');
             $table->string('libelle', 100)->unique()->comment('libelle de la notation');
             $table->integer('level')->comment('niveau hiérarchique');
+            $table->string('illustration1')->nullable()->comment('script d illustration1');
             $table->boolean('statut')->default(false)->comment('Statut de la notation');
             $table->boolean('etat')->default(false)->comment('Etat de la notation');
 

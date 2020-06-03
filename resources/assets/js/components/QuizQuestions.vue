@@ -72,11 +72,12 @@
         },
         mounted() {
     			this.$on('question_creee', (question) => {
+            console.log('reception chapitre_cree', question)
             window.noty({
     					message: 'Question créée avec succès',
     					type: 'success'
     				})
-            // insert le nouveau dans le tableau des questions
+            // insert la nouvelle question dans le tableau des questions
     				this.questions.push(question)
     			})
 
@@ -95,15 +96,16 @@
 
   			 })
 
+         this.$on('reponse_creee', (reponse, questionId) => {
+           // recoit nouvelle réponse créée
+           EventBus.$emit('reponse_to_add', {reponse, questionId})
+         })
+
          this.$on('reponse_updated', (reponse, questionId) => {
            // recoit réponse à modifier
            EventBus.$emit('reponse_to_update', {reponse, questionId})
          })
 
-         this.$on('reponse_creee', (reponse, questionId) => {
-           // recoit nouvelle réponse créée
-           EventBus.$emit('reponse_to_add', {reponse, questionId})
-         })
   		  },
         components: {
           QuizReponses,
@@ -143,15 +145,15 @@
     						 	 window.handleErrors(error)
     						 })
     				  }
-    			 },
-           editQuestion(question) {
+    			  },
+            editQuestion(question) {
               let questionId = this.question_id
               let quizId = this.quiz_id
       				this.$emit('edit_question', { question, questionId, quizId})
-    			 },
-          handleFcAfterDateBack (event) {
+    			  },
+            handleFcAfterDateBack (event) {
               console.log('data after child handle: ', event) // get the data after child dealing
-          }
+            }
       }
 
     }

@@ -73,7 +73,7 @@
   			})
 
         EventBus.$on('reponse_to_add', (add_data) => {
-            // Réponse modifiée à mettre à jour sur la liste
+            // Réponse créée à insérer sur la liste
             if (this.question_id == add_data.questionId) {
               this.createReponse(add_data.reponse)
             }

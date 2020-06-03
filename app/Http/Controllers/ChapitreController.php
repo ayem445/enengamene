@@ -7,6 +7,7 @@ use App\Chapitre;
 use Illuminate\Support\Str;
 use App\Http\Requests\CreateChapitreRequest;
 use App\Http\Requests\UpdateChapitreRequest;
+use App\Difficulte;
 use Illuminate\Http\Request;
 
 class ChapitreController extends Controller
@@ -58,10 +59,27 @@ class ChapitreController extends Controller
     public function store(Cour $cour, CreateChapitreRequest $request)
     {
         $data = $request->all();
-        $data['code'] = Chapitre::getUniqcode();;
-        $data['difficulte_id']=1;
+        $data['code'] = Chapitre::getUniqcode();
 
-        return $cour->chapitres()->create($data);
+        $num_ordre_auto = false;
+        if (isset($data['num_ordre'])) {
+          if (is_null($data['num_ordre'])) {
+            $num_ordre_auto =  true;
+          }
+        } else {
+          $num_ordre_auto =  true;
+        }
+
+        if ($num_ordre_auto) {
+          $num_ordre = $cour->chapitres->count();
+          $num_ordre = $num_ordre + 1;
+          $data['num_ordre'] = $num_ordre;
+        }
+        $difficulte = Difficulte::find($data['difficulte']["id"]);
+        $data['difficulte_id'] = $difficulte->id;
+        unset($data['difficulte']);
+
+        return $cour->chapitres()->create($data)->load('difficulte');
     }
 
     /**
@@ -93,11 +111,15 @@ class ChapitreController extends Controller
      * @param  \App\Chapitre  $chapitre
      * @return \Illuminate\Http\Response
      */
-    public function update(Cour $cour, Chapitre $chapitreId , UpdateChapitreRequest $request)
-    {   dd($chapitreId);
-        $chapitreId->update($request->all());
+    public function update(Cour $cour, Chapitre $chapitre , UpdateChapitreRequest $request)
+    {
+        $data = $request->all();
+        $difficulte = Difficulte::find($data['difficulte']["id"]);
+        $data['difficulte_id'] = $difficulte->id;
+        unset($data['difficulte']);
+        $chapitre->update($data);
 
-        return $chapitreId->fresh();
+        return $chapitre->fresh()->load('difficulte');
         // //
         // $chapitre = \App\Chapitre::find($chapitreId);
 

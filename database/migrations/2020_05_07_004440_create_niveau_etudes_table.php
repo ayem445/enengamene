@@ -20,6 +20,7 @@ class CreateNiveauEtudesTable extends Migration
             $table->string('code')->unique()->comment('code du niveau d étude');
             $table->string('libelle', 100)->comment('libelle du niveau d étude');
             $table->integer('level')->comment('niveau hiérarchique');
+            $table->string('illustration1')->nullable()->comment('script d illustration1');
             $table->boolean('statut')->default(false)->comment('Statut du niveau d étude');
             $table->boolean('etat')->default(false)->comment('Etat du niveau d étude');
 

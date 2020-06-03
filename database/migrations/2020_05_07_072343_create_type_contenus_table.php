@@ -20,7 +20,7 @@ class CreateTypeContenusTable extends Migration
             $table->string('code')->unique()->comment('code du Type de Contenu');
             $table->string('libelle', 100)->unique()->comment('libelle du Type de Contenu');
             $table->string('description')->nullable()->comment('description du Type de Contenu');
-
+            $table->string('illustration1')->nullable()->comment('script d illustration1');
             $table->boolean('statut')->default(false)->comment('Statut du Type de Contenu');
             $table->boolean('etat')->default(false)->comment('Etat du Type de Contenu');
 

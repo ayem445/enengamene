@@ -2,12 +2,6 @@
 
   <div class="container">
 
-    <h5 class="text-left">
-      <button class="btn btn-outline-success btn-sm" @click="creerNouvelleSession()">
-        Nouvelle Session
-      </button>
-    </h5>
-
     <table class="table table-cart">
       <tbody valign="middle">
 
@@ -17,7 +11,12 @@
           </td>
 
           <td>
-            <h5><a href="#" @click.prevent="editSession(session)">{{ session.libelle }}</a></h5>
+            <h5>
+              <span>
+                <small><span class="badge badge-success" style="vertical-align: top">{{ session.num_ordre }}. </span></small>
+                <a href="#" @click.prevent="editSession(session)">{{ session.libelle }}</a>
+              </span>
+            </h5>
             <p>{{ session.description }}</p>
           </td>
 
@@ -43,13 +42,13 @@
       </tbody>
     </table>
 
-    <creer-session></creer-session>
   </div>
 
 </template>
 
 <script>
 
+  import EventBus from './eventBus';
   import axios from 'axios'
 
   export default {
@@ -77,6 +76,21 @@
   					type: 'success'
   				})
 
+  			})
+
+        EventBus.$on('session_to_update', (upd_data) => {
+            // Session modifiée à mettre à jour sur la liste
+            if (this.chapitre_id == upd_data.chapitreId) {
+              this.updateSession(upd_data.session)
+            }
+  			})
+
+        EventBus.$on('session_to_add', (add_data) => {
+            // Session créée à insérer sur la liste
+            console.log('reception session_to_add',add_data)
+            if (this.chapitre_id == add_data.chapitreId) {
+              this.createSession(add_data.session)
+            }
   			})
   		},
       components: {
@@ -110,7 +124,28 @@
   			},
         editSession(session) {
   				let chapitreId = this.chapitre_id
-  				this.$emit('edit_session', { session, chapitreId })
+  				this.$parent.$emit('edit_session', { session, chapitreId })
+  			},
+        updateSession(session) {
+          // on récupère l'index de session modifiée
+  				let sessionIndex = this.sessions.findIndex(s => {
+  					return session.id == s.id
+  				})
+
+          // TODO: Inserer la nouvelle session en fonction de son numéro d'ordre (dans le UPDSATE)
+  				this.sessions.splice(sessionIndex, 1, session)
+          window.noty({
+  					message: 'Session modifiée avec succès',
+  					type: 'success'
+  				})
+  			},
+        createSession(session) {
+          window.noty({
+  					message: 'Session créée avec succès',
+  					type: 'success'
+  				})
+
+  				this.sessions.push(session)
   			}
       }
   }

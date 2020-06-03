@@ -4095,8 +4095,24 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _eventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventBus */ "./resources/assets/js/components/eventBus.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Sessions_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sessions.vue */ "./resources/assets/js/components/Sessions.vue");
+/* harmony import */ var _children_CreerChapitre_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./children/CreerChapitre.vue */ "./resources/assets/js/components/children/CreerChapitre.vue");
+/* harmony import */ var _children_CreerSession_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./children/CreerSession.vue */ "./resources/assets/js/components/children/CreerSession.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4149,8 +4165,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['default_chapitres', 'cour_id'],
+  //props: ['default_chapitres', 'cour_id'],
+  props: {
+    default_chapitres: {},
+    cour_id: "",
+    default_difficultes: {}
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -4164,25 +4189,43 @@ __webpack_require__.r(__webpack_exports__);
     });
     this.$on('chapitre_updated', function (chapitre) {
       // on récupère l'index du chapitre modifiée
-      var chapitreIndex = _this.chapitre.findIndex(function (s) {
+      var chapitreIndex = _this.chapitres.findIndex(function (s) {
         return chapitre.id == s.id;
       }); // TODO: Inserer la nouveau chapitre en fonction de son numéro d'ordre (dans le UPDSATE)
 
 
-      _this.chapitre.splice(chapitreIndex, 1, chapitre);
+      _this.chapitres.splice(chapitreIndex, 1, chapitre);
 
       window.noty({
         message: 'Chapitre modifié avec succès',
         type: 'success'
       });
     });
+    this.$on('session_creee', function (session, chapitreId) {
+      // recoit nouvelle session créée
+      console.log('reception session_creee', session, chapitreId);
+      _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('session_to_add', {
+        session: session,
+        chapitreId: chapitreId
+      });
+    });
+    this.$on('session_updated', function (session, chapitreId) {
+      // recoit session à modifier
+      _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('session_to_update', {
+        session: session,
+        chapitreId: chapitreId
+      });
+    });
   },
   components: {
-    "creer-chapitre": __webpack_require__(/*! ./children/CreerChapitre.vue */ "./resources/assets/js/components/children/CreerChapitre.vue")["default"]
+    Sessions: _Sessions_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CreerChapitre: _children_CreerChapitre_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    CreerSession: _children_CreerSession_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
-      chapitres: this.default_chapitres
+      chapitres: JSON.parse(this.default_chapitres),
+      difficultes: JSON.parse(this.default_difficultes)
     };
   },
   computed: {
@@ -4193,6 +4236,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     creerNouveauChapitre: function creerNouveauChapitre() {
       this.$emit('creer_nouveau_chapitre', this.cour_id);
+    },
+    creerNouvelleSession: function creerNouvelleSession(chapitreId, key) {
+      this.$emit('creer_nouvelle_session', chapitreId);
     },
     deleteChapitre: function deleteChapitre(id, key) {
       var _this2 = this;
@@ -4505,10 +4551,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.$on('question_creee', function (question) {
+      console.log('reception chapitre_cree', question);
       window.noty({
         message: 'Question créée avec succès',
         type: 'success'
-      }); // insert le nouveau dans le tableau des questions
+      }); // insert la nouvelle question dans le tableau des questions
 
       _this.questions.push(question);
     });
@@ -4526,16 +4573,16 @@ __webpack_require__.r(__webpack_exports__);
         type: 'success'
       });
     });
-    this.$on('reponse_updated', function (reponse, questionId) {
-      // recoit réponse à modifier
-      _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('reponse_to_update', {
+    this.$on('reponse_creee', function (reponse, questionId) {
+      // recoit nouvelle réponse créée
+      _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('reponse_to_add', {
         reponse: reponse,
         questionId: questionId
       });
     });
-    this.$on('reponse_creee', function (reponse, questionId) {
-      // recoit nouvelle réponse créée
-      _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('reponse_to_add', {
+    this.$on('reponse_updated', function (reponse, questionId) {
+      // recoit réponse à modifier
+      _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('reponse_to_update', {
         reponse: reponse,
         questionId: questionId
       });
@@ -4684,7 +4731,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
     _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$on('reponse_to_add', function (add_data) {
-      // Réponse modifiée à mettre à jour sur la liste
+      // Réponse créée à insérer sur la liste
       if (_this.question_id == add_data.questionId) {
         _this.createReponse(add_data.reponse);
       }
@@ -4890,8 +4937,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _eventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventBus */ "./resources/assets/js/components/eventBus.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -4940,8 +4988,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['default_sessions', 'chapitre_id'],
@@ -4969,6 +5016,20 @@ __webpack_require__.r(__webpack_exports__);
         message: 'Session modifiée avec succès',
         type: 'success'
       });
+    });
+    _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$on('session_to_update', function (upd_data) {
+      // Session modifiée à mettre à jour sur la liste
+      if (_this.chapitre_id == upd_data.chapitreId) {
+        _this.updateSession(upd_data.session);
+      }
+    });
+    _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$on('session_to_add', function (add_data) {
+      // Session créée à insérer sur la liste
+      console.log('reception session_to_add', add_data);
+
+      if (_this.chapitre_id == add_data.chapitreId) {
+        _this.createSession(add_data.session);
+      }
     });
   },
   components: {
@@ -5002,10 +5063,29 @@ __webpack_require__.r(__webpack_exports__);
     },
     editSession: function editSession(session) {
       var chapitreId = this.chapitre_id;
-      this.$emit('edit_session', {
+      this.$parent.$emit('edit_session', {
         session: session,
         chapitreId: chapitreId
       });
+    },
+    updateSession: function updateSession(session) {
+      // on récupère l'index de session modifiée
+      var sessionIndex = this.sessions.findIndex(function (s) {
+        return session.id == s.id;
+      }); // TODO: Inserer la nouvelle session en fonction de son numéro d'ordre (dans le UPDSATE)
+
+      this.sessions.splice(sessionIndex, 1, session);
+      window.noty({
+        message: 'Session modifiée avec succès',
+        type: 'success'
+      });
+    },
+    createSession: function createSession(session) {
+      window.noty({
+        message: 'Session créée avec succès',
+        type: 'success'
+      });
+      this.sessions.push(session);
     }
   }
 });
@@ -5023,6 +5103,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_1__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //
@@ -5061,18 +5143,39 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 var Chapitre = function Chapitre(chapitre) {
   _classCallCheck(this, Chapitre);
 
   this.libelle = chapitre.libelle || '';
+  this.difficulte = chapitre.difficulte || '';
   this.num_ordre = chapitre.num_ordre || '';
   this.description = chapitre.description || '';
-  this.commentaire = chapitre.commentaire || ' ';
+  this.commentaire = chapitre.commentaire || '';
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
+  //props: ['default_typequestions'],
+  props: {
+    difficultes_toselect: {}
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -5098,31 +5201,46 @@ var Chapitre = function Chapitre(chapitre) {
       chapitre: {},
       courId: '',
       editing: false,
-      chapitreId: null
+      loading: false,
+      chapitreId: null,
+      difficultes: JSON.parse(this.difficultes_toselect)
     };
   },
   methods: {
     creerChapitre: function creerChapitre() {
       var _this2 = this;
 
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.courId, "/chapitres"), this.chapitre).then(function (resp) {
+        _this2.loading = false;
+
         _this2.$parent.$emit('chapitre_cree', resp.data);
 
         $('#createChapitre').modal('hide');
       })["catch"](function (error) {
+        _this2.loading = false;
         window.handleErrors(error);
       });
     },
     updateChapitre: function updateChapitre() {
       var _this3 = this;
 
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.courId, "/chapitres/").concat(this.chapitreId), this.chapitre).then(function (resp) {
+        _this3.loading = false;
+
         _this3.$parent.$emit('chapitre_updated', resp.data);
 
         $("#createChapitre").modal('hide');
       })["catch"](function (error) {
+        _this3.loading = false;
         window.handleErrors(error);
       });
+    }
+  },
+  computed: {
+    isValidCreateForm: function isValidCreateForm() {
+      return this.chapitre.libelle && this.chapitre.difficulte && this.chapitre.description && !this.loading;
     }
   }
 });
@@ -5530,6 +5648,7 @@ var Session = function Session(session) {
       _this.chapitreId = chapitreId;
       _this.editing = false;
       _this.session = new Session({});
+      console.log('reception creer_nouvelle_session', chapitreId, _this.session);
       $('#createSession').modal();
     });
     this.$parent.$on('edit_session', function (_ref) {
@@ -5547,6 +5666,7 @@ var Session = function Session(session) {
       session: {},
       chapitreId: '',
       editing: false,
+      loading: false,
       sessionId: null
     };
   },
@@ -5558,25 +5678,36 @@ var Session = function Session(session) {
       var _this2 = this;
 
       // Poster les données sur le serveur
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/admin/".concat(this.chapitreId, "/sessions"), this.session).then(function (resp) {
-        _this2.$parent.$emit('session_creee', resp.data);
+        _this2.loading = false;
+
+        _this2.$parent.$emit('session_creee', resp.data, _this2.chapitreId);
 
         $('#createSession').modal('hide');
       })["catch"](function (error) {
+        _this2.loading = false;
         window.handleErrors(error);
       });
     },
     updateSession: function updateSession() {
       var _this3 = this;
 
+      this.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/admin/".concat(this.chapitreId, "/sessions/").concat(this.sessionId), this.session).then(function (resp) {
-        console.log(resp);
+        _this3.loading = false;
         $("#createSession").modal('hide');
 
-        _this3.$parent.$emit('session_updated', resp.data);
+        _this3.$parent.$emit('session_updated', resp.data, _this3.chapitreId);
       })["catch"](function (error) {
+        _this3.loading = false;
         window.handleErrors(error);
       });
+    }
+  },
+  computed: {
+    isValidCreateForm: function isValidCreateForm() {
+      return this.session.libelle && this.session.lien && this.session.description && !this.loading;
     }
   }
 });
@@ -23854,15 +23985,21 @@ var render = function() {
               }
             }
           },
-          [_vm._v("\n        Nouveau Chapitre\n      ")]
+          [
+            _c("i", {
+              staticClass: "fa fa-plus",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" Chapitre\n      ")
+          ]
         )
       ]),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "accordion", attrs: { id: "accordion-chapitres" } },
-        _vm._l(_vm.formattedChapitres, function(chapitre, index) {
-          return _vm.formattedChapitres
+        _vm._l(_vm.chapitres, function(chapitre, index) {
+          return _vm.chapitres
             ? _c("div", { staticClass: "card" }, [
                 _c("h3", { staticClass: "card-title" }, [
                   _c(
@@ -23877,17 +24014,35 @@ var render = function() {
                     },
                     [
                       _c("span", { staticClass: "mr-auto" }, [
-                        _vm._v(_vm._s(chapitre.libelle))
+                        _c("small", [
+                          _c("span", { staticClass: "badge badge-primary" }, [
+                            _vm._v(_vm._s(chapitre.num_ordre))
+                          ])
+                        ]),
+                        _vm._v(" " + _vm._s(chapitre.libelle))
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "text-lighter hidden-sm-down" },
-                        [
-                          _c("i", { staticClass: "fa fa-signal mr-8" }),
-                          _vm._v(" " + _vm._s(chapitre.difficulte.libelle))
-                        ]
-                      )
+                      _c("small", [
+                        _c(
+                          "span",
+                          { staticClass: "text-lighter hidden-sm-down" },
+                          [
+                            chapitre.difficulte.level == 1
+                              ? _c("span", [_vm._v("😁")])
+                              : chapitre.difficulte.level == 2
+                              ? _c("span", [_vm._v("😀")])
+                              : chapitre.difficulte.level == 3
+                              ? _c("span", [_vm._v("😐")])
+                              : chapitre.difficulte.level == 4
+                              ? _c("span", [_vm._v("😑")])
+                              : _c("span", [_vm._v("🧐")]),
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(chapitre.difficulte.libelle)
+                            )
+                          ]
+                        )
+                      ])
                     ]
                   )
                 ]),
@@ -23900,6 +24055,12 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "card-block" }, [
+                      _c("p", [_vm._v(_vm._s(chapitre.description))]),
+                      _vm._v(" "),
+                      _c("footer", { staticClass: "blockquote-footer" }, [
+                        _vm._v(_vm._s(chapitre.commentaire))
+                      ]),
+                      _vm._v(" "),
                       _c("p", {}, [
                         _c(
                           "button",
@@ -23915,7 +24076,8 @@ var render = function() {
                             _c("i", {
                               staticClass: "fa fa-pencil-square-o",
                               attrs: { "aria-hidden": "true" }
-                            })
+                            }),
+                            _vm._v(" Chapitre\n               ")
                           ]
                         ),
                         _vm._v(" "),
@@ -23925,7 +24087,7 @@ var render = function() {
                             staticClass: "btn btn-danger btn-xs",
                             on: {
                               click: function($event) {
-                                return _vm.deleteChapitre(chapitre.id, _vm.key)
+                                return _vm.deleteChapitre(chapitre.id, index)
                               }
                             }
                           },
@@ -23933,22 +24095,39 @@ var render = function() {
                             _c("i", {
                               staticClass: "fa fa-trash-o",
                               attrs: { "aria-hidden": "true" }
-                            })
+                            }),
+                            _vm._v(" Chapitre\n               ")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success btn-xs",
+                            on: {
+                              click: function($event) {
+                                return _vm.creerNouvelleSession(
+                                  chapitre.id,
+                                  index
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-plus",
+                              attrs: { "aria-hidden": "true" }
+                            }),
+                            _vm._v(" Session\n               ")
                           ]
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [
-                        _vm._v(_vm._s(chapitre.description)),
-                        _c("br"),
-                        _vm._v(" Durée du chapitre: " + _vm._s(chapitre.duree))
                       ]),
                       _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "row" },
                         [
-                          _c("vue-sessions", {
+                          _c("Sessions", {
                             attrs: {
                               default_sessions: chapitre.sessions,
                               chapitre_id: chapitre.id
@@ -23966,7 +24145,11 @@ var render = function() {
         0
       ),
       _vm._v(" "),
-      _c("creer-chapitre")
+      _c("CreerChapitre", {
+        attrs: { difficultes_toselect: _vm.default_difficultes }
+      }),
+      _vm._v(" "),
+      _c("CreerSession")
     ],
     1
   )
@@ -24667,50 +24850,44 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("h5", { staticClass: "text-left" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-success btn-sm",
-            on: {
-              click: function($event) {
-                return _vm.creerNouvelleSession()
-              }
-            }
-          },
-          [_vm._v("\n      Nouvelle Session\n    ")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("table", { staticClass: "table table-cart" }, [
-        _c(
-          "tbody",
-          { attrs: { valign: "middle" } },
-          _vm._l(_vm.sessions, function(session, key) {
-            return _c("tr", [
-              _c("td", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "item-remove",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.deleteSession(session.id, key)
-                      }
+  return _c("div", { staticClass: "container" }, [
+    _c("table", { staticClass: "table table-cart" }, [
+      _c(
+        "tbody",
+        { attrs: { valign: "middle" } },
+        _vm._l(_vm.sessions, function(session, key) {
+          return _c("tr", [
+            _c("td", [
+              _c(
+                "a",
+                {
+                  staticClass: "item-remove",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.deleteSession(session.id, key)
                     }
-                  },
-                  [_c("i", { staticClass: "ti-close" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("h5", [
+                  }
+                },
+                [_c("i", { staticClass: "ti-close" })]
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("h5", [
+                _c("span", [
+                  _c("small", [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "badge badge-success",
+                        staticStyle: { "vertical-align": "top" }
+                      },
+                      [_vm._v(_vm._s(session.num_ordre) + ". ")]
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "a",
                     {
@@ -24724,66 +24901,59 @@ var render = function() {
                     },
                     [_vm._v(_vm._s(session.libelle))]
                   )
-                ]),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(session.description))])
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("label", [_vm._v("Dimensions")]),
-                _vm._v(" "),
-                _c("p", [
-                  _vm._v(_vm._s(session.width) + "/" + _vm._s(session.height))
                 ])
               ]),
               _vm._v(" "),
-              _c("td", { attrs: { valign: "center" } }, [
-                _vm._m(0, true),
-                _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(session.duree_hhmmss))])
-              ]),
+              _c("p", [_vm._v(_vm._s(session.description))])
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("label", [_vm._v("Dimensions")]),
               _vm._v(" "),
-              _c("td", { attrs: { valign: "center" } }, [
-                _c("label", [_vm._v("Quiz")]),
-                _vm._v(" "),
-                _c("p", [
-                  session.quiz_id
-                    ? _c(
-                        "a",
-                        { attrs: { href: "/admin/quizs/" + session.id } },
-                        [
-                          _c("i", {
-                            staticClass: "fa fa-graduation-cap",
-                            attrs: { "aria-hidden": "true" }
-                          })
-                        ]
-                      )
-                    : _c(
-                        "a",
-                        {
-                          attrs: {
-                            href: "/admin/quizsessions/create/" + session.id
-                          }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "fa fa-graduation-cap",
-                            attrs: { "aria-hidden": "true" }
-                          })
-                        ]
-                      )
-                ])
+              _c("p", [
+                _vm._v(_vm._s(session.width) + "/" + _vm._s(session.height))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { valign: "center" } }, [
+              _vm._m(0, true),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(session.duree_hhmmss))])
+            ]),
+            _vm._v(" "),
+            _c("td", { attrs: { valign: "center" } }, [
+              _c("label", [_vm._v("Quiz")]),
+              _vm._v(" "),
+              _c("p", [
+                session.quiz_id
+                  ? _c("a", { attrs: { href: "/admin/quizs/" + session.id } }, [
+                      _c("i", {
+                        staticClass: "fa fa-graduation-cap",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ])
+                  : _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: "/admin/quizsessions/create/" + session.id
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-graduation-cap",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
               ])
             ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _c("creer-session")
-    ],
-    1
-  )
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -24876,29 +25046,34 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.chapitre.num_ordre,
-                    expression: "chapitre.num_ordre"
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("multiselect", {
+                  key: "id",
+                  attrs: {
+                    id: "m_select",
+                    "selected.sync": "chapitre.difficulte",
+                    value: "",
+                    options: _vm.difficultes,
+                    searchable: true,
+                    multiple: false,
+                    label: "libelle",
+                    "track-by": "id",
+                    placeholder: "Difficulté"
+                  },
+                  model: {
+                    value: _vm.chapitre.difficulte,
+                    callback: function($$v) {
+                      _vm.$set(_vm.chapitre, "difficulte", $$v)
+                    },
+                    expression: "chapitre.difficulte"
                   }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", placeholder: "Numéro Ordre" },
-                domProps: { value: _vm.chapitre.num_ordre },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.chapitre, "num_ordre", $event.target.value)
-                  }
-                }
-              })
-            ]),
+                })
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("textarea", {
@@ -24964,7 +25139,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.updateChapitre()
@@ -24977,7 +25152,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.creerChapitre()
@@ -25713,7 +25888,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.updateSession()
@@ -25726,7 +25901,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { type: "button" },
+                    attrs: { type: "button", disabled: !_vm.isValidCreateForm },
                     on: {
                       click: function($event) {
                         return _vm.creerSession()
