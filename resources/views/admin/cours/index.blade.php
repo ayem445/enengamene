@@ -25,6 +25,14 @@
       <h2>{{ $cour->libelle }}</h2>
       <hr>
       <p class="lead">{{ $cour->description }}
+        <p>
+          @if($cour->quiz_id)
+          <a href="/admin/quizs/{{ $cour->quiz_id }} ">
+          @else
+          <a href="/admin/quizcours/create/{{ $cour->id }} ">
+          @endif
+          <i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+        </p>
         <footer class="blockquote-footer">{{ $cour->commentaire }}</footer>
       </p>
     </header>

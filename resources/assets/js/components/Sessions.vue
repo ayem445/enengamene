@@ -33,8 +33,8 @@
           <td valign="center">
             <label>Quiz</i></label>
             <p>
-              <a :href="'/admin/quizs/' + session.id " v-if="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
-              <a :href="'/admin/quizsessions/create/' + session.id " v-else="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+              <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+              <a :href="'/admin/quizsessions/create/' + session.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
             </p>
           </td>
         </tr>

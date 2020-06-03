@@ -4164,6 +4164,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -24057,6 +24061,39 @@ var render = function() {
                     _c("div", { staticClass: "card-block" }, [
                       _c("p", [_vm._v(_vm._s(chapitre.description))]),
                       _vm._v(" "),
+                      _c("p", [
+                        chapitre.quiz_id
+                          ? _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "/admin/quizs/" + chapitre.quiz_id
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-graduation-cap",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                          : _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href:
+                                    "/admin/quizchapitres/create/" + chapitre.id
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fa fa-graduation-cap",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                      ]),
+                      _vm._v(" "),
                       _c("footer", { staticClass: "blockquote-footer" }, [
                         _vm._v(_vm._s(chapitre.commentaire))
                       ]),
@@ -24926,12 +24963,16 @@ var render = function() {
               _vm._v(" "),
               _c("p", [
                 session.quiz_id
-                  ? _c("a", { attrs: { href: "/admin/quizs/" + session.id } }, [
-                      _c("i", {
-                        staticClass: "fa fa-graduation-cap",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ])
+                  ? _c(
+                      "a",
+                      { attrs: { href: "/admin/quizs/" + session.quiz_id } },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-graduation-cap",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
                   : _c(
                       "a",
                       {

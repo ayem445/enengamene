@@ -32,13 +32,12 @@ class QuizController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Charge la page de création de quiz pour une session
+     * @param  Session $session Session pour laquelle le quiz sera créé
+     * @return [type]           [description]
      */
     public function createsession(Session $session)
     {
-        //dd($session);
         $store_route = "QuizController@storesession";
         return view('admin.quizs.create')
           ->withElem($session)
@@ -48,10 +47,10 @@ class QuizController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Stocke le quiz d'une session dans la base données
+     * @param  Session $session Session pour laquelle le quiz sera créé
+     * @param  Request $request Requête
+     * @return [type]           [description]
      */
     public function storesession(Session $session, Request $request)
     {
@@ -61,6 +60,63 @@ class QuizController extends Controller
         $quiz = Quiz::create($data);
         $session->quiz_id = $quiz->id;
         $session->save();
+
+        session()->flash('success', 'Quiz créé avec succès.');
+        return redirect()->route('quizs.show', $quiz);
+    }
+
+    /**
+     * Charge la page de création de quiz pour un chapitre
+     * @param  Chapitre $chapitre Chapitre pour lequel le quiz sera créé
+     * @return [type]             [description]
+     */
+    public function createchapitre(Chapitre $chapitre)
+    {
+        $store_route = "QuizController@storechapitre";
+        return view('admin.quizs.create')
+          ->withElem($chapitre)
+          ->withElemType("le chapitre")
+          ->withStoreRoute("QuizController@storechapitre")
+          ;
+    }
+
+    /**
+     * Stocke le quiz d'un chapitre dans la base données
+     * @param  Chapitre $chapitre Chapitre pour lequel le quiz sera créé
+     * @param  Request  $request  [description]
+     * @return [type]             [description]
+     */
+    public function storechapitre(Chapitre $chapitre, Request $request)
+    {
+        $data = $request->all();
+        $data['code'] = Quiz::getUniqcode();
+
+        $quiz = Quiz::create($data);
+        $chapitre->quiz_id = $quiz->id;
+        $chapitre->save();
+
+        session()->flash('success', 'Quiz créé avec succès.');
+        return redirect()->route('quizs.show', $quiz);
+    }
+
+    public function createcour(Cour $cour)
+    {
+        $store_route = "QuizController@storecour";
+        return view('admin.quizs.create')
+          ->withElem($cour)
+          ->withElemType("le cour")
+          ->withStoreRoute("QuizController@storecour")
+          ;
+    }
+
+    public function storecour(Cour $cour, Request $request)
+    {
+        $data = $request->all();
+        $data['code'] = Quiz::getUniqcode();
+
+        $quiz = Quiz::create($data);
+        $cour->quiz_id = $quiz->id;
+        $cour->save();
 
         session()->flash('success', 'Quiz créé avec succès.');
         return redirect()->route('quizs.show', $quiz);

@@ -49,6 +49,12 @@ Route::middleware('admin')->prefix('admin')->group(function(){
     Route::get('/quizsessions/create/{session_by_id}','QuizController@createsession')->name('quizsessions.create');
     Route::post('/quizsessions/store/{session_by_id}','QuizController@storesession')->name('quizsessions.store');
 
+    Route::get('/quizchapitres/create/{chapitre_by_id}','QuizController@createchapitre')->name('quizchapitres.create');
+    Route::post('/quizchapitres/store/{chapitre_by_id}','QuizController@storechapitre')->name('quizchapitres.store');
+
+    Route::get('/quizcours/create/{cour_by_id}','QuizController@createcour')->name('quizcours.create');
+    Route::post('/quizcours/store/{cour_by_id}','QuizController@storecour')->name('quizcours.store');
+
     //Route::resource('quizquestions','QuizQuestionController');
     Route::resource('{quiz_by_id}/quizquestions','QuizQuestionController');
     Route::resource('{quizquestion_by_id}/quizreponses','QuizReponseController');
