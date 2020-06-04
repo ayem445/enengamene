@@ -24806,7 +24806,7 @@ var render = function() {
       _vm._v(" "),
       _c("input", {
         ref: "selectedVal",
-        attrs: { type: "text", id: _vm.name, name: _vm.name },
+        attrs: { hidden: "", type: "text", id: _vm.name, name: _vm.name },
         domProps: { value: _vm.selectedVal }
       })
     ],

@@ -14,7 +14,7 @@
       :placeholder="placeholder"
       @select="onSelected" @remove="onRemove" >
     </multiselect>
-    <input type="text" :id="name" ref="selectedVal" :name="name" :value="selectedVal">
+    <input hidden type="text" :id="name" ref="selectedVal" :name="name" :value="selectedVal">
   </div>
 </template>
 
