@@ -11,7 +11,7 @@ class Cour extends Model
 
     protected $guarded = [];
     protected $appends = ['duree'];
-    
+
     /**
      * Eager load relationships
      *
@@ -100,5 +100,20 @@ class Cour extends Model
      */
     public function getChapitresOrdonnes() {
         return $this->chapitres()->orderBy('num_ordre', 'asc')->get();
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        // juste avant suppression
+        self::deleting(function($model){
+            // On supprime le quiz s'il y en a
+            if ($model->quiz) {
+              $model->quiz->delete();
+            }
+            //On supprime tous les chapitres
+            $model->chapitres()->get(['id'])->each->delete();
+        });
     }
 }

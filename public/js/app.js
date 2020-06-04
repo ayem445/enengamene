@@ -4248,8 +4248,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
-        Axios["delete"]("/admin/".concat(this.cour_id, "/chapitres/").concat(id)).then(function (resp) {
-          _this2.sessions.splice(key, 1);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/admin/".concat(this.cour_id, "/chapitres/").concat(id)).then(function (resp) {
+          _this2.chapitres.splice(key, 1);
 
           window.noty({
             message: 'Chapitre supprimé avec succès',
@@ -5053,7 +5053,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
-        Axios["delete"]("/admin/".concat(this.chapitre_id, "/sessions/").concat(id)).then(function (resp) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/admin/".concat(this.chapitre_id, "/sessions/").concat(id)).then(function (resp) {
           _this2.sessions.splice(key, 1);
 
           window.noty({
@@ -24020,7 +24020,7 @@ var render = function() {
                       _c("span", { staticClass: "mr-auto" }, [
                         _c("small", [
                           _c("span", { staticClass: "badge badge-primary" }, [
-                            _vm._v(_vm._s(chapitre.num_ordre))
+                            _vm._v(_vm._s(index + 1))
                           ])
                         ]),
                         _vm._v(" " + _vm._s(chapitre.libelle))
@@ -24074,7 +24074,10 @@ var render = function() {
                                 _c("i", {
                                   staticClass: "fa fa-graduation-cap",
                                   attrs: { "aria-hidden": "true" }
-                                })
+                                }),
+                                _vm._v(
+                                  " (" + _vm._s(chapitre.quiz.nbquestions) + ")"
+                                )
                               ]
                             )
                           : _c(
@@ -24921,7 +24924,7 @@ var render = function() {
                         staticClass: "badge badge-success",
                         staticStyle: { "vertical-align": "top" }
                       },
-                      [_vm._v(_vm._s(session.num_ordre) + ". ")]
+                      [_vm._v(_vm._s(key + 1) + ". ")]
                     )
                   ]),
                   _vm._v(" "),
@@ -24970,7 +24973,8 @@ var render = function() {
                         _c("i", {
                           staticClass: "fa fa-graduation-cap",
                           attrs: { "aria-hidden": "true" }
-                        })
+                        }),
+                        _vm._v(" (" + _vm._s(session.quiz.nbquestions) + ")")
                       ]
                     )
                   : _c(

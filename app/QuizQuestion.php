@@ -51,4 +51,15 @@ class QuizQuestion extends Model
     {
         return $this->quiz_reponses()->where('is_valide', true)->count();
     }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        // juste avant suppression
+        self::deleting(function($model){
+            //On supprime toutes les reponses
+            $model->reponses()->get(['id'])->each->delete();
+        });
+    }
 }

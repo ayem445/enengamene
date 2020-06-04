@@ -135,13 +135,13 @@ class ChapitreController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Chapitre  $chapitre
-     * @return \Illuminate\Http\Response
+     * @param  Cour     $cour     cour
+     * @param  Chapitre $chapitre chapitre
+     * @return [type]             [description]
      */
-    public function destroy($cour, $chapitre)
+    public function destroy(Cour $cour, Chapitre $chapitre)
     {
-        $chapitre = \App\Chapitre::find($chapitreId);
+        $chapitre = Chapitre::find($chapitre->id);
         $chapitre->delete();
 
         return response()->json(['status' => 'ok'], 200);

@@ -28,10 +28,12 @@
         <p>
           @if($cour->quiz_id)
           <a href="/admin/quizs/{{ $cour->quiz_id }} ">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ $cour->quiz->nbquestions }})
           @else
           <a href="/admin/quizcours/create/{{ $cour->id }} ">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
           @endif
-          <i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+          </a>
         </p>
         <footer class="blockquote-footer">{{ $cour->commentaire }}</footer>
       </p>

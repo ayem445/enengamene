@@ -10,6 +10,7 @@ class Session extends Model
     use BaseTrait;
 
     protected $guarded = [];
+    protected $with = ['quiz'];
 
     /**
      * Retourne le type de contenu de cette session.
@@ -77,5 +78,18 @@ class Session extends Model
           return $this;
         }
         return $prevChapitre->derniereSession();
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        // juste avant suppression
+        self::deleting(function($model){
+            // On supprime le quiz s'il y en a
+            if ($model->quiz) {
+              $model->quiz->delete();
+            }
+        });
     }
 }

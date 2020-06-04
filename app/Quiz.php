@@ -11,6 +11,11 @@ class Quiz extends Model
 
     protected $table = 'quizs';
     protected $guarded = [];
+    protected $appends = ['nbquestions'];
+
+    public function getNbquestionsAttribute() {
+      return $this->questions()->count();
+    }
 
     /**
      * Retourne toutes les questions de ce Quiz.
@@ -42,5 +47,16 @@ class Quiz extends Model
     public function sessions()
     {
         return $this->hasMany('App\Session', 'quiz_id');
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        // juste avant suppression
+        self::deleting(function($model){
+            //On supprime toutes les questions
+            $model->questions()->get(['id'])->each->delete();
+        });
     }
 }

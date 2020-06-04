@@ -14,7 +14,7 @@
         <div class="card" v-for="(chapitre, index) in chapitres" v-if="chapitres">
           <h3 class="card-title">
             <a class="d-flex" data-toggle="collapse" data-parent="#accordion-chapitres" :href="'#collapse-chapitres-'+index">
-              <span class="mr-auto"> <small><span class="badge badge-primary">{{ chapitre.num_ordre }}</span></small> {{ chapitre.libelle }}</span>
+              <span class="mr-auto"> <small><span class="badge badge-primary">{{ index + 1 }}</span></small> {{ chapitre.libelle }}</span>
               <small>
               <span class="text-lighter hidden-sm-down">
                 <span v-if="chapitre.difficulte.level == 1">&#128513;</span>
@@ -32,7 +32,7 @@
 
               <p>{{ chapitre.description }}</p>
               <p>
-                <a :href="'/admin/quizs/' + chapitre.quiz_id " v-if="chapitre.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+                <a :href="'/admin/quizs/' + chapitre.quiz_id " v-if="chapitre.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ chapitre.quiz.nbquestions }})</a>
                 <a :href="'/admin/quizchapitres/create/' + chapitre.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
               </p>
               <footer class="blockquote-footer">{{ chapitre.commentaire }}</footer>
@@ -68,7 +68,7 @@
 <script>
 
     import EventBus from './eventBus';
-    import axios from 'axios'
+    import Axios from 'axios'
     import Sessions from './Sessions.vue'
     import CreerChapitre from './children/CreerChapitre.vue'
     import CreerSession from './children/CreerSession.vue'
@@ -143,12 +143,12 @@
           deleteChapitre(id, key) {
     				if(confirm('Voulez-vous vraiment supprimer ?')) {
     					Axios.delete(`/admin/${this.cour_id}/chapitres/${id}`)
-    						 .then(resp => {
-    						 	this.sessions.splice(key, 1)
-                  window.noty({
-    								message: 'Chapitre supprimé avec succès',
-    								type: 'success'
-    							})
+                  .then(resp => {
+                      this.chapitres.splice(key, 1)
+                      window.noty({
+                          message: 'Chapitre supprimé avec succès',
+                          type: 'success'
+                      })
     						 }).catch(error => {
     						 	 window.handleErrors(error)
     						 })

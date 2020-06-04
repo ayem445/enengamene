@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BaseTrait;
+use App\Session;
 
 class Chapitre extends Model
 {
@@ -11,6 +12,7 @@ class Chapitre extends Model
 
     protected $guarded = [];
     protected $appends = ['duree'];
+    protected $with = ['quiz'];
 
     /**
      * Eager load relationships
@@ -144,6 +146,21 @@ class Chapitre extends Model
         }
 
         return null;
+    }
+
+    public static function boot ()
+    {
+        parent::boot();
+
+        // juste avant suppression
+        self::deleting(function($model){
+            // On supprime le quiz s'il y en a
+            if ($model->quiz) {
+              $model->quiz->delete();
+            }
+            //On supprime toutes les sessions
+            $model->sessions()->get(['id'])->each->delete();
+        });
     }
 
 }

@@ -119,6 +119,8 @@ class CourController extends Controller
      */
     public function destroy(Cour $cour)
     {
-        //
+        $cour->delete();
+        session()->flash('success', 'Cours supprimé avec succès.');
+        return redirect()->route('cours.index');
     }
 }

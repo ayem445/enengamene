@@ -13,7 +13,7 @@
           <td>
             <h5>
               <span>
-                <small><span class="badge badge-success" style="vertical-align: top">{{ session.num_ordre }}. </span></small>
+                <small><span class="badge badge-success" style="vertical-align: top">{{ key + 1 }}. </span></small>
                 <a href="#" @click.prevent="editSession(session)">{{ session.libelle }}</a>
               </span>
             </h5>
@@ -33,7 +33,7 @@
           <td valign="center">
             <label>Quiz</i></label>
             <p>
-              <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+              <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ session.quiz.nbquestions }})</a>
               <a :href="'/admin/quizsessions/create/' + session.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
             </p>
           </td>
@@ -49,7 +49,7 @@
 <script>
 
   import EventBus from './eventBus';
-  import axios from 'axios'
+  import Axios from 'axios'
 
   export default {
       props: ['default_sessions', 'chapitre_id'],
@@ -110,13 +110,13 @@
         },
         deleteSession(id, key) {
   				if(confirm('Voulez-vous vraiment supprimer ?')) {
-  					Axios.delete(`/admin/${this.chapitre_id}/sessions/${id}`)
-  						 .then(resp => {
-  						 	this.sessions.splice(key, 1)
-                window.noty({
-  								message: 'Session supprimée avec succès',
-  								type: 'success'
-  							})
+              Axios.delete(`/admin/${this.chapitre_id}/sessions/${id}`)
+                .then(resp => {
+                    this.sessions.splice(key, 1)
+                    window.noty({
+                        message: 'Session supprimée avec succès',
+                        type: 'success'
+                    })
   						 }).catch(error => {
   						 	 window.handleErrors(error)
   						 })
