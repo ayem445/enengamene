@@ -12,3 +12,6 @@ Update à partir du vue component (Axios)
 
 Delete d'une question
 --> TODO: Faire un delete cascade des réponses
+
+TOUS LES MODELS
+--> TODO: Faire fonctionner la suppression en cascade
