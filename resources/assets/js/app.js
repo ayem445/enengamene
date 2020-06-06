@@ -52,6 +52,7 @@ Vue.component('vue-chapitres', require('./components/Chapitres.vue').default);
 Vue.component('vue-sessions', require('./components/Sessions.vue').default);
 Vue.component('vue-player', require('./components/Player.vue').default);
 Vue.component('vue-quizquestions', require('./components/QuizQuestions.vue').default);
+Vue.component('vue-doquiz', require('./components/DoQuiz.vue').default);
 //Vue.component('vue-quizreponses', require('./components/QuizReponses.vue').default);
 
 

@@ -45,7 +45,7 @@ class QuizQuestionController extends Controller
         unset($data['typequestion']);
         //return QuizQuestion::create($data);
         //$quizquestion->fresh()->load('typequestion')
-        return $quiz->questions()->create($data)->load('typequestion');
+        return $quiz->questions()->create($data)->load(['typequestion','reponses']);
     }
 
     /**

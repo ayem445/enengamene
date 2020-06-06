@@ -108,7 +108,6 @@
 
            this.$on('session_creee', (session, chapitreId) => {
              // recoit nouvelle session créée
-             console.log('reception session_creee', session, chapitreId)
              EventBus.$emit('session_to_add', {session, chapitreId})
            })
 

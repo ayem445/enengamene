@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,9 @@ Route::get('/cours/{cour}', 'FrontendController@cour')->name('cours');
 Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
 Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
 Route::post('/chapitre/terminer-session/{session}', 'WatchCoursController@terminerSession');
+
+Route::get('/doquiz/{quiz_by_id}', 'DoQuizController@showQuiz')->name('quizs.do');
+Route::post('/doquiz/{quiz_by_id}', 'DoQuizController@saveQuiz')->name('quizs.dosave');
 
 Route::get('register/confirm', 'ConfirmEmailController@index')->name('confirm-email');
 

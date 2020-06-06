@@ -87,7 +87,6 @@
 
         EventBus.$on('session_to_add', (add_data) => {
             // Session créée à insérer sur la liste
-            console.log('reception session_to_add',add_data)
             if (this.chapitre_id == add_data.chapitreId) {
               this.createSession(add_data.session)
             }

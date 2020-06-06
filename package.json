@@ -26,6 +26,8 @@
     "dependencies": {
         "@vimeo/player": "^2.11.0",
         "sweetalert": "^2.1.2",
-        "vue-multiselect": "^2.1.6"
+        "vue-form-wizard": "^0.8.4",
+        "vue-multiselect": "^2.1.6",
+        "vue-step-wizard": "^0.1.10"
     }
 }

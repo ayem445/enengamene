@@ -72,7 +72,7 @@
         },
         mounted() {
     			this.$on('question_creee', (question) => {
-            console.log('reception chapitre_cree', question)
+            console.log('reception question_creee', question)
             window.noty({
     					message: 'Question créée avec succès',
     					type: 'success'

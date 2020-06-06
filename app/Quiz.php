@@ -11,10 +11,18 @@ class Quiz extends Model
 
     protected $table = 'quizs';
     protected $guarded = [];
-    protected $appends = ['nbquestions'];
+    protected $appends = ['nbquestions','isdoable'];
 
     public function getNbquestionsAttribute() {
       return $this->questions()->count();
+    }
+
+    /**
+     * Détermine si ce quiz peut etre effectué
+     * @return bool [description]
+     */
+    public function getIsdoableAttribute() {
+      return true;
     }
 
     /**
@@ -22,7 +30,7 @@ class Quiz extends Model
      */
     public function questions()
     {
-        return $this->hasMany('App\QuizQuestion', 'quiz_id');
+        return $this->hasMany('App\QuizQuestion', 'quiz_id')->orderBy('id', 'asc');
     }
 
     /**

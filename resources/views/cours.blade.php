@@ -69,7 +69,20 @@
                   <h3 class="card-title">
                     <a class="d-flex" data-toggle="collapse" data-parent="#accordion-chapitres" href="#{{ $chapitre->code }}">
                       <span class="mr-auto">{{ $chapitre->libelle }}</span>
-                      <span class="text-lighter hidden-sm-down"><i class="fa fa-signal mr-8"></i> {{ $chapitre->difficulte->libelle }}</span>
+                      <span> <small>
+                      @if($chapitre->difficulte->level == 1)
+                        <span>&#128513;
+                      @elseif($chapitre->difficulte->level == 2)
+                        <span>&#128512;
+                      @elseif($chapitre->difficulte->level == 3)
+                        <span>&#128528;
+                      @elseif($chapitre->difficulte->level == 4)
+                        <span>&#128529;
+                      @else
+                        <span>&#129488;
+                      @endif
+                      </span>
+                      {{ $chapitre->difficulte->libelle }}</small></span>
                     </a>
                   </h3>
 

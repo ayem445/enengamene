@@ -10,7 +10,15 @@ class QuizQuestion extends Model
     use BaseTrait;
 
     protected $guarded = [];
-    //protected $with = ['typequestion'];
+    protected $appends = ['userreponse','userreponsevalide'];
+
+    public function getUserreponseAttribute() {
+      return "";
+    }
+
+    public function getUserreponsevalideAttribute() {
+      return "";
+    }
 
     /**
      * Retourne le type de question de la question.

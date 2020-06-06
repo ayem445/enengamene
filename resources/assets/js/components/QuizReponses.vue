@@ -5,7 +5,7 @@
     <table class="table table-cart">
       <tbody valign="middle">
 
-        <tr v-for="reponse, key in reponses">
+        <tr v-for="(reponse, key) in reponses">
           <td>
             <a class="item-remove" href="#" @click.prevent="deleteReponse(reponse.id, key)"><i class="ti-close"></i></a>
           </td>
@@ -42,6 +42,7 @@
       props: ['default_reponses', 'question_id'],
       mounted() {
   			this.$on('reponse_creee', (reponse) => {
+          console.log('reception reponse_creee', reponse)
           window.noty({
   					message: 'Reponse créée avec succès',
   					type: 'success'

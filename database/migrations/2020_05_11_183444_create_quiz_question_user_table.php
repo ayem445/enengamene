@@ -23,6 +23,8 @@ class CreateQuizQuestionUserTable extends Migration
             $table->unsignedBigInteger('quiz_question_id')->nullable()->comment('référence de la question de quiz');
             $table->foreign('quiz_question_id')->references('id')->on('quiz_questions')->onDelete('set null');
 
+            $table->boolean('is_valide')->default(false)->comment('Indique si la Question de Quiz a été bien traitée ou pas');
+
             $table->timestamps();
         });
         switch(DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME))

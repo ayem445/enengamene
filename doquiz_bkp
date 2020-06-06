@@ -1,0 +1,51 @@
+// if (this.questions[qid].userreponse == "") {
+//   this.questions[qid].userreponse = []
+// }
+// recherche de l'élément chécké
+// let key = this.questions[qid].userreponse.findIndex(l => {
+// 	return this.questions[qid].reponses[rid].id == l
+// })
+
+
+// if (key == -1) {
+//   // Si n'existe pas, insertion
+//   this.questions[qid].userreponse.push(this.questions[qid].reponses[rid].id)
+// } else {
+//   // Sinon, suppression
+//   this.questions[qid].userreponse.splice(key, 1)
+// }
+
+
+
+// Type: choix-multiple
+// On parcourt les reponses proposées et on s'assure que chaque bonne réponse existe
+// dans le tableau des réponses données par le user (userreponse)
+let allgoodresp = 0
+let allgoodrespuser = 0
+let allbadrespuser = 0
+let i = 0
+for (i = 0; i < this.questions[qid].reponses.length; i++) {
+    let key = -1
+    if (this.questions[qid].userreponse == "" || this.questions[qid].userreponse == []) {
+
+    } else {
+      key = this.questions[qid].userreponse.findIndex(l => {
+        return this.questions[qid].reponses[i].id == l
+      })
+    }
+
+    if (this.questions[qid].reponses[i].is_valide) {
+      allgoodresp++
+      if (key == -1) {
+        // le user n'a pas trouvé cette réponse
+      } else {
+        allgoodrespuser++
+      }
+    } else {
+      if (key == -1) {
+        // le user n'a pas trouvé cette réponse
+      } else {
+        allbadrespuser++
+      }
+    }
+}
