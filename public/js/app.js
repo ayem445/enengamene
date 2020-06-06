@@ -95,7 +95,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*! @vimeo/player v2.11.0 | (c) 2020 Vimeo | MIT License | https://github.com/vimeo/player.js */
+/* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*! @vimeo/player v2.12.0 | (c) 2020 Vimeo | MIT License | https://github.com/vimeo/player.js */
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -1575,6 +1575,36 @@ function () {
     key: "play",
     value: function play() {
       return this.callMethod('play');
+    }
+    /**
+     * Request that the player enters fullscreen.
+     * @return {Promise}
+     */
+
+  }, {
+    key: "requestFullscreen",
+    value: function requestFullscreen() {
+      return this.callMethod('requestFullscreen');
+    }
+    /**
+     * Request that the player exits fullscreen.
+     * @return {Promise}
+     */
+
+  }, {
+    key: "exitFullscreen",
+    value: function exitFullscreen() {
+      return this.callMethod('exitFullscreen');
+    }
+    /**
+     * Returns true if the player is currently fullscreen.
+     * @return {Promise}
+     */
+
+  }, {
+    key: "getFullscreen",
+    value: function getFullscreen() {
+      return this.get('fullscreen');
     }
     /**
      * A promise to unload the video.
@@ -39200,8 +39230,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/judeparfaitngomnze/VMs/VagrantVMs/puppetlabs_ubuntu_14/www/enengamene/resources/assets/js/app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! /Users/judeparfaitngomnze/VMs/VagrantVMs/puppetlabs_ubuntu_14/www/enengamene/resources/assets/sass/app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\enengamene\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\enengamene\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
