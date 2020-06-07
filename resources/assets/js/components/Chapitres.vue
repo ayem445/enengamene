@@ -33,10 +33,10 @@
               <p>{{ chapitre.description }}</p>
               <p>
                 <a :href="'/admin/quizs/' + chapitre.quiz_id " v-if="chapitre.quiz_id">
-                  <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ chapitre.quiz.nbquestions }})
+                  <i class="fa fa-graduation-cap" aria-hidden="true"></i> <small><span class="badge badge-primary">{{ chapitre.quiz.nbquestions }}</span></small>
                   <small>
-                    <label class="badge badge-success" v-if="chapitre.quiz.is_complet">complet</label>
-                    <label class="badge badge-danger" v-else>incomplet</label>
+                    <span class="badge badge-success" v-if="chapitre.quiz.is_complet">complet</span>
+                    <span class="badge badge-danger" v-else>incomplet</span>
                   </small>
                 </a>
                 <a :href="'/admin/quizchapitres/create/' + chapitre.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>

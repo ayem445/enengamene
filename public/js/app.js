@@ -4949,7 +4949,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
-        Axios["delete"]("/admin/".concat(this.question_id, "/reponses/").concat(id)).then(function (resp) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/admin/".concat(this.question_id, "/reponses/").concat(id)).then(function (resp) {
           _this2.reponses.splice(key, 1);
 
           window.noty({
@@ -5140,6 +5140,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _eventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventBus */ "./resources/assets/js/components/eventBus.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -24336,20 +24342,24 @@ var render = function() {
                                   staticClass: "fa fa-graduation-cap",
                                   attrs: { "aria-hidden": "true" }
                                 }),
-                                _vm._v(
-                                  " (" +
-                                    _vm._s(chapitre.quiz.nbquestions) +
-                                    ")\n                "
-                                ),
+                                _vm._v(" "),
+                                _c("small", [
+                                  _c(
+                                    "span",
+                                    { staticClass: "badge badge-primary" },
+                                    [_vm._v(_vm._s(chapitre.quiz.nbquestions))]
+                                  )
+                                ]),
+                                _vm._v(" "),
                                 _c("small", [
                                   chapitre.quiz.is_complet
                                     ? _c(
-                                        "label",
+                                        "span",
                                         { staticClass: "badge badge-success" },
                                         [_vm._v("complet")]
                                       )
                                     : _c(
-                                        "label",
+                                        "span",
                                         { staticClass: "badge badge-danger" },
                                         [_vm._v("incomplet")]
                                       )
@@ -25352,9 +25362,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("td", { attrs: { valign: "center" } }, [
-              _c("label", [_vm._v("Quiz")]),
-              _vm._v(" "),
-              _c("p", [
+              _c("label", [
                 session.quiz_id
                   ? _c(
                       "a",
@@ -25363,25 +25371,7 @@ var render = function() {
                         _c("i", {
                           staticClass: "fa fa-graduation-cap",
                           attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(
-                          " (" +
-                            _vm._s(session.quiz.nbquestions) +
-                            ")\n              "
-                        ),
-                        _c("small", [
-                          _vm.chapitre.quiz.is_complet
-                            ? _c(
-                                "label",
-                                { staticClass: "badge badge-success" },
-                                [_vm._v("complet")]
-                              )
-                            : _c(
-                                "label",
-                                { staticClass: "badge badge-danger" },
-                                [_vm._v("incomplet")]
-                              )
-                        ])
+                        })
                       ]
                     )
                   : _c(
@@ -25398,6 +25388,26 @@ var render = function() {
                         })
                       ]
                     )
+              ]),
+              _vm._v(" "),
+              _c("p", [
+                session.quiz_id
+                  ? _c("small", [
+                      _c("span", { staticClass: "badge badge-primary" }, [
+                        _vm._v(_vm._s(session.quiz.nbquestions))
+                      ]),
+                      _vm._v(" "),
+                      _c("span", [
+                        session.quiz.is_complet
+                          ? _c("span", { staticClass: "badge badge-success" }, [
+                              _vm._v("complet")
+                            ])
+                          : _c("span", { staticClass: "badge badge-danger" }, [
+                              _vm._v("incomplet")
+                            ])
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])

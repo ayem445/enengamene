@@ -28,12 +28,12 @@
         <p>
           @if($cour->quiz_id)
           <a href="/admin/quizs/{{ $cour->quiz_id }} ">
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ $cour->quiz->nbquestions }})
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i> <small><span class="badge badge-primary">{{ $cour->quiz->nbquestions }}</span></small>
             <small>
               @if($cour->quiz->is_complet)
-              <label class="badge badge-success">complet</label>
+              <span class="badge badge-success">complet</span>
               @else
-              <label class="badge badge-danger">incomplet</label>
+              <span class="badge badge-danger">incomplet</span>
               @endif
             </small>
           @else

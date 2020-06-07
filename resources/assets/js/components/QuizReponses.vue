@@ -36,7 +36,7 @@
 <script>
 
   import EventBus from './eventBus';
-  import axios from 'axios'
+  import Axios from 'axios'
 
   export default {
       props: ['default_reponses', 'question_id'],

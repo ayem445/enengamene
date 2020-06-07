@@ -31,16 +31,22 @@
           </td>
 
           <td valign="center">
-            <label>Quiz</i></label>
-            <p>
+            <label>
               <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id">
-                <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ session.quiz.nbquestions }})
-                <small>
-                  <label class="badge badge-success" v-if="chapitre.quiz.is_complet">complet</label>
-                  <label class="badge badge-danger" v-else>incomplet</label>
-                </small>
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
               </a>
-              <a :href="'/admin/quizsessions/create/' + session.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+              <a :href="'/admin/quizsessions/create/' + session.id " v-else>
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+              </a>
+            </label>
+            <p>
+              <small v-if="session.quiz_id">
+                <span class="badge badge-primary">{{ session.quiz.nbquestions }}</span>
+                <span>
+                  <span class="badge badge-success" v-if="session.quiz.is_complet">complet</span>
+                  <span class="badge badge-danger" v-else>incomplet</span>
+                </span>
+              </small>
             </p>
           </td>
         </tr>
