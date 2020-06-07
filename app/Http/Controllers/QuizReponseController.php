@@ -37,7 +37,7 @@ class QuizReponseController extends Controller
     public function store(QuizQuestion $quizquestion, Request $request)
     {
         $data = $request->all();
-        return $quizquestion->reponses()->create($data);
+        return $quizquestion->reponses()->create($data)->load('question');
     }
 
     /**
@@ -75,7 +75,7 @@ class QuizReponseController extends Controller
         $quizreponse = QuizReponse::find($data['id']);
         $quizreponse->update($data);
         //$quizReponse->update($data);
-        return $quizreponse->fresh();
+        return $quizreponse->fresh()->load('question');
     }
 
     /**

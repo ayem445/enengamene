@@ -28,6 +28,7 @@ class CreateQuizQuestionsTable extends Migration
           $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
           $table->integer('num_ordre')->nullable()->comment('numéro d ordre de la question dans le quiz');
+          $table->boolean('is_complet')->default(false)->comment('Indique si la Question de Quiz est complète');
 
           $table->boolean('statut')->default(false)->comment('Statut de la Question de Quiz');
           $table->boolean('etat')->default(false)->comment('Etat de la Question de Quiz');

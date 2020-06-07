@@ -60,14 +60,37 @@ class QuizQuestion extends Model
         return $this->quiz_reponses()->where('is_valide', true)->count();
     }
 
+    public function setIsComplet() {
+        if ($this->reponses->count() == 0) {
+            $this->is_complet = false;
+        } else {
+            $nb_reponses_valides = 0;
+            $nb_reponses_invalides = 0;
+            foreach ($this->reponses as $reponse) {
+                $nb_reponses_valides = ( $reponse->is_valide ? ($nb_reponses_valides + 1) : $nb_reponses_valides );
+                $nb_reponses_invalides = ( $reponse->is_valide ? $nb_reponses_invalides : ($nb_reponses_invalides + 1) );
+            }
+            $this->is_complet = ( $nb_reponses_valides > 0 );
+        }
+
+        $this->save();
+        $this->quiz->setIsComplet();
+    }
+
     public static function boot ()
     {
         parent::boot();
 
         // juste avant suppression
-        self::deleting(function($model){
+        self::deleting(function($model) {
             //On supprime toutes les reponses
             $model->reponses()->get(['id'])->each->delete();
+        });
+
+        // Après suppression de la réponse
+        self::deleted(function($model) {
+            //On met à jour l'attribut is_complet du quiz parent
+            $model->quiz->setIsComplet();
         });
     }
 }

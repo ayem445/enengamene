@@ -33,7 +33,13 @@
           <td valign="center">
             <label>Quiz</i></label>
             <p>
-              <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ session.quiz.nbquestions }})</a>
+              <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id">
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ session.quiz.nbquestions }})
+                <small>
+                  <label class="badge badge-success" v-if="chapitre.quiz.is_complet">complet</label>
+                  <label class="badge badge-danger" v-else>incomplet</label>
+                </small>
+              </a>
               <a :href="'/admin/quizsessions/create/' + session.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
             </p>
           </td>

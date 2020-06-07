@@ -16,8 +16,14 @@
               <span class="mr-auto">{{ question.libelle }}</span>
 
               <span class="text-lighter">
-                <small><i class="fa fa-check" aria-hidden="true" v-if="question.quiz_type_question_id == 1"></i>
-                <i class="fa fa-pencil" aria-hidden="true" v-else ></i> {{ question.typequestion.libelle }}</small>
+                <small>
+                  <i class="fa fa-check" aria-hidden="true" v-if="question.quiz_type_question_id == 1"></i>
+                  <i class="fa fa-pencil" aria-hidden="true" v-else ></i> {{ question.typequestion.libelle }}
+                </small>
+                <small>
+                  <label class="badge badge-success" v-if="question.is_complet">complet</label>
+                  <label class="badge badge-danger" v-else>incomplet</label>
+                </small>
               </span>
             </a>
           </h3>
@@ -82,13 +88,7 @@
     			})
 
     			this.$on('question_updated', (question) => {
-            // on récupère l'index du question modifiée
-    				let questionIndex = this.questions.findIndex(s => {
-    					return question.id == s.id
-    			  })
-
-            // TODO: Inserer la nouveau question en fonction de son numéro d'ordre (dans le UPDSATE)
-  				  this.questions.splice(questionIndex, 1, question)
+            this.updateQuestion(question)
             window.noty({
   					   message: 'Question modifiée avec succès',
   					   type: 'success'
@@ -97,11 +97,18 @@
   			 })
 
          this.$on('reponse_creee', (reponse, questionId) => {
+           // Update de la question parent
+           let question = reponse.question
+           // Update de la question parent
+           this.updateQuestionAttributes(question)
            // recoit nouvelle réponse créée
            EventBus.$emit('reponse_to_add', {reponse, questionId})
          })
 
          this.$on('reponse_updated', (reponse, questionId) => {
+           let question = reponse.question
+           // Update de la question parent
+           this.updateQuestionAttributes(question)
            // recoit réponse à modifier
            EventBus.$emit('reponse_to_update', {reponse, questionId})
          })
@@ -151,6 +158,23 @@
               let quizId = this.quiz_id
       				this.$emit('edit_question', { question, questionId, quizId})
     			  },
+            updateQuestion(question) {
+              console.log('question to update', question)
+              // on récupère l'index du question modifiée
+              let questionIndex = this.questions.findIndex(s => {
+                return question.id == s.id
+              })
+
+              // TODO: Inserer la nouveau question en fonction de son numéro d'ordre (dans le UPDSATE)
+              this.questions.splice(questionIndex, 1, question)
+    			  },
+            updateQuestionAttributes(question) {
+              let questionIndex = this.questions.findIndex(s => {
+                return question.id == s.id
+              })
+
+              this.questions[questionIndex].is_complet = question.is_complet
+            },
             handleFcAfterDateBack (event) {
               console.log('data after child handle: ', event) // get the data after child dealing
             }

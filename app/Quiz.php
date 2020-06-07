@@ -57,6 +57,19 @@ class Quiz extends Model
         return $this->hasMany('App\Session', 'quiz_id');
     }
 
+    public function setIsComplet() {
+        if ($this->questions->count() == 0) {
+          $this->is_complet = false;
+        } else {
+          $this->is_complet = true;
+          foreach ($this->questions as $question) {
+              $this->is_complet = ($this->is_complet && $question->is_complet);
+          }
+        }
+
+        $this->save();
+    }
+
     public static function boot ()
     {
         parent::boot();

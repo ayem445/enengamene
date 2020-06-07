@@ -32,7 +32,13 @@
 
               <p>{{ chapitre.description }}</p>
               <p>
-                <a :href="'/admin/quizs/' + chapitre.quiz_id " v-if="chapitre.quiz_id"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ chapitre.quiz.nbquestions }})</a>
+                <a :href="'/admin/quizs/' + chapitre.quiz_id " v-if="chapitre.quiz_id">
+                  <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ chapitre.quiz.nbquestions }})
+                  <small>
+                    <label class="badge badge-success" v-if="chapitre.quiz.is_complet">complet</label>
+                    <label class="badge badge-danger" v-else>incomplet</label>
+                  </small>
+                </a>
                 <a :href="'/admin/quizchapitres/create/' + chapitre.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
               </p>
               <footer class="blockquote-footer">{{ chapitre.commentaire }}</footer>

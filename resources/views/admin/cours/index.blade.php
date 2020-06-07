@@ -29,6 +29,13 @@
           @if($cour->quiz_id)
           <a href="/admin/quizs/{{ $cour->quiz_id }} ">
             <i class="fa fa-graduation-cap" aria-hidden="true"></i> ({{ $cour->quiz->nbquestions }})
+            <small>
+              @if($cour->quiz->is_complet)
+              <label class="badge badge-success">complet</label>
+              @else
+              <label class="badge badge-danger">incomplet</label>
+              @endif
+            </small>
           @else
           <a href="/admin/quizcours/create/{{ $cour->id }} ">
             <i class="fa fa-graduation-cap" aria-hidden="true"></i>

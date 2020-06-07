@@ -4168,6 +4168,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4704,6 +4710,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4729,13 +4741,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.questions.push(question);
     });
     this.$on('question_updated', function (question) {
-      // on récupère l'index du question modifiée
-      var questionIndex = _this.questions.findIndex(function (s) {
-        return question.id == s.id;
-      }); // TODO: Inserer la nouveau question en fonction de son numéro d'ordre (dans le UPDSATE)
-
-
-      _this.questions.splice(questionIndex, 1, question);
+      _this.updateQuestion(question);
 
       window.noty({
         message: 'Question modifiée avec succès',
@@ -4743,14 +4749,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     });
     this.$on('reponse_creee', function (reponse, questionId) {
-      // recoit nouvelle réponse créée
+      // Update de la question parent
+      var question = reponse.question; // Update de la question parent
+
+      _this.updateQuestionAttributes(question); // recoit nouvelle réponse créée
+
+
       _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('reponse_to_add', {
         reponse: reponse,
         questionId: questionId
       });
     });
     this.$on('reponse_updated', function (reponse, questionId) {
-      // recoit réponse à modifier
+      var question = reponse.question; // Update de la question parent
+
+      _this.updateQuestionAttributes(question); // recoit réponse à modifier
+
+
       _eventBus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('reponse_to_update', {
         reponse: reponse,
         questionId: questionId
@@ -4808,6 +4823,21 @@ __webpack_require__.r(__webpack_exports__);
         questionId: questionId,
         quizId: quizId
       });
+    },
+    updateQuestion: function updateQuestion(question) {
+      console.log('question to update', question); // on récupère l'index du question modifiée
+
+      var questionIndex = this.questions.findIndex(function (s) {
+        return question.id == s.id;
+      }); // TODO: Inserer la nouveau question en fonction de son numéro d'ordre (dans le UPDSATE)
+
+      this.questions.splice(questionIndex, 1, question);
+    },
+    updateQuestionAttributes: function updateQuestionAttributes(question) {
+      var questionIndex = this.questions.findIndex(function (s) {
+        return question.id == s.id;
+      });
+      this.questions[questionIndex].is_complet = question.is_complet;
     },
     handleFcAfterDateBack: function handleFcAfterDateBack(event) {
       console.log('data after child handle: ', event); // get the data after child dealing
@@ -5110,6 +5140,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _eventBus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./eventBus */ "./resources/assets/js/components/eventBus.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -24301,8 +24337,23 @@ var render = function() {
                                   attrs: { "aria-hidden": "true" }
                                 }),
                                 _vm._v(
-                                  " (" + _vm._s(chapitre.quiz.nbquestions) + ")"
-                                )
+                                  " (" +
+                                    _vm._s(chapitre.quiz.nbquestions) +
+                                    ")\n                "
+                                ),
+                                _c("small", [
+                                  chapitre.quiz.is_complet
+                                    ? _c(
+                                        "label",
+                                        { staticClass: "badge badge-success" },
+                                        [_vm._v("complet")]
+                                      )
+                                    : _c(
+                                        "label",
+                                        { staticClass: "badge badge-danger" },
+                                        [_vm._v("incomplet")]
+                                      )
+                                ])
                               ]
                             )
                           : _c(
@@ -24875,7 +24926,25 @@ var render = function() {
                                 staticClass: "fa fa-pencil",
                                 attrs: { "aria-hidden": "true" }
                               }),
-                          _vm._v(" " + _vm._s(question.typequestion.libelle))
+                          _vm._v(
+                            " " +
+                              _vm._s(question.typequestion.libelle) +
+                              "\n              "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("small", [
+                          question.is_complet
+                            ? _c(
+                                "label",
+                                { staticClass: "badge badge-success" },
+                                [_vm._v("complet")]
+                              )
+                            : _c(
+                                "label",
+                                { staticClass: "badge badge-danger" },
+                                [_vm._v("incomplet")]
+                              )
                         ])
                       ])
                     ]
@@ -25295,7 +25364,24 @@ var render = function() {
                           staticClass: "fa fa-graduation-cap",
                           attrs: { "aria-hidden": "true" }
                         }),
-                        _vm._v(" (" + _vm._s(session.quiz.nbquestions) + ")")
+                        _vm._v(
+                          " (" +
+                            _vm._s(session.quiz.nbquestions) +
+                            ")\n              "
+                        ),
+                        _c("small", [
+                          _vm.chapitre.quiz.is_complet
+                            ? _c(
+                                "label",
+                                { staticClass: "badge badge-success" },
+                                [_vm._v("complet")]
+                              )
+                            : _c(
+                                "label",
+                                { staticClass: "badge badge-danger" },
+                                [_vm._v("incomplet")]
+                              )
+                        ])
                       ]
                     )
                   : _c(
