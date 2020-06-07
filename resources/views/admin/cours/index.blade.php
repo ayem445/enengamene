@@ -27,20 +27,34 @@
       <p class="lead">{{ $cour->description }}
         <p>
           @if($cour->quiz_id)
-          <a href="/admin/quizs/{{ $cour->quiz_id }} ">
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i> <small><span class="badge badge-primary">{{ $cour->quiz->nbquestions }}</span></small>
+            <a href="/admin/quizs/{{ $cour->quiz_id }} ">
+              <i class="fa fa-graduation-cap" aria-hidden="true"></i> <small><span class="badge badge-primary">{{ $cour->quiz->nbquestions }}</span></small>
+            </a>
             <small>
               @if($cour->quiz->is_complet)
               <span class="badge badge-success">complet</span>
               @else
               <span class="badge badge-danger">incomplet</span>
               @endif
+
+              <span>
+                <a href="#" onclick="if(confirm('Etes-vous sur de vouloir supprimer?')) {event.preventDefault(); document.getElementById('index_destroy-form-{{ $cour->quiz->id }}').submit();}">
+                  <i class="ti-trash" style="color:red"></i>
+                </a>
+                <form id="index_destroy-form-{{ $cour->quiz->id }}" action="{{ action('QuizController@destroycour', $cour->id) }}" method="POST" style="display: none;">
+
+                  @csrf
+                  <input type="hidden" value="{{ $cour->id }}" name="cour_by_id">
+                  <input type="hidden" value="{{ $cour->quiz->id }}" name="id">
+                </form>
+              </span>
             </small>
           @else
-          <a href="/admin/quizcours/create/{{ $cour->id }} ">
+          <a href="/admin/quizcours/{{ $cour->id }}/create ">
             <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-          @endif
           </a>
+          @endif
+
         </p>
         <footer class="blockquote-footer">{{ $cour->commentaire }}</footer>
       </p>

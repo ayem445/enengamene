@@ -79,6 +79,6 @@ class QuizCourController extends Controller
      */
     public function destroy($id)
     {
-        //
+
     }
 }

@@ -56,8 +56,9 @@ Route::middleware('admin')->prefix('admin')->group(function(){
     Route::get('/quizchapitres/create/{chapitre_by_id}','QuizController@createchapitre')->name('quizchapitres.create');
     Route::post('/quizchapitres/store/{chapitre_by_id}','QuizController@storechapitre')->name('quizchapitres.store');
 
-    Route::get('/quizcours/create/{cour_by_id}','QuizController@createcour')->name('quizcours.create');
-    Route::post('/quizcours/store/{cour_by_id}','QuizController@storecour')->name('quizcours.store');
+    Route::get('/quizcours/{cour_by_id}/create/','QuizController@createcour')->name('quizcours.create');
+    Route::post('/quizcours/{cour_by_id}/store/','QuizController@storecour')->name('quizcours.store');
+    Route::post('/quizcours/{cour_by_id}/destroy/','QuizController@destroycour')->name('quizcours.destroy');
 
     //Route::resource('quizquestions','QuizQuestionController');
     Route::resource('{quiz_by_id}/quizquestions','QuizQuestionController');

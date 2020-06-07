@@ -122,6 +122,15 @@ class QuizController extends Controller
         return redirect()->route('quizs.show', $quiz);
     }
 
+    public function destroycour(Cour $cour, Request $request)
+    {
+        $data = $request->all();
+        $quiz = Quiz::where('id', $data['id'])->first();
+        $quiz->delete();
+        session()->flash('success', 'Quiz supprimé avec succès.');
+        return redirect()->route('cours.show', $cour);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -179,7 +188,8 @@ class QuizController extends Controller
      */
     public function destroy(Quiz $quiz)
     {
-        //
+        $quiz->delete();
+        return redirect()->refresh();
     }
 
     public function addToElem($elem, $elemid, Request $request) {
