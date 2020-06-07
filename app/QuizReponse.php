@@ -12,6 +12,16 @@ class QuizReponse extends Model
     protected $guarded = [];
     protected $appends = ['selectedbyuser'];
 
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
+
     public function getSelectedbyuserAttribute() {
       return false;
     }
@@ -43,7 +53,9 @@ class QuizReponse extends Model
         // Après suppression de la réponse
         self::deleted(function($model){
             //On met à jour l'attribut is_complet de la question parent
-            $model->question->setIsComplet();
+            if ($model->question) {
+                $model->question->setIsComplet();
+            }
         });
     }
 }

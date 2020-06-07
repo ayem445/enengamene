@@ -64,7 +64,7 @@
 <script>
 
     import EventBus from './eventBus';
-    import axios from 'axios'
+    import Axios from 'axios'
     import QuizReponses from './QuizReponses.vue'
     import CreerQuizQuestion from './children/CreerQuizQuestion.vue'
     import CreerQuizReponse from './children/CreerQuizReponse.vue'
@@ -113,6 +113,13 @@
            EventBus.$emit('reponse_to_update', {reponse, questionId})
          })
 
+         this.$on('reponse_deleted', (data) => {
+           // recoit réponse supprimé
+           let question = data.question
+           // Update de la question parent
+           this.updateQuestionAttributes(question)
+         })
+
   		  },
         components: {
           QuizReponses,
@@ -141,9 +148,9 @@
      			  },
             deleteQuestion(id, key) {
     				if(confirm('Voulez-vous vraiment supprimer ?')) {
-    					Axios.delete(`/admin/${this.quiz_id}/questions/${id}`)
+    					Axios.delete(`/admin/${this.quiz_id}/quizquestions/${id}`)
     						 .then(resp => {
-    						 	this.reponses.splice(key, 1)
+    						 	this.questions.splice(key, 1)
                   window.noty({
     								message: 'Question supprimée avec succès',
     								type: 'success'

@@ -78,14 +78,26 @@ class QuizReponseController extends Controller
         return $quizreponse->fresh()->load('question');
     }
 
+    // QuizQuestion $quizquestion, QuizReponse $quizReponse
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\QuizReponse  $quizReponse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(QuizReponse $quizReponse)
+
+    /**
+     * Supprime la réponse de la question d'un quiz
+     * @param  QuizQuestion $quizquestion Question parent
+     * @param  [type]       $id           id de la reponse à supprimer
+     * @return [type]                     [description]
+     */
+    public function destroy(QuizQuestion $quizquestion, $id)
     {
-        //
+        $quizreponse = QuizReponse::where('id', $id)->first();
+        //$question = $quizreponse->question;//QuizQuestion::where('id', $quizReponse->quiz_question_id)->get()->first();
+        $quizreponse->delete();
+
+        return $quizquestion->fresh();
     }
 }

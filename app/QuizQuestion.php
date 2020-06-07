@@ -90,7 +90,9 @@ class QuizQuestion extends Model
         // Après suppression de la réponse
         self::deleted(function($model) {
             //On met à jour l'attribut is_complet du quiz parent
-            $model->quiz->setIsComplet();
+            if ($model->quiz) {
+              $model->quiz->setIsComplet();
+            }
         });
     }
 }

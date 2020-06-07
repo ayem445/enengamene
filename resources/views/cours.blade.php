@@ -68,7 +68,7 @@
                 <div class="card">
                   <h3 class="card-title">
                     <a class="d-flex" data-toggle="collapse" data-parent="#accordion-chapitres" href="#{{ $chapitre->code }}">
-                      <span class="mr-auto">{{ $chapitre->libelle }}</span>
+                      <span class="mr-auto"> <small><span class="badge badge-primary">{{ $loop->index + 1 }}</span></small> {{ $chapitre->libelle }}</span>
                       <span> <small>
                       @if($chapitre->difficulte->level == 1)
                         <span>&#128513;

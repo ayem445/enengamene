@@ -4771,6 +4771,12 @@ __webpack_require__.r(__webpack_exports__);
         questionId: questionId
       });
     });
+    this.$on('reponse_deleted', function (data) {
+      // recoit réponse supprimé
+      var question = data.question; // Update de la question parent
+
+      _this.updateQuestionAttributes(question);
+    });
   },
   components: {
     QuizReponses: _QuizReponses_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -4803,8 +4809,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
-        Axios["delete"]("/admin/".concat(this.quiz_id, "/questions/").concat(id)).then(function (resp) {
-          _this2.reponses.splice(key, 1);
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/admin/".concat(this.quiz_id, "/quizquestions/").concat(id)).then(function (resp) {
+          _this2.questions.splice(key, 1);
 
           window.noty({
             message: 'Question supprimée avec succès',
@@ -4949,12 +4955,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       if (confirm('Voulez-vous vraiment supprimer ?')) {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/admin/".concat(this.question_id, "/reponses/").concat(id)).then(function (resp) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]("/admin/".concat(this.question_id, "/quizreponses/").concat(id)).then(function (resp) {
           _this2.reponses.splice(key, 1);
 
           window.noty({
             message: 'Reponse supprimée avec succès',
             type: 'success'
+          });
+          var question = resp.data;
+
+          _this2.$parent.$emit('reponse_deleted', {
+            id: id,
+            question: question
           });
         })["catch"](function (error) {
           window.handleErrors(error);

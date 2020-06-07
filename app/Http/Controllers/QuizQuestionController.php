@@ -100,13 +100,17 @@ class QuizQuestionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\QuizQuestion  $quizQuestion
-     * @return \Illuminate\Http\Response
+     * Supprime la question d'un Quiz
+     * @param  Quiz   $quiz le quiz
+     * @param  [type] $id   id de la question
+     * @return [type]       [description]
      */
-    public function destroy(QuizQuestion $quizQuestion)
+    public function destroy(Quiz $quiz, $id)
     {
-        //
+        $quizquestion = QuizQuestion::where('id', $id)->first();
+        //$question = $quizreponse->question;//QuizQuestion::where('id', $quizReponse->quiz_question_id)->get()->first();
+        $quizquestion->delete();
+
+        return $quiz->fresh();
     }
 }

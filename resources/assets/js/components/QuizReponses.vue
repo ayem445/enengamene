@@ -95,13 +95,16 @@
 
         deleteReponse(id, key) {
   				if(confirm('Voulez-vous vraiment supprimer ?')) {
-  					Axios.delete(`/admin/${this.question_id}/reponses/${id}`)
+  					Axios.delete(`/admin/${this.question_id}/quizreponses/${id}`)
   						 .then(resp => {
   						 	this.reponses.splice(key, 1)
                 window.noty({
   								message: 'Reponse supprimée avec succès',
   								type: 'success'
   							})
+                
+                let question = resp.data
+        				this.$parent.$emit('reponse_deleted', { id, question })
   						 }).catch(error => {
   						 	 window.handleErrors(error)
   						 })

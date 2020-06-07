@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Cour;
 use App\Quiz;
 use App\Chapitre;
+use App\QuizReponse;
 use App\QuizQuestion;
 use App\Session;
 
@@ -61,6 +62,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('quizquestion_by_id', QuizQuestion::class);
         Route::bind('quizquestion_by_id', function($value){
             return QuizQuestion::findOrFail($value);
+        });
+
+        Route::model('quizreponse_by_id', QuizReponse::class);
+        Route::bind('quizreponse_by_id', function($value){
+            return QuizReponse::findOrFail($value);
         });
     }
 
