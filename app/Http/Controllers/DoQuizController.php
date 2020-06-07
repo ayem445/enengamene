@@ -11,7 +11,7 @@ use App\QuizQuestionUser;
 class DoQuizController extends Controller
 {
     public function showQuiz(Quiz $quiz) {
-        $questions = QuizQuestion::with('reponses')->where('quiz_id', $quiz->id)->orderBy('id', 'asc')->get();
+        $questions = QuizQuestion::with('reponses')->where('quiz_id', $quiz->id)->orderBy('num_ordre', 'asc')->get();
         return view('doquiz', [
             'quiz' => $quiz,
             'questions' => $questions

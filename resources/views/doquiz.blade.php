@@ -7,8 +7,8 @@
     <div class="row">
       <div class="col-12 col-lg-8 offset-lg-2">
 
-        <h1>{{ $quiz->libelle }}</h1>
-        <p class="fs-18 opacity-70">{{ $quiz->description }}</p>
+        <h1>QUIZ</h1>
+        <p class="fs-18 opacity-70">Réalisez un meilleur Score pour valider vos acquis.</p>
 
       </div>
     </div>

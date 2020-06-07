@@ -45,6 +45,14 @@ class QuizQuestionController extends Controller
         unset($data['typequestion']);
         //return QuizQuestion::create($data);
         //$quizquestion->fresh()->load('typequestion')
+
+        // Switcher le numéro d'ordre de la dernière question avant celle-la
+        $num_ordre = $quiz->questions->count();
+        if ($num_ordre > 0) {
+            $last_question = $quiz->questions()->where('num_ordre', 0)->first();
+            $last_question->update(['num_ordre' => $num_ordre]);
+        }
+
         return $quiz->questions()->create($data)->load(['typequestion','reponses']);
     }
 

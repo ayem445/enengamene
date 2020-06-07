@@ -27,6 +27,8 @@ class CreateQuizQuestionsTable extends Migration
           $table->unsignedBigInteger('quiz_id')->nullable()->comment('référence du Quiz rattaché');
           $table->foreign('quiz_id')->references('id')->on('quizs')->onDelete('set null');
 
+          $table->integer('num_ordre')->nullable()->comment('numéro d ordre de la question dans le quiz');
+
           $table->boolean('statut')->default(false)->comment('Statut de la Question de Quiz');
           $table->boolean('etat')->default(false)->comment('Etat de la Question de Quiz');
 

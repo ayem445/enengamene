@@ -60,7 +60,8 @@
 			this.id = question.id || ''
 			this.libelle = question.libelle || ''
       this.typequestion = question.typequestion || ''
-      this.description = question.description || ''
+			this.description = question.description || ''
+      this.num_ordre = question.num_ordre || 0
 			this.commentaire = question.commentaire || ''
       this.quiz_id = question.quiz_id || ''
     }

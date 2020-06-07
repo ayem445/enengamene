@@ -23,7 +23,7 @@
                         window.location = this.next_session_url
                     })
                 } else {
-                    Swal('Félicitation ! Vous avez terminé ce Chapitre !')
+                    Swal('Félicitation ! Vous avez terminé ce Cours !')
                 }
             },
             completeLesson() {

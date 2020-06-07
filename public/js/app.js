@@ -4609,7 +4609,7 @@ __webpack_require__.r(__webpack_exports__);
           window.location = _this.next_session_url;
         });
       } else {
-        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé ce Chapitre !');
+        sweetalert__WEBPACK_IMPORTED_MODULE_1___default()('Félicitation ! Vous avez terminé ce Cours !');
       }
     },
     completeLesson: function completeLesson() {
@@ -5493,6 +5493,7 @@ var Question = function Question(question) {
   this.libelle = question.libelle || '';
   this.typequestion = question.typequestion || '';
   this.description = question.description || '';
+  this.num_ordre = question.num_ordre || 0;
   this.commentaire = question.commentaire || '';
   this.quiz_id = question.quiz_id || '';
 };
