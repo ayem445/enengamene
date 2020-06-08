@@ -30,32 +30,13 @@
           <div :id="'collapse-chapitres-'+index" class="collapse in">
             <div class="card-block">
 
-              <p>{{ chapitre.description }}</p>
-              <p>
-                <span v-if="chapitre.quiz_id">
-                  <a :href="'/admin/quizs/' + chapitre.quiz_id ">
-                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                  </a>
-                  <small>
-
-                    <div class="btn-group" v-if="chapitre.quiz.is_complet">
-                      <span class="badge badge-succes">complet</span>
-                      <span class="badge badge-info">{{ chapitre.quiz.nbquestions }}</span>
-                    </div>
-
-                    <div class="btn-group" v-else>
-                      <span class="badge badge-danger">incomplet</span>
-                      <span class="badge badge-info">{{ chapitre.quiz.nbquestions }}</span>
-                    </div>
-
-                    <a class="text-danger" href="#" @click.prevent="deleteQuizChapitre(chapitre.id, chapitre.quiz)">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                    </a>
-                  </small>
-                </span>
-                <a :href="'/admin/quizchapitres/' + chapitre.id + '/create' " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+              <p>{{ chapitre.description }}
+                  <footer class="blockquote-footer">{{ chapitre.commentaire }}</footer>
               </p>
-              <footer class="blockquote-footer">{{ chapitre.commentaire }}</footer>
+              
+              <div class="col-4">
+                <vue-quiz :default_elem="chapitre" default_quiztype="quizchapitres"></vue-quiz>
+              </div>
 
               <p class="">
                  <button class="btn btn-primary btn-xs" @click="editChapitre(chapitre)">

@@ -143,8 +143,7 @@ class QuizController extends Controller
         $data = $request->all();
         $quiz = Quiz::where('id', $data['id'])->first();
         $quiz->delete();
-        session()->flash('success', 'Quiz supprimé avec succès.');
-        return redirect()->route('cours.show', $cour);
+        return $cour->fresh();
     }
 
     /**

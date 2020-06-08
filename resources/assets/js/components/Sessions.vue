@@ -31,36 +31,8 @@
           </td>
 
           <td valign="center">
-            <label>
-              <span v-if="session.quiz_id">
-                <a :href="'/admin/quizs/' + session.quiz_id ">
-                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                </a>
-                <a class="text-danger" href="#" @click.prevent="deleteQuizSession(session.id, session.quiz)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </a>
-              </span>
-              <span v-else>
-              <a :href="'/admin/quizsessions/' + session.id + '/create' ">
-                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-              </a>
-              </span>
-            </label>
             <p>
-              <small v-if="session.quiz_id && session.quiz.is_complet">
-                <div class="btn-group">
-                  <span class="badge badge-success">complet</span>
-                  <span class="badge badge-info">{{ session.quiz.nbquestions }}</span>
-                </div>
-              </small>
-              <small v-else-if="session.quiz_id">
-                <div class="btn-group">
-                  <span class="badge badge-danger">incomplet</span>
-                  <span class="badge badge-info">{{ session.quiz.nbquestions }}</span>
-                </div>
-              </small>
-              <small v-else>
-              </small>
+              <vue-quiz :default_elem="session" default_quiztype="quizsessions"></vue-quiz>
             </p>
           </td>
         </tr>

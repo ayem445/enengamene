@@ -71,7 +71,7 @@ class CourController extends Controller
     public function show(Cour $cour)
     {
         $difficultes = Difficulte::listMap('libelle');
-        $cour = Cour::with(['chapitres', 'chapitres.sessions', 'chapitres.difficulte'])->find($cour->id);
+        $cour = Cour::with(['chapitres', 'chapitres.sessions', 'chapitres.difficulte', 'quiz'])->find($cour->id);
         return view('admin.cours.index')
           ->withCour($cour)
           ->withDifficultes($difficultes);

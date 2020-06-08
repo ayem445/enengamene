@@ -25,48 +25,14 @@
       <h2>{{ $cour->libelle }}</h2>
       <hr>
       <p class="lead">{{ $cour->description }}
-        <p>
-          @if($cour->quiz_id)
-
-            <small>
-              <div class="btn-group">
-                <a href="/admin/quizs/{{ $cour->quiz_id }} ">
-                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                </a>
-              @if($cour->quiz->is_complet)
-
-                  <span class="badge badge-succes">complet</span>
-                  <span class="badge badge-info">{{ $cour->quiz->nbquestions }}</span>
-
-              @else
-
-                  <span class="badge badge-danger">complet</span>
-                  <span class="badge badge-info">{{ $cour->quiz->nbquestions }}</span>
-
-              @endif
-
-              <span>
-                <a href="#" onclick="if(confirm('Etes-vous sur de vouloir supprimer?')) {event.preventDefault(); document.getElementById('index_destroy-form-{{ $cour->quiz->id }}').submit();}">
-                  <i class="ti-trash" style="color:red"></i>
-                </a>
-                <form id="index_destroy-form-{{ $cour->quiz->id }}" action="{{ action('QuizController@destroycour', $cour->id) }}" method="POST" style="display: none;">
-
-                  @csrf
-                  <input type="hidden" value="{{ $cour->id }}" name="cour_by_id">
-                  <input type="hidden" value="{{ $cour->quiz->id }}" name="id">
-                </form>
-              </span>
-
-              </div>
-            </small>
-          @else
-          <a href="/admin/quizcours/{{ $cour->id }}/create ">
-            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-          </a>
-          @endif
-
-        </p>
         <footer class="blockquote-footer">{{ $cour->commentaire }}</footer>
+      </p>
+      <p>
+        <div class="row justify-content-center">
+          <div class="col-4">
+            <vue-quiz :default_elem="{{ $cour->toJson() }}" default_quiztype="quizcours"></vue-quiz>
+          </div>
+        </div>
       </p>
     </header>
 
