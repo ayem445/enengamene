@@ -27,14 +27,22 @@
       <p class="lead">{{ $cour->description }}
         <p>
           @if($cour->quiz_id)
-            <a href="/admin/quizs/{{ $cour->quiz_id }} ">
-              <i class="fa fa-graduation-cap" aria-hidden="true"></i> <small><span class="badge badge-primary">{{ $cour->quiz->nbquestions }}</span></small>
-            </a>
+
             <small>
+              <div class="btn-group">
+                <a href="/admin/quizs/{{ $cour->quiz_id }} ">
+                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                </a>
               @if($cour->quiz->is_complet)
-              <span class="badge badge-success">complet</span>
+
+                  <span class="badge badge-succes">complet</span>
+                  <span class="badge badge-info">{{ $cour->quiz->nbquestions }}</span>
+
               @else
-              <span class="badge badge-danger">incomplet</span>
+
+                  <span class="badge badge-danger">complet</span>
+                  <span class="badge badge-info">{{ $cour->quiz->nbquestions }}</span>
+
               @endif
 
               <span>
@@ -48,6 +56,8 @@
                   <input type="hidden" value="{{ $cour->quiz->id }}" name="id">
                 </form>
               </span>
+
+              </div>
             </small>
           @else
           <a href="/admin/quizcours/{{ $cour->id }}/create ">

@@ -65,6 +65,14 @@ class QuizController extends Controller
         return redirect()->route('quizs.show', $quiz);
     }
 
+    public function destroysession(Session $session, Request $request)
+    {
+        $data = $request->all();
+        $quiz = Quiz::where('id', $data['id'])->first();
+        $quiz->delete();
+        return $session->fresh();
+    }
+
     /**
      * Charge la page de création de quiz pour un chapitre
      * @param  Chapitre $chapitre Chapitre pour lequel le quiz sera créé
@@ -97,6 +105,14 @@ class QuizController extends Controller
 
         session()->flash('success', 'Quiz créé avec succès.');
         return redirect()->route('quizs.show', $quiz);
+    }
+
+    public function destroychapitre(Chapitre $chapitre, Request $request)
+    {
+        $data = $request->all();
+        $quiz = Quiz::where('id', $data['id'])->first();
+        $quiz->delete();
+        return $chapitre->fresh();
     }
 
     public function createcour(Cour $cour)

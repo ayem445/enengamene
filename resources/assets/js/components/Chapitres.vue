@@ -32,14 +32,28 @@
 
               <p>{{ chapitre.description }}</p>
               <p>
-                <a :href="'/admin/quizs/' + chapitre.quiz_id " v-if="chapitre.quiz_id">
-                  <i class="fa fa-graduation-cap" aria-hidden="true"></i> <small><span class="badge badge-primary">{{ chapitre.quiz.nbquestions }}</span></small>
+                <span v-if="chapitre.quiz_id">
+                  <a :href="'/admin/quizs/' + chapitre.quiz_id ">
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                  </a>
                   <small>
-                    <span class="badge badge-success" v-if="chapitre.quiz.is_complet">complet</span>
-                    <span class="badge badge-danger" v-else>incomplet</span>
+
+                    <div class="btn-group" v-if="chapitre.quiz.is_complet">
+                      <span class="badge badge-succes">complet</span>
+                      <span class="badge badge-info">{{ chapitre.quiz.nbquestions }}</span>
+                    </div>
+
+                    <div class="btn-group" v-else>
+                      <span class="badge badge-danger">incomplet</span>
+                      <span class="badge badge-info">{{ chapitre.quiz.nbquestions }}</span>
+                    </div>
+
+                    <a class="text-danger" href="#" @click.prevent="deleteQuizChapitre(chapitre.id, chapitre.quiz)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
                   </small>
-                </a>
-                <a :href="'/admin/quizchapitres/create/' + chapitre.id " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+                </span>
+                <a :href="'/admin/quizchapitres/' + chapitre.id + '/create' " v-else><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
               </p>
               <footer class="blockquote-footer">{{ chapitre.commentaire }}</footer>
 
@@ -163,7 +177,30 @@
             let chapitreId = this.chapitre_id
             let courId = this.cour_id
     				this.$emit('edit_chapitre', { chapitre, chapitreId, courId})
-    			}
+    			},
+          deleteQuizChapitre(chapitreId, quiz) {
+    				if(confirm('Voulez-vous vraiment supprimer ?')) {
+    					Axios.post(`/admin/quizchapitres/${chapitreId}/destroy`, quiz)
+                  .then(resp => {
+                      window.noty({
+                          message: 'Quiz supprimé avec succès',
+                          type: 'success'
+                      })
+                      let chapitre = resp.data
+                      this.updateChapitreAttributes(chapitre)
+    						 }).catch(error => {
+    						 	 window.handleErrors(error)
+    						 })
+    				}
+    			},
+          updateChapitreAttributes(chapitre) {
+            let chapitreIndex = this.chapitres.findIndex(c => {
+              return chapitre.id == c.id
+            })
+
+            this.chapitres[chapitreIndex].quiz_id = chapitre.quiz_id
+            this.chapitres[chapitreIndex].quiz = chapitre.quiz
+          }
       }
 
     }

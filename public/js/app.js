@@ -4174,6 +4174,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4273,6 +4287,30 @@ __webpack_require__.r(__webpack_exports__);
         chapitreId: chapitreId,
         courId: courId
       });
+    },
+    deleteQuizChapitre: function deleteQuizChapitre(chapitreId, quiz) {
+      var _this3 = this;
+
+      if (confirm('Voulez-vous vraiment supprimer ?')) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/admin/quizchapitres/".concat(chapitreId, "/destroy"), quiz).then(function (resp) {
+          window.noty({
+            message: 'Quiz supprimé avec succès',
+            type: 'success'
+          });
+          var chapitre = resp.data;
+
+          _this3.updateChapitreAttributes(chapitre);
+        })["catch"](function (error) {
+          window.handleErrors(error);
+        });
+      }
+    },
+    updateChapitreAttributes: function updateChapitreAttributes(chapitre) {
+      var chapitreIndex = this.chapitres.findIndex(function (c) {
+        return chapitre.id == c.id;
+      });
+      this.chapitres[chapitreIndex].quiz_id = chapitre.quiz_id;
+      this.chapitres[chapitreIndex].quiz = chapitre.quiz;
     }
   }
 });
@@ -5212,6 +5250,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5308,6 +5360,30 @@ __webpack_require__.r(__webpack_exports__);
         type: 'success'
       });
       this.sessions.push(session);
+    },
+    deleteQuizSession: function deleteQuizSession(sessionId, quiz) {
+      var _this3 = this;
+
+      if (confirm('Voulez-vous vraiment supprimer ?')) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/admin/quizsessions/".concat(sessionId, "/destroy"), quiz).then(function (resp) {
+          window.noty({
+            message: 'Quiz supprimé avec succès',
+            type: 'success'
+          });
+          var session = resp.data;
+
+          _this3.updateSessionAttributes(session);
+        })["catch"](function (error) {
+          window.handleErrors(error);
+        });
+      }
+    },
+    updateSessionAttributes: function updateSessionAttributes(session) {
+      var sessionIndex = this.sessions.findIndex(function (c) {
+        return session.id == c.id;
+      });
+      this.sessions[sessionIndex].quiz_id = session.quiz_id;
+      this.sessions[sessionIndex].quiz = session.quiz;
     }
   }
 });
@@ -24342,48 +24418,91 @@ var render = function() {
                       _vm._v(" "),
                       _c("p", [
                         chapitre.quiz_id
-                          ? _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "/admin/quizs/" + chapitre.quiz_id
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fa fa-graduation-cap",
-                                  attrs: { "aria-hidden": "true" }
-                                }),
-                                _vm._v(" "),
-                                _c("small", [
-                                  _c(
-                                    "span",
-                                    { staticClass: "badge badge-primary" },
-                                    [_vm._v(_vm._s(chapitre.quiz.nbquestions))]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("small", [
-                                  chapitre.quiz.is_complet
-                                    ? _c(
+                          ? _c("span", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: "/admin/quizs/" + chapitre.quiz_id
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fa fa-graduation-cap",
+                                    attrs: { "aria-hidden": "true" }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("small", [
+                                chapitre.quiz.is_complet
+                                  ? _c("div", { staticClass: "btn-group" }, [
+                                      _c(
                                         "span",
-                                        { staticClass: "badge badge-success" },
+                                        { staticClass: "badge badge-succes" },
                                         [_vm._v("complet")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "badge badge-info" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(chapitre.quiz.nbquestions)
+                                          )
+                                        ]
                                       )
-                                    : _c(
+                                    ])
+                                  : _c("div", { staticClass: "btn-group" }, [
+                                      _c(
                                         "span",
                                         { staticClass: "badge badge-danger" },
                                         [_vm._v("incomplet")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "badge badge-info" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(chapitre.quiz.nbquestions)
+                                          )
+                                        ]
                                       )
-                                ])
-                              ]
-                            )
+                                    ]),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "text-danger",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteQuizChapitre(
+                                          chapitre.id,
+                                          chapitre.quiz
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-trash",
+                                      attrs: { "aria-hidden": "true" }
+                                    })
+                                  ]
+                                )
+                              ])
+                            ])
                           : _c(
                               "a",
                               {
                                 attrs: {
                                   href:
-                                    "/admin/quizchapitres/create/" + chapitre.id
+                                    "/admin/quizchapitres/" +
+                                    chapitre.id +
+                                    "/create"
                                 }
                               },
                               [
@@ -25376,50 +25495,86 @@ var render = function() {
             _c("td", { attrs: { valign: "center" } }, [
               _c("label", [
                 session.quiz_id
-                  ? _c(
-                      "a",
-                      { attrs: { href: "/admin/quizs/" + session.quiz_id } },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-graduation-cap",
-                          attrs: { "aria-hidden": "true" }
-                        })
-                      ]
-                    )
-                  : _c(
-                      "a",
-                      {
-                        attrs: {
-                          href: "/admin/quizsessions/create/" + session.id
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fa fa-graduation-cap",
-                          attrs: { "aria-hidden": "true" }
-                        })
-                      ]
-                    )
+                  ? _c("span", [
+                      _c(
+                        "a",
+                        { attrs: { href: "/admin/quizs/" + session.quiz_id } },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-graduation-cap",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.deleteQuizSession(
+                                session.id,
+                                session.quiz
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-trash",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ])
+                  : _c("span", [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "/admin/quizsessions/" + session.id + "/create"
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-graduation-cap",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ])
               ]),
               _vm._v(" "),
               _c("p", [
-                session.quiz_id
+                session.quiz_id && session.quiz.is_complet
                   ? _c("small", [
-                      _c("span", { staticClass: "badge badge-primary" }, [
-                        _vm._v(_vm._s(session.quiz.nbquestions))
-                      ]),
-                      _vm._v(" "),
-                      _c("span", [
-                        session.quiz.is_complet
-                          ? _c("span", { staticClass: "badge badge-success" }, [
-                              _vm._v("complet")
-                            ])
-                          : _c("span", { staticClass: "badge badge-danger" }, [
-                              _vm._v("incomplet")
-                            ])
+                      _c("div", { staticClass: "btn-group" }, [
+                        _c("span", { staticClass: "badge badge-success" }, [
+                          _vm._v("complet")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "badge badge-info" }, [
+                          _vm._v(_vm._s(session.quiz.nbquestions))
+                        ])
                       ])
                     ])
-                  : _vm._e()
+                  : session.quiz_id
+                  ? _c("small", [
+                      _c("div", { staticClass: "btn-group" }, [
+                        _c("span", { staticClass: "badge badge-danger" }, [
+                          _vm._v("incomplet")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "badge badge-info" }, [
+                          _vm._v(_vm._s(session.quiz.nbquestions))
+                        ])
+                      ])
+                    ])
+                  : _c("small")
               ])
             ])
           ])

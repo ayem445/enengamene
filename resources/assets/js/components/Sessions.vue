@@ -32,20 +32,34 @@
 
           <td valign="center">
             <label>
-              <a :href="'/admin/quizs/' + session.quiz_id " v-if="session.quiz_id">
+              <span v-if="session.quiz_id">
+                <a :href="'/admin/quizs/' + session.quiz_id ">
+                  <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                </a>
+                <a class="text-danger" href="#" @click.prevent="deleteQuizSession(session.id, session.quiz)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>
+              </span>
+              <span v-else>
+              <a :href="'/admin/quizsessions/' + session.id + '/create' ">
                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
               </a>
-              <a :href="'/admin/quizsessions/create/' + session.id " v-else>
-                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-              </a>
+              </span>
             </label>
             <p>
-              <small v-if="session.quiz_id">
-                <span class="badge badge-primary">{{ session.quiz.nbquestions }}</span>
-                <span>
-                  <span class="badge badge-success" v-if="session.quiz.is_complet">complet</span>
-                  <span class="badge badge-danger" v-else>incomplet</span>
-                </span>
+              <small v-if="session.quiz_id && session.quiz.is_complet">
+                <div class="btn-group">
+                  <span class="badge badge-success">complet</span>
+                  <span class="badge badge-info">{{ session.quiz.nbquestions }}</span>
+                </div>
+              </small>
+              <small v-else-if="session.quiz_id">
+                <div class="btn-group">
+                  <span class="badge badge-danger">incomplet</span>
+                  <span class="badge badge-info">{{ session.quiz.nbquestions }}</span>
+                </div>
+              </small>
+              <small v-else>
               </small>
             </p>
           </td>
@@ -157,7 +171,30 @@
   				})
 
   				this.sessions.push(session)
-  			}
+  			},
+        deleteQuizSession(sessionId, quiz) {
+          if(confirm('Voulez-vous vraiment supprimer ?')) {
+            Axios.post(`/admin/quizsessions/${sessionId}/destroy`, quiz)
+                .then(resp => {
+                    window.noty({
+                        message: 'Quiz supprimé avec succès',
+                        type: 'success'
+                    })
+                    let session = resp.data
+                    this.updateSessionAttributes(session)
+               }).catch(error => {
+                 window.handleErrors(error)
+               })
+          }
+        },
+        updateSessionAttributes(session) {
+          let sessionIndex = this.sessions.findIndex(c => {
+            return session.id == c.id
+          })
+
+          this.sessions[sessionIndex].quiz_id = session.quiz_id
+          this.sessions[sessionIndex].quiz = session.quiz
+        }
       }
   }
 </script>

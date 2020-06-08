@@ -50,15 +50,17 @@ Route::middleware('admin')->prefix('admin')->group(function(){
     // Route::resource('{chapitre_by_id}/quizchapitres','QuizChapitreController');
     // Route::resource('{session_by_id}/quizsessions','QuizSessionController');
     //
-    Route::get('/quizsessions/create/{session_by_id}','QuizController@createsession')->name('quizsessions.create');
-    Route::post('/quizsessions/store/{session_by_id}','QuizController@storesession')->name('quizsessions.store');
+    Route::get('/quizsessions/{session_by_id}/create','QuizController@createsession')->name('quizsessions.create');
+    Route::post('/quizsessions/{session_by_id}/store','QuizController@storesession')->name('quizsessions.store');
+    Route::post('/quizsessions/{session_by_id}/destroy','QuizController@destroysession')->name('quizsessions.destroy');
 
-    Route::get('/quizchapitres/create/{chapitre_by_id}','QuizController@createchapitre')->name('quizchapitres.create');
-    Route::post('/quizchapitres/store/{chapitre_by_id}','QuizController@storechapitre')->name('quizchapitres.store');
+    Route::get('/quizchapitres/{chapitre_by_id}/create','QuizController@createchapitre')->name('quizchapitres.create');
+    Route::post('/quizchapitres/{chapitre_by_id}/store','QuizController@storechapitre')->name('quizchapitres.store');
+    Route::post('/quizchapitres/{chapitre_by_id}/destroy','QuizController@destroychapitre')->name('quizchapitres.destroy');
 
-    Route::get('/quizcours/{cour_by_id}/create/','QuizController@createcour')->name('quizcours.create');
-    Route::post('/quizcours/{cour_by_id}/store/','QuizController@storecour')->name('quizcours.store');
-    Route::post('/quizcours/{cour_by_id}/destroy/','QuizController@destroycour')->name('quizcours.destroy');
+    Route::get('/quizcours/{cour_by_id}/create','QuizController@createcour')->name('quizcours.create');
+    Route::post('/quizcours/{cour_by_id}/store','QuizController@storecour')->name('quizcours.store');
+    Route::post('/quizcours/{cour_by_id}/destroy','QuizController@destroycour')->name('quizcours.destroy');
 
     //Route::resource('quizquestions','QuizQuestionController');
     Route::resource('{quiz_by_id}/quizquestions','QuizQuestionController');
