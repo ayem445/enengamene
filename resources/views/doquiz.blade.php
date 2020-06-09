@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-<header class="header header-inverse bg-fixed" style="background-image: url({{ asset('assets/img/bg-laptop.jpg') }})" data-overlay="8">
+<header class="header header-inverse bg-fixed" style="background-image: url({{ asset('assets/img/bg-cup.jpg') }})" data-overlay="8">
   <div class="container text-center">
 
     <div class="row">
