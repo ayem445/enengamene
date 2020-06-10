@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-<header class="header header-inverse" style="background-color: #9ac29d">
+<header class="header header-inverse" style="background-image: url({{ $chapitre->cour->image_path }});" data-overlay="8">
   <div class="container text-center">
 
     <div class="row">

@@ -58,6 +58,18 @@ class Quiz extends Model
         return $this->hasOne('App\Session', 'quiz_id');
     }
 
+    public function setSessionSuivant() {
+        if ($this->cour) {
+            $sessionsuivant = $this->cour->dernierChapitre()->derniereSession();
+        } elseif ($this->chapitre) {
+            $sessionsuivant = $this->chapitre->derniereSession();
+        } else {
+            $sessionsuivant = $this->session->sessionSuiv();
+        }
+
+        $this->setNextLink($sessionsuivant);
+    }
+
     public function setIsComplet() {
         if ($this->questions->count() == 0) {
           $this->is_complet = false;

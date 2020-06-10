@@ -30,11 +30,13 @@
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
   import Axios from 'axios'
+  import Swal from 'sweetalert'
 
   export default {
      props: {
         default_quiz: {},
-        default_questions: {}
+        default_questions: {},
+        next_url: ""
      },
      components: {
         FormWizard,
@@ -124,16 +126,16 @@
               scorenotation = 'Travail insuffisant. Vous pouvez mieux faire.'
           }
 
-          window.noty({
-            message: 'Votre score est de ' + score + '% . ' + scorenotation,
-            type: 'success'
-          })
-          console.log(this.questions)
-          this.saveQuizReponses()
+          this.saveQuizReponses(score, scorenotation)
       },
-      saveQuizReponses: function () {
+      saveQuizReponses: function (score, scorenotation) {
           Axios.post(`/doquiz/${this.quiz.id}`, this.questions).then(resp => {
-            console.log(resp)
+
+            Swal('Votre score est de ' + score + '% . ' + scorenotation)
+            .then(() => {
+                window.location = this.next_url
+            })
+
           }).catch(error => {
             window.handleErrors(error)
           })

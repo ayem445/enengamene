@@ -18,3 +18,6 @@ TOUS LES MODELS
 
 SESSION
 --> TODO: Ajouter un champs pour gérer les session free
+
+COURS
+--> TODO: Modeliser la page de fin de cours (résumé chapitres/sessions lu, résumés + scores quiz ...)

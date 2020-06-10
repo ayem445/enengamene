@@ -78,6 +78,10 @@ class Cour extends Model
         return $this->hasMany('App\Chapitre', 'cour_id');
     }
 
+    public function dernierChapitre() {
+        return $this->chapitres()->orderBy('num_ordre', 'desc')->first();
+    }
+
     /**
      * Retourne le Quiz de ce cours.
      */

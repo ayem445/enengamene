@@ -31,64 +31,72 @@ trait WatchNavigationTrait
             // si cette session a un quiz complet
             if ($this->quiz && $this->quiz->is_complet) {
                 // le prochain lien mènera vers ce quiz
-                $this->next_link = route('quizs.do', ['quiz_by_id' => $this->quiz->id]);
+                $this->setLinkNextQuiz($this->quiz);
             } else {
                 // sinon on traite les dépendances de cette session
-                $this->setLinkSession($this);
+                $this->checkLinkSession($this);
             }
         } else {
             // si l'élément actuelle est un quiz
             if ($this->session) {
                 // quiz de session
-                $this->setLinkSession($this->session);
+                $this->checkLinkSession($this->session);
             } elseif ($this->chapitre) {
                 // quiz de chapitre
-                $this->setLinkCour($this->chapitre->cour);
+                $this->checkLinkCour($this->chapitre->cour);
             } else {
                 // quiz de cour
                 // le prochain c'est la fin du cours
-                $this->next_link = route('cours.fin', ['cour' => $chapitre->cour]);
+                $this->setLinkNextFinCours($chapitre->cour);
             }
         }
     }
 
-    private function setLinkSession($session) {
+    private function checkLinkSession($session) {
         // si la session de ce quiz est la dernière de son chapitre ...
         if ($session->estDerniereDuChapitre()) {
             // on traite le chapitre et ses dépendances
-            $this->setLinkChapitre($session->chapitre);
+            $this->checkLinkChapitre($session->chapitre);
         } else {
             // sinon, le prochain lien menera à la prochaine session
             $this->setLinkNextSession();
         }
     }
 
-    private function setLinkChapitre($chapitre) {
+    private function checkLinkChapitre($chapitre) {
         // si le chapitre (paramètre) a un quiz complet
         if ($chapitre->quiz && $chapitre->quiz->is_complet) {
             // alors le prochain lien menera au quiz de ce chapitre
-            $this->next_link = route('quizs.do', ['quiz_by_id' => $chapitre->quiz->id]);
+            $this->setLinkNextQuiz($chapitre->quiz);
         } elseif ($chapitre->estDernierDuCour()) {
             // sinon, si ce chapitre est le dernier du cours
             // on traite les dépendances du cours
-            $this->setLinkCour($chapitre->cour);
+            $this->checkLinkCour($chapitre->cour);
         } else {
             // sinon, le prochain lien menera à la prochaine session
             $this->setLinkNextSession();
         }
     }
 
-    private function setLinkCour($cour) {
+    private function checkLinkCour($cour) {
         if ($cour->quiz && $cour->quiz->is_complet) {
-            $this->next_link = route('quizs.do', ['quiz_by_id' => $cour->quiz->id]);
+            $this->setLinkNextQuiz($cour->quiz);
         } else {
             // sinon,
             // le prochain lien menera vers la page de fin de cours
-            $this->next_link = route('cours.fin', ['cour' => $cour]);
+            $this->setLinkNextFinCours($cour);
         }
     }
 
     private function setLinkNextSession() {
-        route('cours.watch', ['chapitre' => $this->next_session->chapitre, 'session' => $this->next_session->id]);
+        $this->next_link = route('cours.watch', ['chapitre' => $this->next_session->chapitre, 'session' => $this->next_session->id]);
+    }
+
+    private function setLinkNextQuiz($quiz) {
+        $this->next_link = route('quizs.do', ['quiz_by_id' => $quiz->id]);
+    }
+
+    private function setLinkNextFinCours($cour) {
+        $this->next_link = route('cours', ['cour' => $cour]);
     }
 }

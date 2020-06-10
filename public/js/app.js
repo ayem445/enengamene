@@ -4313,6 +4313,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_form_wizard_dist_vue_form_wizard_min_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -4341,13 +4343,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     default_quiz: {},
-    default_questions: {}
+    default_questions: {},
+    next_url: ""
   },
   components: {
     FormWizard: vue_form_wizard__WEBPACK_IMPORTED_MODULE_0__["FormWizard"],
@@ -4445,16 +4449,15 @@ __webpack_require__.r(__webpack_exports__);
         scorenotation = 'Travail insuffisant. Vous pouvez mieux faire.';
       }
 
-      window.noty({
-        message: 'Votre score est de ' + score + '% . ' + scorenotation,
-        type: 'success'
-      });
-      console.log(this.questions);
-      this.saveQuizReponses();
+      this.saveQuizReponses(score, scorenotation);
     },
-    saveQuizReponses: function saveQuizReponses() {
+    saveQuizReponses: function saveQuizReponses(score, scorenotation) {
+      var _this = this;
+
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/doquiz/".concat(this.quiz.id), this.questions).then(function (resp) {
-        console.log(resp);
+        sweetalert__WEBPACK_IMPORTED_MODULE_3___default()('Votre score est de ' + score + '% . ' + scorenotation).then(function () {
+          window.location = _this.next_url;
+        });
       })["catch"](function (error) {
         window.handleErrors(error);
       });
@@ -39182,15 +39185,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************!*\
   !*** ./resources/assets/js/components/Quiz.vue ***!
   \*************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Quiz_vue_vue_type_template_id_a9bedee8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Quiz.vue?vue&type=template&id=a9bedee8& */ "./resources/assets/js/components/Quiz.vue?vue&type=template&id=a9bedee8&");
 /* harmony import */ var _Quiz_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Quiz.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/Quiz.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Quiz_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Quiz_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -39220,7 +39222,7 @@ component.options.__file = "resources/assets/js/components/Quiz.vue"
 /*!**************************************************************************!*\
   !*** ./resources/assets/js/components/Quiz.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
