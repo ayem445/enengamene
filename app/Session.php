@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BaseTrait;
+use App\Traits\WatchNavigationTrait;
 
 class Session extends Model
 {
-    use BaseTrait;
+    use BaseTrait, WatchNavigationTrait;
 
     protected $guarded = [];
     protected $with = ['quiz'];
@@ -47,15 +48,20 @@ class Session extends Model
                     ->first();
 
         if($nextSession) {
+            $this->setNextLink($nextSession);
             return $nextSession;
         }
 
         //return $this;
         $nextChapitre = $this->chapitre->chapitreSuiv();
         if ($nextChapitre->id == $this->chapitre_id) {
+          $this->setNextLink($this);
           return $this;
         }
-        return $nextChapitre->premiereSession();
+
+        $nextSession = $nextChapitre->premiereSession();
+        $this->setNextLink($this);
+        return $nextSession;
     }
 
     /**
@@ -78,6 +84,26 @@ class Session extends Model
           return $this;
         }
         return $prevChapitre->derniereSession();
+    }
+
+    public function estPremiereDuChapitre() {
+        $session_precedente = Session::where('chapitre_id', $this->chapitre->id)
+            ->where('num_ordre', $this->num_ordre - 1);
+        if ($session_precedente) {
+          return false;
+        } else {
+          return true;
+        }
+    }
+
+    public function estDerniereDuChapitre() {
+        $session_suivant = Session::where('chapitre_id', $this->chapitre->id)
+            ->where('num_ordre', $this->num_ordre + 1);
+        if ($session_suivant) {
+          return false;
+        } else {
+          return true;
+        }
     }
 
     public static function boot ()

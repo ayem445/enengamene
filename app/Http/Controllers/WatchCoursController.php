@@ -38,6 +38,12 @@ class WatchCoursController extends Controller
       ]);
     }
 
+    public function showFinCours(Cour $cour) {
+      return view('fincour', [
+          'cour' => $cour
+      ]);
+    }
+
     /**
      * Terminer une session via ajax
      *

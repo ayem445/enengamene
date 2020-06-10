@@ -148,6 +148,26 @@ class Chapitre extends Model
         return null;
     }
 
+    public function estPremierDuCour() {
+        $chapitre_precedente = Chapitre::where('cour_id', $this->chapitre->id)
+            ->where('num_ordre', $this->num_ordre - 1);
+        if ($chapitre_precedente) {
+          return false;
+        } else {
+          return true;
+        }
+    }
+
+    public function estDernierDuCour() {
+        $chapitre_suivant = Chapitre::where('cour_id', $this->chapitre->id)
+            ->where('num_ordre', $this->num_ordre + 1);
+        if ($chapitre_suivant) {
+          return false;
+        } else {
+          return true;
+        }
+    }
+
     public static function boot ()
     {
         parent::boot();

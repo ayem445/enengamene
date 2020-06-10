@@ -20,7 +20,9 @@
 @section('content')
   <div class="section bg-grey">
     <div class="container">
-
+      @php
+        $prevSession = $session->sessionPrec();
+      @endphp
       <div class="row gap-y">
         <div class="col-12">
             <vue-doquiz default_quiz="{{ $quiz }}" default_questions="{{ $questions }}"></vue-doquiz>

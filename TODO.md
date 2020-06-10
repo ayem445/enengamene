@@ -15,3 +15,6 @@ Delete d'une question
 
 TOUS LES MODELS
 --> TODO: Faire fonctionner la suppression en cascade
+
+SESSION
+--> TODO: Ajouter un champs pour gérer les session free

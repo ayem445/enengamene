@@ -29,6 +29,7 @@ Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cours');
 Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
 Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
+Route::get('/fincours/{cour}', 'WatchCoursController@showFinCours')->name('cours.fin');
 Route::post('/chapitre/terminer-session/{session}', 'WatchCoursController@terminerSession');
 
 Route::get('/doquiz/{quiz_by_id}', 'DoQuizController@showQuiz')->name('quizs.do');

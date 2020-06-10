@@ -29,7 +29,7 @@
 
             <vue-player default_session="{{$session}}"
             @if($nextSession->id !== $session->id)
-                next_session_url="{{ route('cours.watch', ['chapitre' => $session->chapitre, 'session' => $session->sessionSuiv()->id]) }}"
+                next_session_url="{{ $session->getNextLink() }}"
             @endif
             ></vue-player>
 
@@ -40,7 +40,7 @@
               <a class="btn btn-white disabled" href="#"><i class="fa fa-backward fs-9 mr-4" aria-hidden="true"></i> Session Précédente</a>
               @endif
               @if($nextSession->id !== $session->id)
-              <a class="btn btn-white" href="{{ route('cours.watch', ['chapitre' => $session->sessionSuiv()->chapitre, 'session' => $session->sessionSuiv()->id]) }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
+              <a class="btn btn-white" href="{{ $session->getNextLink() }}">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
               @else
               <a class="btn btn-white disabled" href="#">Session Suivante <i class="fa fa-forward fs-9 ml-4" aria-hidden="true"></i></a>
               @endif

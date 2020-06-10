@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\BaseTrait;
+use App\Traits\WatchNavigationTrait;
 
 class Quiz extends Model
 {
-    use BaseTrait;
+    use BaseTrait, WatchNavigationTrait;
 
     protected $table = 'quizs';
     protected $guarded = [];
@@ -36,9 +37,9 @@ class Quiz extends Model
     /**
      * Retourne tous les cours qui utilisent ce Quiz.
      */
-    public function cours()
+    public function cour()
     {
-        return $this->hasMany('App\Cour', 'quiz_id');
+        return $this->hasOne('App\Cour', 'quiz_id');
     }
 
     /**
@@ -46,15 +47,15 @@ class Quiz extends Model
      */
     public function chapitre()
     {
-        return $this->hasMany('App\Chapitre', 'quiz_id');
+        return $this->hasOne('App\Chapitre', 'quiz_id');
     }
 
     /**
      * Retourne toutes les sessions qui utilisent ce Quiz.
      */
-    public function sessions()
+    public function session()
     {
-        return $this->hasMany('App\Session', 'quiz_id');
+        return $this->hasOne('App\Session', 'quiz_id');
     }
 
     public function setIsComplet() {
