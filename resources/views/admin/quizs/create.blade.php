@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-<header class="header header-inverse" style="background-image: url({{ asset('assets/img/bg-cup.jpg') }})">
+<header class="header header-inverse" style="background-image: url({{ asset('assets/img/bg-cup.jpg') }})" data-overlay="8">
   <div class="container text-center">
 
     <div class="row">
@@ -9,7 +9,7 @@
 
         <h1>Créer un Quiz</h1>
         <p class="fs-20 opacity-70">Pour {{ $elemType }} : {{ $elem->libelle }} </p>
-        <p><strong>{{ $elem->libelle }}</strong></p>
+        <p>Ce Quiz sera proposé (une fois <strong>complet</strong>) à l'apprenant à la fin de la rubrique à laquelle il est rattaché</p>
 
       </div>
     </div>

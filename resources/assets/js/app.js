@@ -54,6 +54,8 @@ Vue.component('vue-player', require('./components/Player.vue').default);
 Vue.component('vue-quizquestions', require('./components/QuizQuestions.vue').default);
 Vue.component('vue-doquiz', require('./components/DoQuiz.vue').default);
 Vue.component('vue-quiz', require('./components/Quiz.vue').default);
+Vue.component('vue-cours', require('./components/Cours.vue').default);
+Vue.component('vue-pagination', require('laravel-vue-pagination'));
 //Vue.component('vue-quizreponses', require('./components/QuizReponses.vue').default);
 
 

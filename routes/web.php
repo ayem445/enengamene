@@ -26,7 +26,11 @@ Auth::routes();
 
 Route::get('/', 'FrontendController@welcome');
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
+
 Route::get('/cours/{cour}', 'FrontendController@cour')->name('cours');
+Route::get('/coursall', 'FrontendController@coursall')->name('cours.all');
+Route::get('/coursgetall', 'FrontendController@coursgetall')->name('cours.getall');
+
 Route::get('/watch-cours/{cour}', 'WatchCoursController@index')->name('cours.learning');
 Route::get('/chapitre/{chapitre}/session/{session}', 'WatchCoursController@showSession')->name('cours.watch');
 Route::get('/fincours/{cour}', 'WatchCoursController@showFinCours')->name('cours.fin');

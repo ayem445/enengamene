@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cour;
+use App\Auteur;
+use App\Matiere;
 
 class FrontEndController extends Controller
 {
@@ -13,8 +15,25 @@ class FrontEndController extends Controller
      * @return view
      */
     public function welcome() {
-        $cours = Cour::all();
-        return view('welcome')->withCours($cours);
+        $cours = Cour::with('matiere')->get();
+        $auteurs = Auteur::with('personne')->get();
+        $matieres = Matiere::all();
+        return view('welcome')
+          ->withCours($cours)
+          ->withAuteurs($auteurs)
+          ->withMatieres($matieres);
+    }
+
+    public function coursall() {
+        return view('coursall');
+    }
+
+    public function coursgetall(Request $request) {
+        // $cours = Cour::all();
+        // return view('coursall')->withCours($cours);
+
+        $data = Cour::paginate(3);
+    	  return response()->json($data);
     }
 
     /**

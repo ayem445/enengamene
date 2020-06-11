@@ -47,11 +47,33 @@
                 <a class="nav-link" href="{{ route('profile', auth()->user()->username) }}">Salut <strong>{{ auth()->user()->name  }}</strong></a></li>
 
               </li>
-              <li class="nav-item"><a href="{{ route('cours.index') }}" class="nav-link">Gestion des Cours</a></li>
-            @endauth
 
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('cours.index') }}">Gestion des Cours <i class="fa fa-caret-down"></i></a>
+                <div class="nav-submenu">
+                  <a class="nav-link" href="demo-helpato.html">Liste des cours</a>
+                  <a class="nav-link" href="demo-trello.html">Créer un cours</a>
+                </div>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('cours.index') }}">Matières <i class="fa fa-caret-down"></i></a>
+                <div class="nav-submenu">
+                  <a class="nav-link" href="demo-helpato.html">Liste des Matières</a>
+                  <a class="nav-link" href="demo-trello.html">Créer une Matière</a>
+                </div>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('cours.index') }}">Auteurs <i class="fa fa-caret-down"></i></a>
+                <div class="nav-submenu">
+                  <a class="nav-link" href="demo-helpato.html">Liste des Auteurs</a>
+                  <a class="nav-link" href="demo-trello.html">Créer un Auteur</a>
+                </div>
+              </li>
+            @endauth
+            <li class="nav-item"><a href="/coursall" class="nav-link">Tous les Cours</a></li>
             @guest
-              <li class="nav-item"><a href="#" class="nav-link">Tous les Cours</a></li>
               <li class="nav-item"><a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#loginModal">Se Connecter</a></li>
             @endguest
           </ul>

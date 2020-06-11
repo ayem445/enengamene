@@ -10,7 +10,7 @@ class Cour extends Model
     use BaseTrait;
 
     protected $guarded = [];
-    protected $appends = ['duree'];
+    protected $appends = ['duree','image_path'];
 
     /**
      * Eager load relationships
