@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use App\Search\Queries\ProductSearch;
 use App\Http\Requests\SearchRequest;
+use App\Http\Requests\ISearchFormRequest;
 
 /**
  * Class FetchRequest
@@ -19,7 +20,7 @@ use App\Http\Requests\SearchRequest;
  * @property string $order_field
  * @property string $order_direction
  */
-class FetchRequest extends FormRequest
+class FetchRequest extends FormRequest implements ISearchFormRequest
 {
     use SearchRequest;
     /**
@@ -52,6 +53,7 @@ class FetchRequest extends FormRequest
      * @return array [description]
      */
     public function response(): array {
+        
         return (new ProductSearch(
           $this->requestParams(), $this->requestOrder()
         ))->response();
