@@ -10,8 +10,16 @@ use App\Search\Payloads\Payload;
 use App\Search\Payloads\SearchOnlyPayload;
 
 /**
- * [trait description]
- * @var [type]
+ * Trait SearchRequest
+ *
+ * @package App\Http\Requests
+ *
+ * @property string|null $search
+ * @property int $per_page
+ * @property int $page
+ * @property string $order_by
+ * @property string $order_field
+ * @property string $order_direction
  */
 trait SearchRequest
 {

@@ -6,9 +6,10 @@ use App\Product;
 use App\Http\Resources\SearchCollection;
 use App\Http\Requests\Product\FetchRequest;
 use App\Http\Resources\Product as ProductResource;
-
 use App\Repositories\Contracts\IProductRepositoryContract;
+
 use \Illuminate\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
@@ -35,7 +36,9 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        return view('product.index');
+        return view('product.index')
+            ->with('perPage', new Collection(config('system.per_page')))
+            ->with('defaultPerPage', config('system.default_per_page'));
     }
 
     /**
