@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use App\Search\Payloads\Payload;
 
 
-class RequestData implements Arrayable
+class Params implements Arrayable
 {
     public $search;
 

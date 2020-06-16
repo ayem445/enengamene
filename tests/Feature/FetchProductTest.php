@@ -113,6 +113,8 @@ class FetchProductTest extends TestCase
      */
     public function returns_filtered_records() {
 
+        $this->withoutExceptionHandling();
+
         $products = collect([
             factory(Product::class)->create([
                 'id' => 1, 'name' => 'Trek Remedy 7 27.5', 'price' => '2200.00'

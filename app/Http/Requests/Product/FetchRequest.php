@@ -2,12 +2,10 @@
 
 namespace App\Http\Requests\Product;
 
-use App\Search\RequestData;
-use Illuminate\Validation\Rule;
-use App\Search\OrderBy;
-use App\Search\Queries\ProductSearch;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Search\Payloads\SearchOnlyPayload;
+
+use App\Search\Queries\ProductSearch;
+use App\Http\Requests\SearchRequest;
 
 /**
  * Class FetchRequest
@@ -23,6 +21,7 @@ use App\Search\Payloads\SearchOnlyPayload;
  */
 class FetchRequest extends FormRequest
 {
+    use SearchRequest;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,51 +33,17 @@ class FetchRequest extends FormRequest
     }
 
     /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function rules(): array
-    {
-        return [
-            'search' => [
-              'present'
-            ],
-            'per_page' => [
-              'required',
-              Rule::in(config('system.per_page')),
-            ],
-            'page' => [
-              'required',
-              'integer',
-            ],
-            'order_by' => [
-              'required',
-              'string',
-            ],
-            'order_field' => [
-              Rule::in(['name','price']),
-            ],
-            'order_direction' => [
-              Rule::in(['asc','desc']),
-            ],
-        ];
+    protected function orderByFields(): array {
+        return ['name','price'];
     }
 
     /**
-     * Prepare the data for validation
-     *
-     * @return void
+     * @inheritDoc
      */
-    protected function prepareForValidation(): void {
-        $this->order_by = $this->order_by ?? 'name:asc';
-        [$order, $direction] = explode(':', $this->order_by);
-
-        $this->offsetSet('order_field', $order);
-        $this->offsetSet('order_direction', $direction);
-
-        $this->per_page = (int)($this->per_page ?? config('system.default_per_page'));
-        $this->page = (int)($this->page ?? 1);
+    protected function defaultOrderByField(): string {
+        return 'name';
     }
 
     /**
@@ -88,27 +53,7 @@ class FetchRequest extends FormRequest
      */
     public function response(): array {
         return (new ProductSearch(
-          $this->RequestData(), $this->requestOrder()
+          $this->requestParams(), $this->requestOrder()
         ))->response();
-    }
-
-    /**
-     * Get request data.
-     *
-     * @return RequestData [description]
-     */
-    public function requestData(): RequestData {
-        return new RequestData(
-            new SearchOnlyPayload($this->search ?? null), $this->per_page, $this->page, $this->order_by
-        );
-    }
-
-    /**
-     * Get request ORDER BY
-     *
-     * @return OrderBy [description]
-     */
-    protected function requestOrder(): OrderBy {
-        return new OrderBy($this->order_field, $this->order_direction);
     }
 }

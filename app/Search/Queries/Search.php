@@ -3,7 +3,7 @@
 namespace App\Search\Queries;
 
 use App\Search\OrderBy;
-use App\Search\RequestData;
+use App\Search\Params;
 use App\Search\Meta;
 
 use Illuminate\Support\Collection;
@@ -14,7 +14,7 @@ abstract class Search
 
     /**
      * [protected description]
-     * @var \App\Search\RequestData
+     * @var \App\Search\Params
      */
     protected $params;
 
@@ -26,10 +26,10 @@ abstract class Search
 
     /**
      * Search constructor
-     * @param RequestData $params [description]
+     * @param Params $params [description]
      * @param OrderBy     $order  [description]
      */
-    public function __construct(RequestData $params, OrderBy $order) {
+    public function __construct(Params $params, OrderBy $order) {
         $this->params = $params;
         $this->order = $order;
     }
