@@ -70,7 +70,6 @@ class FetchProductTest extends TestCase
      */
     public function returns_records_with_default_filter()
     {
-        $this->withoutExceptionHandling();
         $products = factory(Product::class, 15)->create()->sortBy('name');
 
         $response = $this->getJson(route('product.fetch', [
@@ -112,8 +111,6 @@ class FetchProductTest extends TestCase
      * @test
      */
     public function returns_filtered_records() {
-
-        $this->withoutExceptionHandling();
 
         $products = collect([
             factory(Product::class)->create([

@@ -2,15 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use \Illuminate\View\View;
-use App\Http\Requests\Product\FetchRequest;
 use App\Product;
+use App\Http\Resources\SearchCollection;
+use App\Http\Requests\Product\FetchRequest;
+use App\Http\Resources\Product as ProductResource;
+
+use App\Repositories\Contracts\IProductRepositoryContract;
+use \Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
+    /**
+     * [private description]
+     * @var IProductRepositoryContract
+     */
+    private $repository;
+
+    /**
+     * ProductController constructor.
+     *
+     * @param IProductRepositoryContract $repository [description]
+     */
+    public function __construct(IProductRepositoryContract $repository) {
+        $this->repository = $repository;
+    }
+
     /**
      * Display products page.
      *
@@ -21,9 +38,17 @@ class ProductController extends Controller
         return view('product.index');
     }
 
-    public function fetch(FetchRequest $request): JsonResponse
+    /**
+     * Fetch records.
+     *
+     * @param  FetchRequest     $request [description]
+     * @return SearchCollection          [description]
+     */
+    public function fetch(FetchRequest $request): SearchCollection
     {
-        return new JsonResponse($request->response());
+        return new SearchCollection(
+            $this->repository->search($request), ProductResource::class
+        );
     }
 
     /**

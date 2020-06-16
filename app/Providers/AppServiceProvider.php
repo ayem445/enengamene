@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Providers;
+
 use App\Chapitre;
 use App\Cour;
-use Illuminate\Support\ServiceProvider;
+
 use Blade;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,5 +34,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('admin', function() {
             return auth()->user()->isAdmin();
         });
+
+        JsonResource::withoutWrapping();
     }
 }

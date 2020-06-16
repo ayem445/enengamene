@@ -2,27 +2,25 @@
 
 namespace App\Search\Queries;
 
-use App\Search\OrderBy;
-use App\Search\Params;
 use App\Search\Meta;
+use App\Search\Params;
+use App\Search\OrderBy;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Builder;
 
 abstract class Search
 {
+    /**
+     * [protected description]
+     * @var \App\Search\OrderBy
+     */
+    protected $order;
 
     /**
      * [protected description]
      * @var \App\Search\Params
      */
     protected $params;
-
-    /**
-     * [protected description]
-     * @var \App\Search\OrderBy
-     */
-    protected $order;
 
     /**
      * Search constructor
@@ -35,17 +33,12 @@ abstract class Search
     }
 
     /**
-     * Get response.
+     * Get request parameters.
      *
-     * @return array [description]
+     * @return Params [description]
      */
-    public function response(): array {
-
-        return [
-            'params' => $this->params->toArray(),
-            'meta' => $this->meta()->toArray(),
-            'records' => $this->records($this->queryWithoutLimit()),
-        ];
+    public function params(): Params {
+        return $this->params;
     }
 
     /**
@@ -70,43 +63,14 @@ abstract class Search
      *
      * @return int [description]
      */
-    public function total(): int {
-        return $this->queryWithoutLimit()->count('id');
-    }
+    abstract public function total(): int;
 
     /**
-     * Get query without limit.
+     * Get records.
      *
-     * @return Builder [description]
+     * @return \Illuminate\Support\Collection
      */
-    protected function queryWithoutLimit(): Builder {
-        return $this->query()->orderBy($this->order->field, $this->order->direction);
-    }
-
-    /**
-     * Get sql query.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-     abstract protected function query(): Builder;
-
-     /**
-      * Get records.
-      *
-      * @param \Illuminate\Database\Eloquent\Builder $query
-      * @return \Illuminate\Support\Collection
-      */
-     abstract protected function records(Builder $query): Collection;
-
-     /**
-      * Add limit query.
-      *
-      * @param Builder $query [description]
-      */
-     protected function limit(Builder $query): void {
-        $query->take($this->params->perPage)
-              ->skip( ($this->params->page -1) * $this->params->perPage );
-     }
+    abstract public function records(): Collection;
 
     /**
      * Get last page
