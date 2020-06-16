@@ -31,8 +31,9 @@ class FrontEndController extends Controller
     public function coursgetall(Request $request) {
         // $cours = Cour::all();
         // return view('coursall')->withCours($cours);
-
-        $data = Cour::paginate(3);
+        $q = null;
+        if ($request->has('q')) $q = $request->query('q');
+        $data = Cour::search($q)->paginate(3);
     	  return response()->json($data);
     }
 

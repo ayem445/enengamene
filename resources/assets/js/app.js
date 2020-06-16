@@ -58,6 +58,12 @@ Vue.component('vue-cours', require('./components/Cours.vue').default);
 Vue.component('vue-pagination', require('laravel-vue-pagination'));
 //Vue.component('vue-quizreponses', require('./components/QuizReponses.vue').default);
 
+Vue.component('angle-left', require('./components/Icons/AngleLeft.vue').default);
+Vue.component('double-angle-left', require('./components/Icons/DoubleAngleLeft.vue').default);
+Vue.component('angle-right', require('./components/Icons/AngleRight.vue').default);
+Vue.component('double-angle-right', require('./components/Icons/DoubleAngleRight.vue').default);
+Vue.component('times-circle', require('./components/Icons/TimesCircle.vue').default);
+Vue.component('select-angle', require('./components/Form/SelectAngle.vue').default);
 
 //import VueChapitre from './components/Chapitre.vue'
 //components: { VueLogin }

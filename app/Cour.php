@@ -106,6 +106,13 @@ class Cour extends Model
         return $this->chapitres()->orderBy('num_ordre', 'asc')->get();
     }
 
+    public function scopeSearch($query, $q) {
+      if ($q == null) return $query;
+
+      return $query
+        ->where('libelle', 'LIKE', "%{$q}%");
+    }
+
     public static function boot ()
     {
         parent::boot();

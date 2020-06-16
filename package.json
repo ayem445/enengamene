@@ -27,8 +27,10 @@
         "@vimeo/player": "^2.11.0",
         "laravel-vue-pagination": "^2.3.1",
         "sweetalert": "^2.1.2",
+        "tailwindcss": "^1.4.6",
         "vue-form-wizard": "^0.8.4",
         "vue-multiselect": "^2.1.6",
-        "vue-step-wizard": "^0.1.10"
+        "vue-step-wizard": "^0.1.10",
+        "vuex": "^3.4.0"
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cour;
 use App\Matiere;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\CreateCoursRequest;
 use App\Http\Requests\UpdateCourRequest;
 use App\Difficulte;
@@ -26,6 +27,11 @@ class CourController extends Controller
         $cours->load(['matiere', 'auteur', 'niveau_etude', 'chapitres', 'chapitres.sessions']);
 
         return view('admin.cours.all')->withCours($cours);
+    }
+
+    public function fetch(): JsonResponse
+    {
+        return new JsonResponse;
     }
 
     /**

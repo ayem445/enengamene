@@ -109,7 +109,7 @@
           this.questions[qid].reponses[rid].selectedbyuser = (! selected)
           console.log(qid, rid, this.questions[qid],this.questions[qid].reponses[rid])
        },
-       onComplete: function(){
+       onComplete: function() {
           this.validerQuiz()
           let score = ((this.nbquestionstrouvees / this.quiz.nbquestions) * 100).toFixed()
           let scorenotation = ''

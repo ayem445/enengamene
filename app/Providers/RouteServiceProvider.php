@@ -10,6 +10,7 @@ use App\Chapitre;
 use App\QuizReponse;
 use App\QuizQuestion;
 use App\Session;
+use App\Product;
 
 
 class RouteServiceProvider extends ServiceProvider
@@ -39,8 +40,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-           Route::model('cour_by_id', Cour::class);
-           Route::bind('cour_by_id', function($value){
+        Route::model('cour_by_id', Cour::class);
+        Route::bind('cour_by_id', function($value){
             return Cour::findOrFail($value);
          });
 
@@ -68,6 +69,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('quizreponse_by_id', function($value){
             return QuizReponse::findOrFail($value);
         });
+
+        Route::patterns(['product_id' => '[0-9]+']);
+        Route::model('product_id', Product::class);
     }
 
     /**

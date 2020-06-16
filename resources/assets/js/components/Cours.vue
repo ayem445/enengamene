@@ -4,6 +4,13 @@
 
   <div class="container">
 
+    <div class="row">
+      <input type="text" v-model="q" value="">
+      <button class="btn btn-primary" @click="getResults(1)">
+        Search
+      </button>
+    </div>
+
     <div class="row gap-y">
 
       <div class="col-12 col-md-6 col-lg-4" v-for="tag in laravelData.data" :key="tag.id">
@@ -42,6 +49,7 @@
         data() {
             return {
                 laravelData: {},
+                q: null
             }
         },
         created() {
@@ -49,11 +57,12 @@
         },
         methods: {
             getResults(page) {
+                console.log("new search launched !")
                 if (typeof page === 'undefined') {
                     page = 1;
                 }
 
-                Axios.get(`/coursgetall?page=${page}`)
+                Axios.get(`/coursgetall?page=${page}`, this.q)
                     .then(resp => {
                           this.laravelData = resp.data
                     }).catch(error => {
