@@ -29,7 +29,7 @@ Route::get('/', 'FrontendController@welcome');
 Route::get('/product', 'ProductController@index')->name('product');
 Route::get('/product/fetch', 'ProductController@fetch')->name('product.fetch');
 Route::get('/product/{product_id}/edit', 'ProductController@edit')->name('product.edit');
-Route::get('/product/{product_id}/destroy', 'ProductController@edit')->name('product.destroy');
+Route::get('/product/{product_id}/destroy', 'ProductController@destroy')->name('product.destroy');
 
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile');
 

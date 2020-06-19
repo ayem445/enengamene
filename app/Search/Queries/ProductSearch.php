@@ -13,11 +13,14 @@ class ProductSearch extends Search
     /**
      * @inheritDoc
      */
-    protected function query(): Builder {
+    protected function query(): Builder
+    {
         $query = Product::query();
 
-        if ( $this->params->search->hasFilter() ) {
-            $query->where('name', 'like', '%'.$this->params->search->search.'%');
+        if ($this->params->search->hasFilter()) {
+            $query
+              ->where('name', 'like', '%'.$this->params->search->search.'%')
+              ->orWhere('price', 'like', '%'.$this->params->search->search.'%');
         }
 
         return $query;

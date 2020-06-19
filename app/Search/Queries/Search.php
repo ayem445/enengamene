@@ -11,44 +11,51 @@ use Illuminate\Support\Collection;
 abstract class Search
 {
     /**
-     * [protected description]
      * @var \App\Search\OrderBy
      */
     protected $order;
 
     /**
-     * [protected description]
      * @var \App\Search\Params
      */
     protected $params;
 
     /**
-     * Search constructor
-     * @param Params $params [description]
-     * @param OrderBy     $order  [description]
+     * Search constructor.
+     *
+     * @param  \App\Search\Params $params
+     * @param  \App\Search\OrderBy $order
      */
-    public function __construct(Params $params, OrderBy $order) {
-        $this->params = $params;
+    public function __construct(Params $params, OrderBy $order)
+    {
         $this->order = $order;
+        $this->params = $params;
     }
 
     /**
      * Get request parameters.
      *
-     * @return Params [description]
+     * @return \App\Search\Params
      */
-    public function params(): Params {
+    public function params(): Params
+    {
         return $this->params;
     }
 
     /**
      * Get meta.
      *
-     * @return Meta [description]
+     * @return \App\Search\Meta
      */
-    public function meta(): Meta {
+    public function meta(): Meta
+    {
         $total = $this->total();
+
         $lastPage = $this->lastPage($total);
+
+        if ($lastPage < $this->params->page) {
+            $this->params->page = $lastPage;
+        }
 
         return new Meta(
             $total,
@@ -61,7 +68,7 @@ abstract class Search
     /**
      * Get total number of records.
      *
-     * @return int [description]
+     * @return int
      */
     abstract public function total(): int;
 
@@ -73,31 +80,34 @@ abstract class Search
     abstract public function records(): Collection;
 
     /**
-     * Get last page
+     * Get last page.
      *
-     * @param  int $total [description]
-     * @return int        [description]
+     * @param  int $total
+     * @return int
      */
-    protected function lastPage(int $total): int {
+    protected function lastPage(int $total): int
+    {
         return ceil($total / $this->params->perPage) ?: 1;
     }
 
     /**
-     * Get previous page
+     * Get previous page.
      *
-     * @return int|null [description]
+     * @return int|null
      */
-    protected function prevPage(): ?int {
+    protected function prevPage(): ?int
+    {
         return $this->params->page === 1 ? null : $this->params->page - 1;
     }
 
     /**
-     * Get next page
+     * Get next page.
      *
-     * @param  int|null    $lastPage [description]
-     * @return [type]           [description]
+     * @param  int $lastPage
+     * @return int|null
      */
-    protected function nextPage(int $lastPage): ?int {
+    protected function nextPage(int $lastPage): ?int
+    {
         return $this->params->page < $lastPage ? $this->params->page + 1 : null;
     }
 }

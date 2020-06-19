@@ -5,7 +5,7 @@ namespace App\Repositories\Contracts;
 use App\Search\Queries\Search;
 use App\Http\Requests\ISearchFormRequest;
 
-interface IProductRepositoryContract
+interface ICourRepositoryContract
 {
     /**
      * Get instance of Search.

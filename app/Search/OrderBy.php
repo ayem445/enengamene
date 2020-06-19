@@ -5,18 +5,23 @@ namespace App\Search;
 class OrderBy
 {
     /**
-     * [public description]
      * @var string
      */
     public $field;
 
     /**
-     * [public description]
      * @var string
      */
     public $direction;
 
-    public function __construct(string $field, string $direction) {
+    /**
+     * OrderBy constructor.
+     *
+     * @param  string $field
+     * @param  string $direction
+     */
+    public function __construct(string $field, string $direction)
+    {
         $this->field = $field;
         $this->direction = $direction;
     }

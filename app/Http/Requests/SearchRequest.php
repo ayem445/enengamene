@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Validation\Rule;
-
-use App\Search\OrderBy;
 use App\Search\Params;
+use App\Search\OrderBy;
 use App\Search\Payloads\Payload;
 use App\Search\Payloads\SearchOnlyPayload;
+
+use Illuminate\Validation\Rule;
 
 /**
  * Trait SearchRequest
@@ -32,35 +32,36 @@ trait SearchRequest
     {
         return array_merge([
             'per_page' => [
-              'required',
-              Rule::in(config('system.per_page')),
+                'required',
+                Rule::in(config('system.per_page')),
             ],
             'page' => [
-              'required',
-              'integer',
+                'required',
+                'integer',
             ],
             'order_by' => [
-              'required',
-              'string',
+                'required',
+                'string',
             ],
             'order_field' => [
-              Rule::in($this->orderByFields()),
+                Rule::in($this->orderByFields()),
             ],
             'order_direction' => [
-              Rule::in(['asc','desc']),
+                Rule::in(['asc', 'desc']),
             ],
         ], $this->searchParams());
     }
 
     /**
-     * Get seaech parameters.
+     * Get search parameters.
      *
-     * @return array [description]
+     * @return array
      */
-    protected function searchParams(): array {
+    protected function searchParams(): array
+    {
         return [
             'search' => [
-              'present'
+                'present',
             ],
         ];
     }
@@ -82,20 +83,22 @@ trait SearchRequest
     /**
      * Get default ORDER BY direction.
      *
-     * @return string [description]
+     * @return string
      */
-    protected function defaultOrderByDirection(): string {
+    protected function defaultOrderByDirection(): string
+    {
         return 'asc';
     }
 
     /**
-     * Prepare the data for validation
+     * Prepare the data for validation.
      *
      * @return void
      */
-    protected function prepareForValidation(): void {
+    protected function prepareForValidation(): void
+    {
         $this->order_by = $this->order_by ??
-            $this->defaultOrderByField() . ':' . $this->defaultOrderByDirection();
+            $this->defaultOrderByField().':'.$this->defaultOrderByDirection();
 
         [$order, $direction] = explode(':', $this->order_by);
 
@@ -109,9 +112,10 @@ trait SearchRequest
     /**
      * Get request parameters.
      *
-     * @return Params [description]
+     * @return \App\Search\Params
      */
-    public function requestParams(): Params {
+    public function requestParams(): Params
+    {
         return new Params(
             $this->payload(), $this->per_page, $this->page, $this->order_by
         );
@@ -120,18 +124,20 @@ trait SearchRequest
     /**
      * Get search payload.
      *
-     * @return Payload [description]
+     * @return \App\Search\Payloads\Payload
      */
-    protected function payload(): Payload {
+    protected function payload(): Payload
+    {
         return new SearchOnlyPayload($this->search ?? null);
     }
 
     /**
-     * Get request ORDER BY
+     * Get request ORDER BY.
      *
-     * @return OrderBy [description]
+     * @return \App\Search\OrderBy
      */
-    public function requestOrder(): OrderBy {
+    public function requestOrder(): OrderBy
+    {
         return new OrderBy($this->order_field, $this->order_direction);
     }
 }

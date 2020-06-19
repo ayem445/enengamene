@@ -7,43 +7,40 @@ use Illuminate\Contracts\Support\Arrayable;
 class Meta implements Arrayable
 {
     /**
-     * [int description]
      * @var int
      */
     public $total;
 
     /**
-     * [int description]
      * @var int
      */
     public $lastPage;
 
     /**
-     * [private description]
      * @var int|null
      */
-    public $prevPage = null;
+    public $prevPage;
 
     /**
-     * [private description]
      * @var int|null
      */
-    public $nextPage = null;
+    public $nextPage;
 
     /**
-     * Meta constructor
+     * Meta constructor.
      *
-     * @param int        $total    [description]
-     * @param int        $lastPage [description]
-     * @param [type]     $prevPage [description]
-     * @param [type]     $nextPage [description]
+     * @param  int $total
+     * @param  int $lastPage
+     * @param  int|null $prevPage
+     * @param  int|null $nextPage
      */
     public function __construct(
         int $total,
         int $lastPage,
         int $prevPage = null,
         int $nextPage = null
-    ) {
+    )
+    {
         $this->total = $total;
         $this->lastPage = $lastPage;
         $this->prevPage = $prevPage;
@@ -53,7 +50,8 @@ class Meta implements Arrayable
     /**
      * @inheritDoc
      */
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return [
             'total' => $this->total,
             'prev_page' => $this->prevPage,

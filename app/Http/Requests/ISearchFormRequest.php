@@ -10,14 +10,14 @@ interface ISearchFormRequest
     /**
      * Get request parameters.
      *
-     * @return Params [description]
+     * @return \App\Search\Params
      */
-     public function requestParams(): Params;
+    public function requestParams(): Params;
 
     /**
-     * Get request ORDER BY
+     * Get request ORDER BY.
      *
-     * @return OrderBy [description]
+     * @return \App\Search\OrderBy
      */
-     public function requestOrder(): OrderBy;
+    public function requestOrder(): OrderBy;
 }

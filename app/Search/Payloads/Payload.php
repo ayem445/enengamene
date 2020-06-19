@@ -5,7 +5,7 @@ namespace App\Search\Payloads;
 use Illuminate\Contracts\Support\Arrayable;
 
 abstract class Payload implements Arrayable
-{    
+{
     /**
      * Determine if payload has query filter.
      *

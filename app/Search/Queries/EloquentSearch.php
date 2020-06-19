@@ -10,18 +10,20 @@ trait EloquentSearch
     /**
      * Get total number of records.
      *
-     * @return int [description]
+     * @return int
      */
-    public function total(): int {
+    public function total(): int
+    {
         return $this->queryWithoutLimit()->count('id');
     }
 
     /**
      * Get query without limit.
      *
-     * @return Builder [description]
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function queryWithoutLimit(): Builder {
+    protected function queryWithoutLimit(): Builder
+    {
         return $this->query()->orderBy($this->order->field, $this->order->direction);
     }
 
@@ -30,25 +32,27 @@ trait EloquentSearch
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-     abstract protected function query(): Builder;
+    abstract protected function query(): Builder;
 
-     /**
-      * Get records.
-      *
-      * @return \Illuminate\Support\Collection
-      */
-      public function records(): Collection {
-          return $this->limit($this->queryWithoutLimit())->get();
-      }
+    /**
+     * Get records.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function records(): Collection
+    {
+        return $this->limit($this->queryWithoutLimit())->get();
+    }
 
-      /**
-       * Add limit query.
-       *
-       * @param Builder $query [description]
-       * @return Builder [description]
-       */
-      protected function limit(Builder $query): Builder {
-         return $query->take($this->params->perPage)
-               ->skip( ($this->params->page -1) * $this->params->perPage );
-      }
+    /**
+     * Add limit query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function limit(Builder $query): Builder
+    {
+        return $query->take($this->params->perPage)
+            ->skip(($this->params->page - 1) * $this->params->perPage);
+    }
 }

@@ -10,27 +10,20 @@ use Illuminate\Foundation\Http\FormRequest;
 class FetchRequest extends FormRequest implements ISearchFormRequest
 {
     use SearchRequest;
+
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
+     * @inheritDoc
      */
-    public function authorize()
+    protected function orderByFields(): array
     {
-        return true;
+        return ['name', 'price'];
     }
 
     /**
      * @inheritDoc
      */
-    protected function orderByFields(): array {
-        return ['name','price'];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function defaultOrderByField(): string {
+    protected function defaultOrderByField(): string
+    {
         return 'name';
     }
 }

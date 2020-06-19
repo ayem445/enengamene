@@ -15,8 +15,7 @@ use Illuminate\Http\RedirectResponse;
 class ProductController extends Controller
 {
     /**
-     * [private description]
-     * @var IProductRepositoryContract
+     * @var \App\Repositories\Contracts\IProductRepositoryContract
      */
     private $repository;
 
@@ -37,8 +36,8 @@ class ProductController extends Controller
     public function index(): View
     {
         return view('product.index')
-            ->with('perPage', new Collection(config('system.per_page')))
-            ->with('defaultPerPage', config('system.default_per_page'));
+          ->with('perPage', new Collection(config('system.per_page')))
+          ->with('defaultPerPage', config('system.default_per_page'));
     }
 
     /**

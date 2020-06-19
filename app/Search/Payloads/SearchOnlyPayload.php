@@ -5,22 +5,35 @@ namespace App\Search\Payloads;
 class SearchOnlyPayload extends Payload
 {
     /**
-     * [private description]
      * @var string|null
      */
     public $search;
 
-    public function __construct(string $search = null) {
+    /**
+     * SearchOnlyPayload constructor.
+     *
+     * @param  string|null $search
+     */
+    public function __construct(string $search = null)
+    {
         $this->search = $search;
     }
 
-    public function hasFilter(): bool {
+    /**
+     * @inheritDoc
+     */
+    public function hasFilter(): bool
+    {
         return (bool)$this->search;
     }
 
-    public function toArray() {
+    /**
+     * @inheritDoc
+     */
+    public function toArray(): array
+    {
         return [
-            'search' => $this->search,
+            'search' => (string)$this->search,
         ];
     }
 }

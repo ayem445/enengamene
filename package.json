@@ -10,27 +10,59 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@fullhuman/postcss-purgecss": "^2.0.6",
+        "@vue/eslint-config-prettier": "^6.0.0",
         "axios": "^0.19",
-        "bootstrap": "^4.0.0",
-        "cross-env": "^7.0",
-        "jquery": "^3.2",
+        "babel-eslint": "^10.0.3",
+        "cross-env": "^5.1",
+        "eslint": "^6.8.0",
+        "eslint-plugin-prettier": "^3.1.2",
+        "eslint-plugin-vue": "^6.1.2",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
-        "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
-        "sass": "^1.20.1",
+        "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
-        "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "tailwindcss": "^1.2.0",
+        "vue": "^2.6.11",
+        "vue-template-compiler": "^2.6.11",
+        "vuex": "^3.1.2",
+        "bootstrap": "^4.0.0",
+        "jquery": "^3.2",
+        "popper.js": "^1.12"
     },
     "dependencies": {
         "@vimeo/player": "^2.11.0",
         "laravel-vue-pagination": "^2.3.1",
         "sweetalert": "^2.1.2",
-        "tailwindcss": "^1.4.6",
         "vue-form-wizard": "^0.8.4",
         "vue-multiselect": "^2.1.6",
-        "vue-step-wizard": "^0.1.10",
-        "vuex": "^3.4.0"
-    }
+        "vue-step-wizard": "^0.1.10"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "eslint:recommended"
+        ],
+        "rules": {
+            "no-console": "off"
+        },
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": {}
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ]
 }
